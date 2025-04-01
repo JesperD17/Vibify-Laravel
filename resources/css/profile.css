@@ -1,0 +1,8 @@
+img.profilePic {
+    width: 75px;
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    border-radius: 100%;
+}

@@ -3,9 +3,10 @@ headerSidebar {
     display: flex;
     flex-direction: column;
     background-color: var(--background-color-1);
+    border-right: solid;
     width: 50vw;
     max-width: 300px;
-    border-radius: 15px;
+    border-radius: 0px 10px 10px 0px;
     align-items: center;
     justify-content: center;
     position: relative;

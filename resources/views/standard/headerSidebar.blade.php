@@ -1,7 +1,7 @@
 <headerSidebar>
     @vite('resources/css/header.css')
 
-    <img src="{{ asset('pics/logo.png') }}" alt="description of myimage">
+    <img src="{{ asset('pics/logo.png') }}">
 
     <div class="linksWrapper">
         <a href="{{ route('home') }}" class="linkWithIcon">

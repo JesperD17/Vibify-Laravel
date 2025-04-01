@@ -1,6 +1,8 @@
 :root {
-    --background-color-1: #180523;
+    --background-color-1: #121212;
 
+    --Accents-Highlights: #FFD700;
+    
     --first-font-color: #0DC1FA;
     --second-font-color: #0F65A7;
 
@@ -20,7 +22,7 @@ body, html {
 
 a {
     text-decoration: none;
-    color: var(--first-font-color) !important;
+    color: var(--Accents-Highlights) !important;
 }
 
 i {

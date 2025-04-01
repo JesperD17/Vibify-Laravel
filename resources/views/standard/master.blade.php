@@ -15,6 +15,8 @@
     @vite('resources/css/app.css')
 </head>
 <body>
+    @include('standard.toProfile')
+    
     @include('standard.headerSidebar')
     
     @yield('content')
