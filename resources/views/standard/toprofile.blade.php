@@ -1,6 +1,6 @@
-<profile>
 @vite('resources/css/profile.css')
-<a>
-    <img src="{{ asset('pics/blank-profile-picture.webp') }}" class="profilePic">
-</a>
-</profile>
+<toProfile>
+    <a href="{{ route('profile') }}">
+        <img src="{{ asset('pics/blank-profile-picture.webp') }}" class="profilePic">
+    </a>
+</toProfile>

@@ -19,6 +19,10 @@
     
     @include('standard.headerSidebar')
     
-    @yield('content')
+    <div id="contentAndFooter">
+        @yield('content')
+    
+        @include('standard.footerBar')
+    </div>
 </body>
 </html>

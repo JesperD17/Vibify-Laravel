@@ -5,17 +5,15 @@ headerSidebar {
     background-color: var(--background-color-1);
     border-right: solid;
     width: 50vw;
+    min-width: 200px;
     max-width: 300px;
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 20px 20px 0px;
     align-items: center;
     justify-content: center;
     position: relative;
-}
-
-headersidebar img {
-    display: flex;
-    height: 100px;
-    width: 100px;
+    position: sticky;
+    gap: 20px;
+    top: 0;
 }
 
 .linksWrapper {
@@ -41,16 +39,21 @@ headersidebar img {
 @media (max-width: 500px) {
     headersidebar {
         flex-direction: row;
-        width: 100vw;
-        height: 10vh;
+        height: 100px;
+        width: -webkit-fill-available;
         max-width: unset;
-        position: absolute;
+        border-radius: 10px 10px 0px 0px;
         justify-content: space-around;
+        position: fixed;
+
+        top: unset;
         bottom: 0;
         overflow: auto;
+        border: solid;
+        z-index: 1;
     }
 
-    headersidebar img, #extendIcon {
+    headersidebar .logo, #extendIcon {
         display: none;
     }
 
@@ -59,6 +62,7 @@ headersidebar img {
         width: 100%;
         justify-content: space-around;
         padding: 0px 15px;
+        font-size: 0.8rem;
     }
 
     .linkWithIcon {

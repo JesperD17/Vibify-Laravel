@@ -17,3 +17,7 @@ Route::get('/search', function () {
 Route::get('/newPlaylist', function () {
     return view('newPlaylist');
 })->name('newPlaylist');
+
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
