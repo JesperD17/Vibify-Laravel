@@ -4,6 +4,9 @@
 
 @section('content')
 <saved>
-    saved
+    <!-- @include( 'standard.notLoggedIn') -->
+    <div>
+        savedaaa
+    </div>
 </saved>
 @endsection

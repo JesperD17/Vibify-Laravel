@@ -6,6 +6,7 @@ footerbar {
     padding-right: 10px;
     background: var(--background-color-2);
     color: var(--primary-font);
+    height: var(--footer-height);
 }
 
 @media (max-width: 500px) {

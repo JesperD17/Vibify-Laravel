@@ -22,13 +22,19 @@ profile {
     display: flex;
     flex-direction: column;
     background: var(--background-color-1);
-    height: 100%;
-    height: 92vh;
+    height: calc(100vh - var(--footer-height));
     overflow: auto;
+}
+
+.profileOuterWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .profileWrapper {
     height: 80vh;
+    width: 50vw;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -41,7 +47,8 @@ profile {
     align-items: center;
     padding: 15px;
     justify-content: space-between;
-    max-width: 800px;
+    /* max-width: 800px; */
+    /* width: 100%; */
 }
 
 .profileSections img {
@@ -66,5 +73,7 @@ profile {
 @media (max-width: 500px) {
     .profileWrapper {
         height: 50vh;
+        width: -webkit-fill-available;
+        padding: 0px 10px;
     }
 }
