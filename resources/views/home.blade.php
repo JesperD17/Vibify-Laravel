@@ -3,14 +3,13 @@
 @section('title', 'Home Page')
 
 @section('content')
-@vite('resources/css/home.css')
 <home>
 
-    <div class="welcomeSection">
+    <div id="welcomeSection">
         <div class="mainTitle">
             Welcome {user}!
         </div>
-        <div class="top10played">
+        <div class="songList">
             <div class="song">
                 <div class="playSong">
                     <i class='bx bx-play' ></i>
@@ -57,11 +56,11 @@
         </div>
     </div>
 
-    <div class="playlists">
+    <div id="RecentPlaylists">
         <div class="mainTitle">
             Your recently played playlists.
         </div>
-        <div class="top10RecentPlaylist">
+        <div class="playLists">
             <div class="playlist">
                 <a href="">
                     <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
@@ -101,11 +100,11 @@
         </div>
     </div>
 
-    <div class="populairSongs">
+    <div id="populairSongs">
         <div class="mainTitle">
             Your recently played playlists.
         </div>
-        <div class="top10played">
+        <div class="songList">
             <div class="song">
                 <div class="playSong">
                     <i class='bx bx-play' ></i>

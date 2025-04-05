@@ -4,7 +4,7 @@
 
 @section('content')
 
-@vite('resources/css/authentication/register.css')
+@vite('resources/css/authentication/forms.css')
 <register>
     <form action="POST">
         <div class="mainTitle">
@@ -12,13 +12,28 @@
         </div>
 
         <div class="formWrapper">
-            <input type="text" placeholder="userName"></input>
-            <input type="text" placeholder="email"></input>
-            <input type="text" placeholder="verified_email"></input>
-            <input type=password placeholder="password"></input>
+            <div class="inputAndText">
+                Name
+                <input type="text">
+            </div>
+            <div class="inputAndText">
+                Mail
+                <input type="text">
+            </div>
+            <div class="inputAndText">
+                Verify mail
+                <input type="text">
+            </div>
+            <div class="inputAndText">
+                Password
+                <input type=password>
+            </div>
+            
+            <div class="formButtons">
+                <button type="submit" >Register</button>
+                <button type="reset" class="alt">X</button>
+            </div>
         </div>
-
-        <button type="reset"></button>
     </form>
 </register>
 @endsection

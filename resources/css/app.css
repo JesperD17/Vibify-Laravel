@@ -10,6 +10,8 @@
     --border-radius: 10px;
 
     --footer-height: 100px;
+
+    --fill-page: calc(100vh - var(--footer-height));
 }
 
 /* global styles */
@@ -26,7 +28,7 @@
 }
 
 body, html {
-    font-family: poppins;
+    font-family: poppins !important;
     font-size: 1rem;
     margin: 0px;
     height: 100%;
@@ -42,9 +44,23 @@ a {
     color: var(--primary-font) !important;
 }
 
+a:hover {
+    color: var(--accent-font-color) !important;
+}
+
 i {
     color: var(--secondary-font);
     font-size: 30px;
+}
+
+home, saved, search {
+    width: 100%;
+    height: max-content;
+    min-height: var(--fill-page);
+    display: flex;
+    flex-direction: column;
+    background: var(--background-color-1);
+    overflow: auto;
 }
 
 .mainTitle {
@@ -61,6 +77,13 @@ i {
 }
 
 /* song */
+.songList {
+    display: flex;
+    margin: 0px 20px;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
 .song {
     display: flex;
     width: 350px;
@@ -70,6 +93,7 @@ i {
     color: var(--primary-font);
     justify-content: space-between;
     border-radius: var(--border-radius);
+    border: solid 1px black;
     position: relative;
 }
 
@@ -107,15 +131,20 @@ i {
 }
 
 /* playlists */
-.playlists {
+.playLists {
     display: flex;
-    flex-direction: column;
+    margin: 0px 20px;
+    row-gap: 30px;
+    column-gap: 10px;
+    flex-wrap: wrap;
 }
 
 .playlist {
     display: flex;
     width: 135px;
     position: relative;
+    border: solid 1px;
+    border-radius: 0px 0px var(--border-radius) var(--border-radius);
 }
 
 .playlist a {
@@ -131,4 +160,17 @@ i {
 
 .playlistAuthor {
     margin: 0px 10px;
+}
+
+@media (max-width: 500px) {
+    home {
+        width: 100vw;
+    }
+    .songList {
+        justify-content: center;
+    }
+
+    .playLists {
+        justify-content: center;
+    }
 }

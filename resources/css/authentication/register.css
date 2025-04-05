@@ -1,7 +1,0 @@
-register {
-    display: flex;
-    height: calc(100vh - var(--footer-height));
-    align-items: center;
-    justify-content: center;
-    background: var(--background-color-1);
-}
