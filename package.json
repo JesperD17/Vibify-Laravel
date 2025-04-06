@@ -6,7 +6,7 @@
   "directories": {
     "test": "tests"
   },
-    "scripts": {
+  "scripts": {
     "dev": "vite",
     "build": "vite build"
   },

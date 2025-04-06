@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\auth\RegisteredUserController;
 
 Route::get('/', function () { return view('home'); })->name('home');
 
@@ -21,10 +22,12 @@ Route::get('/profile', function () {
 })->name('profile');
 
 // auth
-Route::get('/authentication/login', function () {
-    return view('/authentication/login');
+Route::get('/auth/login', function () {
+    return view('/auth/login');
 })->name('login');
 
-Route::get('/authentication/register', function () {
-    return view('/authentication/register');
-})->name('register');
+// Route::get('/authentication/register', function () {
+//     return view('/authentication/register');
+// })->name('register');
+
+Route::get('/auth/register', [RegisteredUserController::class, 'store'])->name('register');
