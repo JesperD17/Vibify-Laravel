@@ -8,7 +8,7 @@ toProfile {
 toProfile a {
     position: fixed;
     top: 10px;
-    right: 10px;
+    right: 20px;
     z-index: 1;
 }
 
@@ -23,7 +23,6 @@ profile {
     flex-direction: column;
     background: var(--background-color-1);
     height: var(--fill-page);
-    overflow: auto;
 }
 
 .profileOuterWrapper {
@@ -33,7 +32,6 @@ profile {
 }
 
 .profileWrapper {
-    height: 80vh;
     width: 50vw;
     display: flex;
     flex-direction: column;
@@ -47,8 +45,6 @@ profile {
     align-items: center;
     padding: 15px;
     justify-content: space-between;
-    /* max-width: 800px; */
-    /* width: 100%; */
 }
 
 .profileSections img {
@@ -72,8 +68,13 @@ profile {
 
 @media (max-width: 500px) {
     .profileWrapper {
-        height: 50vh;
+        height: auto;
         width: -webkit-fill-available;
         padding: 0px 10px;
+        overflow: auto;
+    }
+
+    .profileWrapper {
+        height: unset;
     }
 }

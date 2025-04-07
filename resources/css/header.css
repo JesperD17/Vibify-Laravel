@@ -51,6 +51,7 @@ headerSidebar {
         overflow: auto;
         border: solid;
         z-index: 1;
+        overflow: auto;
     }
 
     headersidebar .logo, #extendIcon {
@@ -67,5 +68,6 @@ headerSidebar {
 
     .linkWithIcon {
         flex-direction: column;
+        white-space: nowrap;
     }
 }

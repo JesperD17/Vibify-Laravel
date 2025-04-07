@@ -23,11 +23,16 @@ Route::get('/profile', function () {
 
 // auth
 Route::get('/auth/login', function () {
-    return view('/auth/login');
+    return view('auth.login');
 })->name('login');
 
-// Route::get('/authentication/register', function () {
-//     return view('/authentication/register');
-// })->name('register');
+Route::get('/auth/register', function () {
+    return view('auth.register');
+})->name('register');
 
-Route::get('/auth/register', [RegisteredUserController::class, 'store'])->name('register');
+Route::get('/auth/dashboard', function () {
+    return view('auth.dashboard');
+})->name('dashboard');
+
+
+Route::post('/auth/register', [RegisteredUserController::class, 'store'])->name('register');

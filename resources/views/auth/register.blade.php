@@ -6,7 +6,8 @@
 
 @vite('resources/css/authentication/forms.css')
 <register>
-    <form method="POST" action="{{ route('register') }}" >
+    <form method="POST">
+        @csrf
         <div class="mainTitle">
             Create your new account!
         </div>
@@ -14,11 +15,11 @@
         <div class="formWrapper">
             <div class="inputAndText">
                 Name
-                <input type="name">
+                <input type="text" name="name">
             </div>
             <div class="inputAndText">
                 Mail
-                <input type="email">
+                <input type="text" name="email">
             </div>
             {{-- <div class="inputAndText">
                 Verify mail
@@ -26,7 +27,7 @@
             </div> --}}
             <div class="inputAndText">
                 Password
-                <input type=password>
+                <input type="password" name="password">
             </div>
             
             <div class="formButtons">
