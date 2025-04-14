@@ -60,10 +60,11 @@ headerSidebar {
 
     .linksWrapper {
         flex-direction: row;
-        width: 100%;
+        width: auto;
         justify-content: space-around;
         padding: 0px 15px;
         font-size: 0.8rem;
+        gap: 30px;
     }
 
     .linkWithIcon {

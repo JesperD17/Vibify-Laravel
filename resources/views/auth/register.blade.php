@@ -21,17 +21,27 @@
                 Mail
                 <input type="text" name="email">
             </div>
-            {{-- <div class="inputAndText">
-                Verify mail
-                <input type="text">
-            </div> --}}
             <div class="inputAndText">
                 Password
                 <input type="password" name="password">
             </div>
+            <div class="inputAndText">
+                Verify password
+                <input type="text" name="password_confirmation">
+            </div>
+
+            @if ($errors->any())
+                <div class="formErrors">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             
             <div class="formButtons">
-                <button type="submit" >Register</button>
+                <button type="submit">Register</button>
                 <button type="reset" class="alt">X</button>
             </div>
         </div>

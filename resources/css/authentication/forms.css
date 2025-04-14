@@ -99,4 +99,7 @@ search input {
         display: flex;
         justify-content: center;
     }
+    register, login {
+        align-items: unset;
+    }
 }

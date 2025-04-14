@@ -28,9 +28,9 @@
         
         @if (Route::has('login'))
             @auth
-                <a href="{{ route('dashboard') }}" class="linkWithIcon">
+                <a href="{{ route('profile') }}" class="linkWithIcon">
                     <i class='bx bxs-dashboard'></i>
-                    Dashboard
+                    Profile
                 </a>
             @else
                 <a href="{{ route('login') }}" class="linkWithIcon">

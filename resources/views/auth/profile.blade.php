@@ -58,6 +58,21 @@
                     2-4-2025
                 </div>
             </div>
+            <div class="profileSections">
+                <div class="flexAlign">
+                    <form method="POST" action="{{ route('/logout') }}">
+                        @csrf
+
+                        <div href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                    </div>
+                    </form>
+                </div>
+                <div class="flexAlign">
+                </div>
+            </div>
         </div>
     </div>
         

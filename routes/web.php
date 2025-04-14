@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\RegisteredUserController;
+// use App\Http\Controllers\auth\AuthenticatedSessionController;
 
 Route::get('/', function () { return view('home'); })->name('home');
 
@@ -17,8 +18,8 @@ Route::get('/newPlaylist', function () {
     return view('newPlaylist');
 })->name('newPlaylist');
 
-Route::get('/profile', function () {
-    return view('profile');
+Route::get('/auth/profile', function () {
+    return view('auth.profile');
 })->name('profile');
 
 // auth
@@ -33,6 +34,5 @@ Route::get('/auth/register', function () {
 Route::get('/auth/dashboard', function () {
     return view('auth.dashboard');
 })->name('dashboard');
-
 
 Route::post('/auth/register', [RegisteredUserController::class, 'store'])->name('register');
