@@ -4,10 +4,13 @@
 
 @section('content')
 <home>
-
     <div id="welcomeSection">
         <div class="mainTitle">
-            Welcome {user}!
+            @if (Route::has('login'))
+                @auth
+                Welcome {{ auth()->user()->name }}!
+                @endauth
+            @endif
         </div>
         <div class="songList">
             <div class="song">

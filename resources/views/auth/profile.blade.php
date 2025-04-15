@@ -12,7 +12,7 @@
         <div class="profileWrapper">
             <div class="profileSections">
                 <div class="flexAlign">
-                    Profile: 
+                    Profile:
                 </div>
                 <div class="flexAlign">
                     <img src="{{ asset('pics/blank-profile-picture.webp') }}">
@@ -60,14 +60,15 @@
             </div>
             <div class="profileSections">
                 <div class="flexAlign">
-                    <form method="POST" action="{{ route('/logout') }}">
+                    @csrf
+                    <form method="POST" action="{{ route('logout') }}">
                         @csrf
 
-                        <div href="route('logout')"
+                        <a :href="route('logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                    </div>
+                            Log Out
+                    </a>
                     </form>
                 </div>
                 <div class="flexAlign">

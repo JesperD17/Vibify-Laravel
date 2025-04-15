@@ -27,7 +27,7 @@
             </div>
             <div class="inputAndText">
                 Verify password
-                <input type="text" name="password_confirmation">
+                <input type="password" name="password_confirmation">
             </div>
 
             @if ($errors->any())
