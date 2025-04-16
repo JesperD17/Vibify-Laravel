@@ -13,6 +13,16 @@ register form, login form {
     max-width: 350px;
 }
 
+/* form errors */
+.errorFormText {
+    color: var(--error-color);
+}
+
+.errorFormInput {
+    border: solid 1px var(--error-color);
+}
+
+/* standard forms */
 form {
     display: flex;
     flex-direction: column;

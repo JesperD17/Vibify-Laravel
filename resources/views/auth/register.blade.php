@@ -15,31 +15,30 @@
         <div class="formWrapper">
             <div class="inputAndText">
                 Name
-                <input type="text" name="name">
+                <input type="text" name="name" value="{{ old('name') }}">
             </div>
+
             <div class="inputAndText">
                 Mail
-                <input type="text" name="email">
+                <input type="text" name="email" value="{{ old('email') }}" class="@error('email')errorFormInput @enderror">
+                @error('email')
+                    <div class="errorFormText">{{ $message }}</div>
+                @enderror
             </div>
+
             <div class="inputAndText">
                 Password
-                <input type="password" name="password">
+                <input type="password" name="password" class="@error('password')errorFormInput @enderror">
+                @error('password')
+                    <div class="errorFormText">{{ $message }}</div>
+                @enderror
             </div>
+
             <div class="inputAndText">
                 Verify password
                 <input type="password" name="password_confirmation">
             </div>
 
-            @if ($errors->any())
-                <div class="formErrors">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
-            
             <div class="formButtons">
                 <button type="submit">Register</button>
                 <button type="reset" class="alt">X</button>
