@@ -4,7 +4,7 @@
 
 @section('content')
 
-@vite('resources/css/authentication/forms.css')
+<link href="{{ asset('css/authentication/forms.css') }}" rel="stylesheet">
 <search>
     <form>
         <div class="mainTitle">

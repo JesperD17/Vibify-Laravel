@@ -15,6 +15,11 @@ toProfile a {
 img.profilePic {
     width: 75px;
     border-radius: 100%;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+img.profilePic:hover {
+    box-shadow: 0 0 10px var(--accent-font-color);
 }
 
 /* profile page */
@@ -53,11 +58,26 @@ profile {
 }
 
 .profileSections button {
-    padding: 7px;
+    padding: 10px;
     background: none;
     border: solid 2px;
     border-radius: var(--border-radius);
     color: var(--primary-font);
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    cursor: pointer;
+    transition: 0.3s ease, box-shadow 0.3s ease;
+    font-weight: bold;
+}
+
+.profileSections button i {
+    font-size: 25px;
+}
+
+.profileSections button:hover {
+    background-color: #222;
+    box-shadow: 0 0 10px var(--accent-font-color);
 }
 
 .flexAlign {

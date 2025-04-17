@@ -1,4 +1,4 @@
-@vite('resources/css/error.css')
+<link href="{{ asset('css/error.css') }}" rel="stylesheet">
 <notLoggedIn>
     <div class="notloggedWrapper">
         <div class="headerError">

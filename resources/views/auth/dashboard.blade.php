@@ -3,7 +3,7 @@
 @section('title', 'Dashboard Page')
 *
 @section('content')
-@vite('resources/css/authentication/dashboard.css')
+<link href="{{ asset('css/authentication/dashboard.css') }}" rel="stylesheet">
 <dashboard>
     searchpage
 </dashboard>

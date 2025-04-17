@@ -4,7 +4,7 @@
 
 @section('content')
 
-@vite('resources/css/authentication/forms.css')
+<link href="{{ asset('css/authentication/forms.css') }}" rel="stylesheet">
 <login>
     <form method="POST">
         @csrf
@@ -28,18 +28,15 @@
                     <div class="errorFormText">{{ $message }}</div>
                 @enderror
             </div>
-                {{-- @if ($errors->any())
-                    <div class="formErrors">
-                        @foreach ($errors->all() as $error)
-                            <div class="errorFormText">{{ $error }}</div>
-                        @endforeach
-                    </div>
-                @endif --}}
             
             <div class="formButtons">
-                <button type="submit" >Login</button>
+                <button type="submit" onclick="loadingBeforeSubmit()">Login</button>
                 <button type="reset" class="alt">X</button>
             </div>
+        </div>
+
+        <div class="loaderWrapper">
+            <span class="loader"></span>
         </div>
     </form>
 </login>

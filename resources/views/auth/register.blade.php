@@ -4,9 +4,9 @@
 
 @section('content')
 
-@vite('resources/css/authentication/forms.css')
+<link href="{{ asset('css/authentication/forms.css') }}" rel="stylesheet">
 <register>
-    <form method="POST">
+    <form method="POST" class="form">
         @csrf
         <div class="mainTitle">
             Create your new account!
@@ -40,9 +40,13 @@
             </div>
 
             <div class="formButtons">
-                <button type="submit">Register</button>
+                <button type="submit" onclick="loadingBeforeSubmit(event)">Register</button>
                 <button type="reset" class="alt">X</button>
             </div>
+        </div>
+
+        <div class="loaderWrapper">
+            <span class="loader"></span>
         </div>
     </form>
 </register>

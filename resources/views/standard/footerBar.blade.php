@@ -1,4 +1,4 @@
-@vite('resources/css/footer.css')
+<link href="{{ asset('css/footer.css') }}" rel="stylesheet">
 <footerBar>
 
     <a class="logo">

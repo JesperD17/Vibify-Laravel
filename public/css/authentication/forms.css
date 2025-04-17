@@ -26,6 +26,7 @@ register form, login form {
 form {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .formWrapper {
@@ -63,7 +64,7 @@ button {
 
 button:hover {
     background-color: #e6c200;
-    box-shadow: 0 0 10px #FFD70066;
+    box-shadow: 0 0 10px var(--accent-font-color);
 }
 
 button.alt {
@@ -74,7 +75,7 @@ button.alt {
 
 button.alt:hover {
     background-color: #222;
-    box-shadow: 0 0 8px #FFD70066;
+    box-shadow: 0 0 10px var(--accent-font-color);
 }
 
 /* inputs */
@@ -94,7 +95,7 @@ input::placeholder {
 
 input:focus {
     border-color: #FFD700;
-    box-shadow: 0 0 5px #FFD70066;
+    box-shadow: 0 0 5px var(--accent-font-color);
 }
 
 /* searchbar */
