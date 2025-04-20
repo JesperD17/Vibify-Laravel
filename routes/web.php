@@ -47,4 +47,8 @@ Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
 ->middleware('auth')
 ->name('deleteUser');
 
+Route::post('/updateUser', [DeleteUserController::class, 'update_avatar'])
+->middleware('auth')
+->name('updateUser');
+
 require __DIR__.'/auth.php';

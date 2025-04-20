@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const textsObj = [
         { text: 'Are you sure you want to logout?' },
-        { text: 'Are you sure you want to delete your account?' }
+        { text: 'Are you sure you want to delete your account?' },
+        { text: 'aaaa' }
     ]
     const forms = document.querySelectorAll("form");
 

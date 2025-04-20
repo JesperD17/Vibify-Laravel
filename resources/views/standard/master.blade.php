@@ -19,6 +19,7 @@
     {{-- js --}}
     <script src="{{ asset('js/forms.js') }}"></script>
     <script src="{{ asset('js/confirmLogout.js') }}"></script>
+    <script src="{{ asset('js/headerMenuIcon.js') }}"></script>
 
 </head>
 <body>

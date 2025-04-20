@@ -20,8 +20,17 @@
                         Profile:
                     </div>
                     <div class="flexAlign">
-                        <img src="{{ asset('pics/blank-profile-picture.webp') }}">
-                        <button>Change profile <i class='bx bx-edit-alt'></i></button>
+                        {{-- <a id="changeProf" href="#">
+                            <i class='bx bx-edit-alt'></i>
+                        </a> --}}
+                        <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}">
+
+                        <form enctype="multipart/form-data" action="{{ route('updateUser') }}" method="POST">
+                            <label>Update Profile Image</label>
+                            <input type="file" name="avatar" />
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                            <button type="submit" id="3">
+                        </form>
                     </div>
                 </div>
                 
