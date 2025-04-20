@@ -68,11 +68,7 @@
                         @csrf
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
-                            
-                            <button 
-                            :href="route('logout')" 
-                            onclick="event.preventDefault();
-                            this.closest('form').submit();">
+                            <button type="submit" class="logout" id="1">
                                 Log Out
                             </button>
                         </form>
@@ -80,12 +76,9 @@
                     <div class="flexAlign">
                         <form method="POST" action="{{ route('deleteUser') }}">
                             @csrf
-                            
-                            <button 
-                            :href="route('deleteUser')" 
-                            onclick="event.preventDefault();
-                            this.closest('form').submit();">
-                                Remove account
+                            @method('DELETE')
+                            <button type="submit" class="delAcc" id="2">
+                                Delete Account
                             </button>
                         </form>
                     </div>
@@ -97,7 +90,7 @@
     </div>
     <div class="popupBackground">
         <div class="popupWrapper">
-            Are you sure you want to logout?
+            <div class="popupMessage"></div>
             
             <div class="popupBtns">
                 <button class="yes-button">Yes</button>

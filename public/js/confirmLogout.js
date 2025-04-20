@@ -1,34 +1,43 @@
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector("form");
+document.addEventListener("DOMContentLoaded", function () {
+    const textsObj = [
+        { text: 'Are you sure you want to logout?' },
+        { text: 'Are you sure you want to delete your account?' }
+    ]
+    const forms = document.querySelectorAll("form");
 
-    if (!form) return;
+    forms.forEach(form => {
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
 
-    form.addEventListener("submit", function (event) {
-        event.preventDefault();
-        
-        closePopup()
-        
-        // buttons
-        var buttonYes = document.querySelector('.yes-button');
-        var buttonNo = document.querySelector('.no-button');
-        
-        if (!buttonYes || !buttonNo) {
-            form.submit();
-            return;
-        }        
+            closePopup()
 
-        var confirmPopup = document.querySelector('.popupBackground');
-        if (!confirmPopup) return;
+            // buttons
+            var buttonYes = document.querySelector('.yes-button');
+            var buttonNo = document.querySelector('.no-button');
 
-        confirmPopup.style.display = "flex";
+            if (!buttonYes || !buttonNo) {
+                form.submit();
+                return;
+            }
 
-        buttonYes.addEventListener("click", function () {
-            form.submit();
-            loadingBeforeSubmit()
-        })
+            var confirmPopup = document.querySelector('.popupBackground');
+            if (!confirmPopup) return;
 
-        buttonNo.addEventListener("click", function () {
-            confirmPopup.style.display = "none";
-        })
-    });
+            confirmPopup.style.display = "flex";
+
+            var messageLength = Number(form.querySelector('button').getAttribute('id'));
+            var message = confirmPopup.querySelector('.popupMessage');
+                        
+            message.innerText = textsObj[messageLength - 1].text;
+
+            buttonYes.addEventListener("click", function () {
+                form.submit();
+                loadingBeforeSubmit()
+            })
+
+            buttonNo.addEventListener("click", function () {
+                confirmPopup.style.display = "none";
+            })
+        });
+    })
 });

@@ -1,6 +1,6 @@
 <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
 
-@if (Route::has('login'))
+@if (Route::has('login') && !Route::is('profile'))
     @auth
     <toProfile>
         <a href="{{ route('profile') }}">

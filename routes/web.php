@@ -43,7 +43,7 @@ Route::post('/auth/register', [RegisteredUserController::class, 'store'])
 Route::post('/auth/login', [AuthenticatedSessionController::class, 'store'])
 ->name('login');
 
-Route::post('/deleteUser', [DeleteUserController::class, 'destroy'])
+Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
 ->middleware('auth')
 ->name('deleteUser');
 

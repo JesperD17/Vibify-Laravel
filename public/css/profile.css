@@ -28,6 +28,7 @@ profile {
     flex-direction: column;
     background: var(--background-color-1);
     height: var(--fill-page);
+    overflow: auto;
 }
 
 .profileOuterWrapper {
@@ -86,15 +87,19 @@ profile {
     gap: 15px;
 }
 
+.flexAlign:nth-child(2) {
+    text-align: end;
+}
+
 @media (max-width: 500px) {
     .profileWrapper {
         height: auto;
         width: -webkit-fill-available;
-        padding: 0px 10px;
+        padding: 0px 5px;
         overflow: auto;
     }
 
-    .profileWrapper {
-        height: unset;
+    .profileOuterWrapper {
+        padding-bottom: var(--footer-height);
     }
 }
