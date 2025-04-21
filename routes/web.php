@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\DeleteUserController;
+use App\Http\Controllers\Auth\UpdateAvatarController;
 
 Route::get('/', function () { return view('home'); })->name('home');
 
@@ -47,8 +48,7 @@ Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
 ->middleware('auth')
 ->name('deleteUser');
 
-Route::post('/updateUser', [DeleteUserController::class, 'update_avatar'])
-->middleware('auth')
-->name('updateUser');
+Route::post('/updateAvatar', [UpdateAvatarController::class, 'update_avatar'])
+->name('updateAvatar');
 
 require __DIR__.'/auth.php';

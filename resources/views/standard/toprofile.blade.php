@@ -4,7 +4,7 @@
     @auth
     <toProfile>
         <a href="{{ route('profile') }}">
-            <img src="{{ asset('pics/blank-profile-picture.webp') }}" class="profilePic">
+            <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}" class="profilePic">
         </a>
     </toProfile>
     @endauth

@@ -2,9 +2,9 @@
 // loading
 function loadingBeforeSubmit() {
     var loadingDiv = document.querySelector('.loaderWrapper');
-    
+
     if (!loadingDiv) return;
-    
+
     loadingDiv.style.display = 'flex'; // Show loading
 }
 
@@ -12,13 +12,33 @@ function loadingBeforeSubmit() {
 function closePopup() {
     var popupbackground = document.querySelector('.popupBackground')
     if (!popupbackground) return;
-    
+
     var popup = popupbackground.querySelector('.popupWrapper');
     if (!popup) return;
-    
+
     popupbackground.addEventListener('click', function (e) {
-        if(!popup.contains(e.target)) {          
-            popupbackground.style.display = "none";
+        if (!popup.contains(e.target)) {
+            popupbackground.style.display = null;
         }
     })
+}
+
+function showChangeAvatarForm() {
+    closePopup();
+
+    var text = "Please select your new profile picture.";
+
+    var formWrapper = document.getElementById('avatarForm');
+    if (!formWrapper) return;
+    formWrapper.style.display = "flex";
+
+    var confirmPopup = document.querySelector('.popupBackground');
+    if (!confirmPopup) return;
+    confirmPopup.style.display = "flex";
+
+    var btns = confirmPopup.querySelector('.popupBtns');
+    btns.style.display = 'none';
+
+    var message = confirmPopup.querySelector('.popupMessage');
+    message.innerHTML = text;
 }

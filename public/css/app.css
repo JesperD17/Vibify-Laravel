@@ -166,8 +166,8 @@ home, saved, search {
     margin: 0px 10px;
 }
 
-/* buttons */
-.popupBackground {
+/* buttons and popup styling. */
+.popupBackground, .popupBackgroundAvatar {
     width: -webkit-fill-available;
     height: -webkit-fill-available;
     display: none;
@@ -175,6 +175,7 @@ home, saved, search {
     align-items: center;
     justify-content: center;
     background: var(--background-shade);
+    z-index: 1;
 }
 
 .popupWrapper {
@@ -188,9 +189,9 @@ home, saved, search {
     border-radius: var(--border-radius);
 }
 
-.popupBtns .yes-button {
-    background-color: #FFD700;
-    color: #121212;
+button {
+    background-color: var(--primary-font);
+    color: var(--background-color-1);
     border: none;
     padding: 0.75rem 1.25rem;
     border-radius: 8px;
@@ -199,10 +200,10 @@ home, saved, search {
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.popupBtns .no-button {
-    background-color: #191818;
-    color: #FFD700;
-    border: 1px solid #B8860B;
+.popupBtns .no-button, .custom-file-upload {
+    background-color: var(--background-color-2);
+    color: var(--primary-font);
+    border: 1px solid var(--accent-font-color);
     padding: 0.75rem 1.25rem;
     border-radius: 8px;
     font-weight: bold;
@@ -210,12 +211,16 @@ home, saved, search {
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
+input::file-selector-button {
+    display: none;    
+}
+
 .popupBtns button:hover {
     box-shadow: 0 0 10px var(--accent-font-color);
 }
 
 .popupBtns .no-button:hover {
-    background-color: #222;
+    background-color: var(--background-color-1);
 }
 
 @media (max-width: 500px) {
@@ -228,5 +233,9 @@ home, saved, search {
 
     .playLists {
         justify-content: center;
+    }
+
+    .popupWrapper {
+        margin: 10px;
     }
 }

@@ -5,7 +5,6 @@
 @section('content')
 
 <link href="{{ asset('css/profile.css') }}" rel="stylesheet">
-
 <profile>
     <div class="mainTitle">Profile details</div>
 
@@ -20,17 +19,12 @@
                         Profile:
                     </div>
                     <div class="flexAlign">
-                        {{-- <a id="changeProf" href="#">
-                            <i class='bx bx-edit-alt'></i>
-                        </a> --}}
                         <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}">
+                        
+                        <div id="changeProf" onclick="showChangeAvatarForm()">
+                            <i class='bx bx-edit-alt'></i>
+                        </div>
 
-                        <form enctype="multipart/form-data" action="{{ route('updateUser') }}" method="POST">
-                            <label>Update Profile Image</label>
-                            <input type="file" name="avatar" />
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}" />
-                            <button type="submit" id="3">
-                        </form>
                     </div>
                 </div>
                 
@@ -100,7 +94,26 @@
     <div class="popupBackground">
         <div class="popupWrapper">
             <div class="popupMessage"></div>
-            
+
+            <div id="avatarForm">
+                @if (Route::has('login'))
+                @auth
+                
+                <form enctype="multipart/form-data" action="{{ route('updateAvatar') }}" method="POST">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}" />
+                    <label for="file-upload" class="custom-file-upload">
+                        Select file
+                    </label>
+                    <input id="file-upload" type="file" name="avatar" style="field-sizing: content;"/>
+                    <button type="submit" id="3">
+                        Submit
+                    </button>
+                </form>
+                
+                @endauth
+                @endif
+            </div>
+                
             <div class="popupBtns">
                 <button class="yes-button">Yes</button>
                 <button class="no-button">No</button>
