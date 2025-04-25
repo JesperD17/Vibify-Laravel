@@ -7,8 +7,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 
-use Illuminate\Support\Facades\Storage;
-
 class UpdateAvatarController extends Controller
 {
     public function update_avatar(Request $request): RedirectResponse

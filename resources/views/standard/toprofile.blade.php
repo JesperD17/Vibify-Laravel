@@ -1,5 +1,4 @@
-<link href="{{ asset('css/profile.css') }}" rel="stylesheet">
-
+@vite('resources/css/profile.css')
 @if (Route::has('login') && !Route::is('profile'))
     @auth
     <toProfile>

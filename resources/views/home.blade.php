@@ -3,6 +3,8 @@
 @section('title', 'Home Page')
 
 @section('content')
+
+@vite('resources/js/homePageSongs.js')
 <home>
     <div id="welcomeSection">
         <div class="mainTitle">

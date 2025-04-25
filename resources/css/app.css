@@ -145,7 +145,7 @@ home, saved, search {
 
 .playlist {
     display: flex;
-    width: 135px;
+    width: 130px;
     position: relative;
     border: solid 1px;
     border-radius: 0px 0px var(--border-radius) var(--border-radius);
@@ -212,7 +212,7 @@ button {
 }
 
 input::file-selector-button {
-    display: none;    
+    display: none;
 }
 
 .popupBtns button:hover {

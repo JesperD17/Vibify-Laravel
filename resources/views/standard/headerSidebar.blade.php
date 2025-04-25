@@ -1,4 +1,4 @@
-<link href="{{ asset('css/header.css') }}" rel="stylesheet">
+@vite('resources/css/header.css')
 <headerSidebar class="closedMenu">
 
     <a href="{{ route('home') }}" class="logo">

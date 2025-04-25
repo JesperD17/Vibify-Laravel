@@ -6,7 +6,12 @@ use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\DeleteUserController;
 use App\Http\Controllers\Auth\UpdateAvatarController;
 
-Route::get('/', function () { return view('home'); })->name('home');
+use Illuminate\Http\Request;
+use GuzzleHttp\Client as HttpClient;
+
+Route::get('/', function () {
+    return view('home');
+})->name('home');
 
 Route::get('/saved', function () {
     return view('saved');
@@ -39,16 +44,24 @@ Route::get('/auth/dashboard', function () {
 
 // controllers
 Route::post('/auth/register', [RegisteredUserController::class, 'store'])
-->name('register');
+    ->name('register');
 
 Route::post('/auth/login', [AuthenticatedSessionController::class, 'store'])
-->name('login');
+    ->name('login');
 
 Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
-->middleware('auth')
-->name('deleteUser');
+    ->middleware('auth')
+    ->name('deleteUser');
 
 Route::post('/updateAvatar', [UpdateAvatarController::class, 'update_avatar'])
-->name('updateAvatar');
+    ->name('updateAvatar');
 
-require __DIR__.'/auth.php';
+Route::any('/proxy/{path}', function (Request $req, $path) {
+    $client = new HttpClient([
+        'base_uri' => 'https://httpbin.org'
+    ]);
+
+    return $client->request($req->method(), $path);
+});
+
+require __DIR__ . '/auth.php';

@@ -14,7 +14,7 @@ headerSidebar {
     gap: 20px;
     top: 0;
     overflow: hidden;
-    transition: width 0.4s ease-in-out; 
+    transition: width 0.4s ease-in-out;
 }
 
 headerSidebar.closedMenu {
@@ -30,7 +30,6 @@ headerSidebar .linksWrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
-    max-width: 300px;
 }
 
 .closedMenu .linksWrapper {
@@ -72,6 +71,7 @@ headerSidebar .linkWithIcon {
 @media (min-width: 500px) {
     headerSidebar .linksWrapper {
         transition: max-width 0.4s ease-in-out;
+        max-width: 300px;
     }
 }
 

@@ -13,14 +13,13 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     {{-- css --}}
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/animations.css') }}" rel="stylesheet">
+    @vite('resources/css/app.css')
+    @vite('resources/css/animations.css')
 
     {{-- js --}}
-    <script src="{{ asset('js/forms.js') }}"></script>
-    <script src="{{ asset('js/confirmLogout.js') }}"></script>
-    <script src="{{ asset('js/headerMenuIcon.js') }}"></script>
-
+    @vite('resources/js/forms.js')
+    @vite('resources/js/confirmLogout.js')
+    @vite('resources/js/headerMenuIcon.js')
 </head>
 <body>
     @include('standard.toprofile')
