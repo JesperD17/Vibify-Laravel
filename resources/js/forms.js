@@ -5,7 +5,15 @@ export function loadingBeforeSubmit() {
 
     if (!loadingDiv) return;
 
-    loadingDiv.style.display = 'flex'; // Show loading
+    loadingDiv.style.display = 'flex';
+}
+
+export function submittedFormLoading() {
+    var loadingDiv = document.querySelector('.loaderWrapper');
+
+    if (!loadingDiv) return;
+
+    loadingDiv.style.display = null; // Show loading
 }
 
 // popups

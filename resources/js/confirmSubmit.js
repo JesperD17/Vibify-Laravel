@@ -19,6 +19,9 @@ document.addEventListener("DOMContentLoaded", function () {
             var buttonYes = document.querySelector('.yes-button');
             var buttonNo = document.querySelector('.no-button');
 
+            var submitButton = form.querySelector('button');
+            if (!submitButton) return;
+            
             var messageLength = Number(form.querySelector('button').getAttribute('id'));
 
             if (!buttonYes || !buttonNo) {                

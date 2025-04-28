@@ -4,14 +4,14 @@
 
 @section('content')
 
-@vite('resources/css/authentication/forms.css.js')
+@vite('resources/css/authentication/forms.css')
 <search>
-    <form>
+    <form onsubmit="myApp.searchSongs()">
         <div class="mainTitle">
             Search
         </div>
         <div class="searchbarWrapper">
-            <input type="text">
+            <input type="text" id="searchBar" required>
         </div>
     </form>
 
@@ -64,6 +64,10 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <div class="loaderWrapper">
+        <span class="loader"></span>
     </div>
 </search>
 @endsection
