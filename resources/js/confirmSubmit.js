@@ -1,3 +1,5 @@
+import { loadingBeforeSubmit, closePopup } from "./forms";
+
 document.addEventListener("DOMContentLoaded", function () {
     const textsObj = [
         { text: 'Are you sure you want to logout?' },

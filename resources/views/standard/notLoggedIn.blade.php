@@ -1,5 +1,4 @@
 @vite('resources/css/error.css')
-
 <notLoggedIn>
     <div class="notloggedWrapper">
         <div class="headerError">

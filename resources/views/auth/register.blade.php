@@ -4,7 +4,7 @@
 
 @section('content')
 
-<link href="{{ asset('css/authentication/forms.css') }}" rel="stylesheet">
+@vite('resources/css/authentication/forms.css')
 <register>
     <form method="POST" class="form">
         @csrf
@@ -40,7 +40,7 @@
             </div>
 
             <div class="formButtons">
-                <button type="submit" onclick="loadingBeforeSubmit(event)">Register</button>
+                <button type="submit" onclick="myApp.loadingBeforeSubmit(event)">Register</button>
                 <button type="reset" class="alt">X</button>
             </div>
         </div>

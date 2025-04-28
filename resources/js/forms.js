@@ -1,6 +1,6 @@
 
 // loading
-function loadingBeforeSubmit() {
+export function loadingBeforeSubmit() {
     var loadingDiv = document.querySelector('.loaderWrapper');
 
     if (!loadingDiv) return;
@@ -9,7 +9,7 @@ function loadingBeforeSubmit() {
 }
 
 // popups
-function closePopup() {
+export function closePopup() {
     var popupbackground = document.querySelector('.popupBackground')
     if (!popupbackground) return;
 
@@ -23,7 +23,7 @@ function closePopup() {
     })
 }
 
-function showChangeAvatarForm() {
+export function showChangeAvatarForm() {
     closePopup();
 
     var text = "Please select your new profile picture.";

@@ -4,7 +4,7 @@
 
 @section('content')
 
-<link href="{{ asset('css/profile.css') }}" rel="stylesheet">
+@vite('resources/css/profile.css')
 <profile>
     <div class="mainTitle">Profile details</div>
 
@@ -21,7 +21,7 @@
                     <div class="flexAlign">
                         <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}">
                         
-                        <div id="changeProf" onclick="showChangeAvatarForm()">
+                        <div id="changeProf" onclick="myApp.showChangeAvatarForm()">
                             <i class='bx bx-edit-alt'></i>
                         </div>
 

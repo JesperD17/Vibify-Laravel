@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
-function openCloseMenu() {
+export function openCloseMenu() {
     var icon = document.querySelector('#extendIcon i');
     if (!icon) return;
 

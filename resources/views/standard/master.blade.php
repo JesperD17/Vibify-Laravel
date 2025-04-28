@@ -17,9 +17,8 @@
     @vite('resources/css/animations.css')
 
     {{-- js --}}
-    @vite('resources/js/forms.js')
-    @vite('resources/js/confirmLogout.js')
-    @vite('resources/js/headerMenuIcon.js')
+    @vite('resources/js/app.js')
+    @vite('resources/js/confirmSubmit.js')
 </head>
 <body>
     @include('standard.toprofile')
