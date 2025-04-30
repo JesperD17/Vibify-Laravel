@@ -10,6 +10,8 @@ let youtube;
   youtube = await Innertube.create();
 })();
 
+app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", '*'); next(); });
+
 app.get('/search', async (req, res) => {
   const query = req.query.q;
   if (!query) return res.status(400).send('Query parameter "q" is required.');
@@ -21,6 +23,8 @@ app.get('/search', async (req, res) => {
     res.status(500).send(error.toString());
   }
 });
+
+
 
 app.listen(port, () => {
   console.log(`YouTube service listening at http://localhost:${port}`);

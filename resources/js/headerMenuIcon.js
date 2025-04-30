@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
-    if (window.innerWidth > 800) {
+    if (window.innerWidth > 500) {
         openCloseMenu()
     } else {
         var panel = document.querySelector('headerSidebar');

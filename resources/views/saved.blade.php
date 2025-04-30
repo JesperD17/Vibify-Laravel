@@ -45,6 +45,18 @@
                     <div class="playlistAuthor">Metallica</div>
                 </a>
             </div>
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
         </div>
     </div>
 </saved>

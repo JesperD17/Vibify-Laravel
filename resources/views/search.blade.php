@@ -16,53 +16,16 @@
     </form>
 
     <div id="recentSearched">
-        <div class="mainTitle">
-            Your recently searched songs.
+        <div class="searchHeader">
+            <div class="mainTitle">
+                Your recently searched songs.
+            </div>
+            <div class="smallTitle searchAmount">
+                <div id="amountFound"></div> results...
+            </div>
         </div>
         <div class="songList">
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
             
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
-
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
-
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
         </div>
     </div>
 
