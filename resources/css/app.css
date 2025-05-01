@@ -60,7 +60,6 @@ home, saved, search {
     flex-direction: column;
     background: var(--background-color-1);
     overflow: auto;
-    padding-bottom: var(--padding-footer-sections);
 }
 
 .searchHeader {
@@ -290,7 +289,11 @@ input::file-selector-button {
     #contentAndFooter {
         display: flex;
         flex-direction: column-reverse;
-    }   
+    }
+
+    home, saved, search {
+        padding-bottom: var(--padding-footer-sections);
+    }
 
     home {
         width: 100vw;

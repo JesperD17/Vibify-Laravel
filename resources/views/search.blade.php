@@ -24,9 +24,8 @@
                 <div id="amountFound"></div> results...
             </div>
         </div>
-        <div class="songList">
-            
-        </div>
+        <div id="filters"></div>
+        <div class="songList"></div>
     </div>
 
     <div class="loaderWrapper">
