@@ -1,4 +1,5 @@
 import { loadingBeforeSubmit, submittedFormLoading } from "./forms";
+import { skeletonSongs } from './skeletonItems';
 
 var songsMainContainer = document.getElementById('recentSearched');
 var songList = songsMainContainer.querySelector('.songList');
@@ -7,12 +8,9 @@ var filtersContainer = document.getElementById('filters');
 
 export async function searchSongs() {
     loadingBeforeSubmit();
-
-    skeletonSongs();
+    skeletonSongs(songList);
 
     await fetchSearchResult();
-
-    submittedFormLoading();
 }
 
 function getSearchParams() {
@@ -21,13 +19,23 @@ function getSearchParams() {
     return param;
 }
 
-async function fetchSearchResult() {
+async function fetchSearchResult(payloadParam) {
+    loadingBeforeSubmit();
+    skeletonSongs(songList);
+
     var param = getSearchParams();
     setSearchTitle(param)
 
+    if (payloadParam) {
+        console.log(payloadParam);
+        var response = await fetch(`http://localhost:3000/results?search_query=${param}&sp=${payloadParam}`);
+        var data = await response.json();
+    } else {
+        var response = await fetch(`http://localhost:3000/results?search_query=${param}`);
+        var data = await response.json();
+    }
 
-    var response = await fetch(`http://localhost:3000/search?q=${param}`);
-    var data = await response.json();
+    submittedFormLoading();
 
     console.log('received', data);
 
@@ -39,28 +47,6 @@ async function fetchSearchResult() {
 function setSearchTitle(param) {
     if (!title) return;
     title.innerText = 'Searched for: ' + param;
-}
-
-function skeletonSongs() {
-    var amountOfSkeletonSongs = 24;
-    var skeletonSongs = "";
-    for (let i = 0; i < amountOfSkeletonSongs; i++) {
-        skeletonSongs += `
-        <div class="song noClick">
-            <div class="playSong">
-                <i class='bx bx-play'></i>
-                <img class="skeletons">
-            </div>
-            <div class="textWrapper">
-                <div class="songTitle skeletons">random song title</div>
-                <div class="songAuthor skeletons">random song author</div>
-            </div>
-        </div>
-        `
-    }
-
-    if (!songList) return;
-    songList.innerHTML = skeletonSongs;
 }
 
 async function formJsonHtml(results) {
@@ -118,8 +104,10 @@ async function addFilterButtons(data) {
             
             <div class="hiddenDropDown ${i + 1}">`
         for (let a = 0; a < groups[i].filters.length; a++) {
+            var url = groups[i].filters[a].endpoint.metadata.url;
+            var metaDataParam = await getAfterSubstring(url, '&sp=');
             filters +=
-                `<button>${groups[i].filters[a].label.text}</button>`
+                `<button params='${metaDataParam}'>${groups[i].filters[a].label.text}</button>`
         }
         filters +=
             `</div>
@@ -128,12 +116,22 @@ async function addFilterButtons(data) {
     }
     addSubmitButtonFilters(filters);
     showFilterItems();
+    selectedFilterButtons();
+    
+    submitFIlterBtn();
+}
+
+async function getAfterSubstring(str, substring) {
+  if (typeof str !== 'string' || typeof substring !== 'string') return '';
+  const index = str.indexOf(substring);
+  if (index === -1) return '';
+  return str.slice(index + substring.length);
 }
 
 function addSubmitButtonFilters(filters) {
     filters += `
     <div class="filterWrapper">
-        <button>Submit Filters</button>
+        <button id="submitFilters">Submit Filters</button>
     </div>
     `
 
@@ -144,7 +142,7 @@ function showFilterItems() {
     var filterHeaders = document.querySelectorAll('#filters .filterMainName');
     if (!filterHeaders) return;
 
-    outSieFilterClose(filterHeaders);
+    outSideFilterClose(filterHeaders);
 
     filterHeaders.forEach(filterHeader => {
         filterHeader.addEventListener('click', function (e) {
@@ -157,13 +155,13 @@ function showFilterItems() {
     })
 }
 
-function outSieFilterClose(filters) {
+function outSideFilterClose(filters) {
     window.addEventListener('click', function (e) {
         filters.forEach(filter => {
             if (filter.contains(e.target)) return;
         })
         if (filtersContainer.contains(e.target)) return;
-
+        
         closeAllFilters(filters);
     })
 }
@@ -182,4 +180,66 @@ function closeAllFilters(filters) {
             filter.classList.remove('open');
         }
     })
+}
+
+function selectedFilterButtons() {
+    var filterDropdowns = document.querySelectorAll('#filters .hiddenDropDown');
+    if (!filterDropdowns) return;
+
+    filterDropdowns.forEach(dropdown => {
+        var buttons = dropdown.querySelectorAll('button');
+        if (!buttons) return;
+
+        
+        buttons.forEach(button => {
+            button.addEventListener('click', function (e) {
+                removeSelectedBtns(buttons, e.currentTarget);
+
+                e.currentTarget.classList.toggle('selected');
+            })
+        })
+    })
+}
+
+function removeSelectedBtns(buttons, clickedButton) {
+    buttons.forEach(button => {
+        if (button.classList.contains('selected') && clickedButton !== button) {
+            button.classList.remove('selected');
+        }
+    })
+}
+
+// param based search url
+function submitFIlterBtn() {
+    var button = document.getElementById('submitFilters');
+    if (!button) return;
+
+    button.addEventListener('click', function () {
+        var params = [];
+        var filters = document.querySelectorAll('#filters .filterWrapper');
+        var filterHeaders = document.querySelectorAll('#filters .filterMainName');
+        if (!filters || !filterHeaders) return;
+
+        closeAllFilters(filterHeaders);
+        
+        filters.forEach(filter => {
+            var filterBtns = filter.querySelectorAll('.hiddenDropDown button');
+            
+            filterBtns.forEach(button => {
+                if (!button.classList.contains('selected')) return;
+                var paramAttribute = button.getAttribute('params');
+                params.push(paramAttribute);
+            })
+        })
+        filteredQuery(params);
+    })
+}
+
+function filteredQuery(params) {
+    if (!params) return;
+
+    var payloadParam = params.join('');
+console.log(params);
+
+    fetchSearchResult(payloadParam);
 }

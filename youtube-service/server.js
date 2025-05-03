@@ -12,9 +12,9 @@ let youtube;
 
 app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", '*'); next(); });
 
-app.get('/search', async (req, res) => {
-  const query = req.query.q;
-  if (!query) return res.status(400).send('Query parameter "q" is required.');
+app.get('/results', async (req, res) => {
+  const query = req.query.search_query;
+  if (!query) return res.status(400).send('Query parameter "search_query" is required.');
 
   try {
     const searchResults = await youtube.search(query);

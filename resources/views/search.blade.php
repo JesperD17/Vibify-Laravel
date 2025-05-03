@@ -5,6 +5,7 @@
 @section('content')
 
 @vite('resources/css/authentication/forms.css')
+@vite('resources/css/search.css')
 <search>
     <form onsubmit="myApp.searchSongs()">
         <div class="mainTitle">

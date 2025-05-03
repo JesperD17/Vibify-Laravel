@@ -105,72 +105,7 @@ search input {
     margin: 0px 20px;
 }
 
-/* filters */
-#filters {
-    display: flex;
-    margin: 0px 20px 20px;
-    flex-wrap: wrap;
-}
-
-#filters button {
-    border-radius: 0px;
-}
-
-.filterWrapper {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin: 2px;
-    position: relative;
-}
-
-.filterMainName {
-    display: flex;
-    color: var(--pure-white);
-    background: var(--background-color-2);
-    border-radius: var(--border-radius);
-    align-items: center;
-    justify-content: center;
-    padding: 5px;
-    cursor: pointer;
-}
-
-.filterMainName i {
-    transform: rotate(0deg);
-    transition: transform 0.2s ease-in-out;
-}
-
-.filterMainName.open i {
-    transform: rotate(90deg);
-    transition: transform 0.2s ease-in-out;
-}
-
-.filterWrapper:has(.filterMainName.open) .hiddenDropDown {
-    opacity: 1;
-    pointer-events: auto;
-}
-
-.hiddenDropDown {
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    top: 100%;
-    position: absolute;
-    z-index: 1;
-    max-height: 250px;
-    overflow: auto;
-
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.2s ease;
-}
-
 @media (max-width: 500px) {
-    .searchbarWrapper {
-        display: flex;
-        justify-content: center;
-    }
-
     register, login {
         align-items: unset;
     }

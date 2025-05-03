@@ -168,7 +168,6 @@ home, saved, search {
 .songAuthor:hover {
     cursor: pointer;
     text-decoration: underline;
-    pointer-events: none;
 }
 
 .songTitle {
