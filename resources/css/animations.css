@@ -2,7 +2,7 @@
     display: none;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    height: -webkit-fill-available;
     width: 100%;
     position: absolute;
     background: var(--background-shade);

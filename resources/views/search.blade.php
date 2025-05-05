@@ -27,6 +27,9 @@
         </div>
         <div id="filters"></div>
         <div class="songList"></div>
+        <div id="loadingScrollSongs">
+            <span class="loader"></span>
+        </div>
     </div>
 
     <div class="loaderWrapper">

@@ -15,6 +15,7 @@ headerSidebar {
     top: 0;
     overflow: hidden;
     transition: width 0.4s ease-in-out;
+    position: sticky;
 }
 
 headerSidebar.closedMenu {
