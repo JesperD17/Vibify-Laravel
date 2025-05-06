@@ -32,11 +32,11 @@ async function fetchSearchResult(newParams) {
 
     if (newParams) {
         console.log(newParams);
-        // var response = await fetch(`http://localhost:3000/results?search_query=${param}&sp=${payloadParam}`);
+        // var response = await fetch(`http://localhost:3000/search?search_query=${param}&sp=${payloadParam}`);
         var response = await fetch(`${newParams}`)
         var data = await response.json();
     } else {
-        var response = await fetch(`http://localhost:3000/results?search_query=${param}`);
+        var response = await fetch(`http://localhost:3000/search?search_query=${param}`);
         var data = await response.json();
 
         var loadIcon = document.getElementById('loadingScrollSongs');
@@ -296,7 +296,7 @@ function continuationUrlFetch(continuation) {
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0;
 
-    let newUrl = `http://localhost:3000/results?continuation=${continuation}`;
+    let newUrl = `http://localhost:3000/search?continuation=${continuation}`;
 
     fetchSearchResult(newUrl);
 }

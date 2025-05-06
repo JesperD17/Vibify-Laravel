@@ -110,49 +110,7 @@
             Your recently played playlists.
         </div>
         <div class="songList">
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
             
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
-
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
-
-            <div class="song">
-                <div class="playSong">
-                    <i class='bx bx-play' ></i>
-                    <img src="{{ asset('pics/metallic_image.jpg') }}">
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">Ride the lightning song</div>
-                    <div class="songAuthor">Metellica</div>
-                </div>
-            </div>
         </div>
     </div>
 </home>
