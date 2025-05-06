@@ -20,10 +20,19 @@ app.get('/search', async (req, res) => {
     let searchFeed;
 
     if (continuation) {
-      // Continuation-based search
-      searchFeed = await tube.music.search(undefined, {
-        continuation: continuation
-      });
+      // searchFeed = await tube.actions.execute("/search", {
+      //   client: "YTMUSIC",
+      //   continuation: continuation,
+      // });
+
+      let searchFeed = await tube.music.search(query);
+      searchFeed.songs.forEach(s => { /* process 20 songs */ })
+
+      while (searchFeed.continuation) {
+        await searchFeed.getContinuation();
+        searchFeed.songs.forEach(s => { /* process next 20 songs */ });
+      }
+
     } else {
       // New search
       if (!query) {
