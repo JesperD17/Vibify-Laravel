@@ -14,52 +14,34 @@ app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", '*'); ne
 
 app.get('/search', async (req, res) => {
   const query = req.query.search_query;
-  const continuation = req.query.continuation;
+  const maxResults = req.query.searchLength;
 
   try {
-    let result;
+    let results = [];
 
-    // searchFeed = await tube.actions.execute("/search", {
-    //   client: "YTMUSIC",
-    //   continuation: continuation,
-    // });
+    let feed = await tube.music.search(query, {
+      upload_date: req.query.upload_date,
+      sort_by: req.query.sort_by,
+      type: "song",
+      duration: req.query.duration,
+      features: []
+    });    
+    let songs = feed.songs;
+    let next;
 
-    // while (searchFeed.continuation) {
-    //   searchFeed = await searchFeed.getContinuation();
-    // }
-
-    if (!query && !continuation) {
-      return res.status(400).send('Query parameter "search_query" is required.');
-    }
-
-    if (continuation) {
-      result = await tube.music.search('', {
-        upload_date: req.query.upload_date,
-        sort_by: req.query.sort_by,
-        type: "song",
-        duration: req.query.duration,
-        features: []
-      });
-
-      while (result.has_continuation) {
-        await result.getContinuation();
-        result.songs.forEach(s => { /* process next 20 songs */ });
-      }
+    if (songs) {
+      do {
+        songs.contents.forEach(s => { results.push(s); });
+        if (feed.has_continuation) {
+          next = await feed.getContinuation();
+          songs = next.contents;
+        }
+      } while (feed.has_continuation && results.length < maxResults);
     } else {
-      result = await tube.music.search(query, {
-        upload_date: req.query.upload_date,
-        sort_by: req.query.sort_by,
-        type: "song",
-        duration: req.query.duration,
-        features: []
-      });
+      results = [ 'NO SONGS FOUND' ]
     }
 
-    // while (searchFeed.has_continuation) {
-    //   await searchFeed.getContinuation();
-    // }
-
-    res.json(result);
+    res.json(results);
   } catch (error) {
     console.error('Search error:', error);
     res.status(500).send(error.toString());

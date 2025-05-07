@@ -67,16 +67,6 @@ div#recentSearched {
     background: var(--accent-font-color);
 }
 
-#loadingScrollSongs {
-    display: flex;
-    width: -webkit-fill-available;
-    height: auto;
-    align-items: center;
-    justify-content: center;
-    margin: 20px;
-    visibility: hidden;
-}
-
 @media (max-width: 500px) {
     .searchbarWrapper {
         display: flex;

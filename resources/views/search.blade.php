@@ -22,14 +22,16 @@
                 Your recently searched songs.
             </div>
             <div class="smallTitle searchAmount">
+                <select name="AmountOfSongs" id="amountSongSelector">
+                    <option value="20">20</option>
+                    <option value="40">40</option>
+                    <option value="80">80</option>
+                </select>
                 <div id="amountFound"></div> results...
             </div>
         </div>
         <div id="filters"></div>
         <div class="songList"></div>
-        <div id="loadingScrollSongs">
-            <span class="loader"></span>
-        </div>
     </div>
 
     <div class="loaderWrapper">

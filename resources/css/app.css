@@ -1,11 +1,11 @@
 :root {
     --background-color-1: #121212;
     --background-color-2: #191818;
-    --background-gradient: linear-gradient(0deg, rgba(18,18,18,1) 0%, rgba(25,24,24,1) 100%);
+    --background-gradient: linear-gradient(0deg, rgba(18, 18, 18, 1) 0%, rgba(25, 24, 24, 1) 100%);
     --primary-font: #FFD700;
     --secondary-font: #E5E5E5;
     --accent-font-color: #B8860B;
-    --pure-white:  #FFFFFF;
+    --pure-white: #FFFFFF;
 
     --error-color: red;
 
@@ -26,7 +26,8 @@
     height: -webkit-fill-available;
 }
 
-body, html {
+body,
+html {
     font-family: poppins !important;
     font-size: 1rem;
     margin: 0px;
@@ -52,7 +53,9 @@ i {
     font-size: 30px;
 }
 
-home, saved, search {
+home,
+saved,
+search {
     width: 100%;
     height: max-content;
     min-height: var(--fill-page);
@@ -219,7 +222,7 @@ home, saved, search {
     align-items: center;
 }
 
-#error404Wrapper  .header {
+#error404Wrapper .header {
     font-size: 12rem;
 }
 
@@ -241,12 +244,13 @@ home, saved, search {
 
 @keyframes shine {
     to {
-      background-position-x: -200%;
+        background-position-x: -200%;
     }
 }
 
 /* buttons and popup styling. */
-.popupBackground, .popupBackgroundAvatar {
+.popupBackground,
+.popupBackgroundAvatar {
     width: -webkit-fill-available;
     height: -webkit-fill-available;
     display: none;
@@ -279,7 +283,8 @@ button {
     transition: background 0.3s ease, box-shadow 0.3s ease;
 }
 
-.popupBtns .no-button, .custom-file-upload {
+.popupBtns .no-button,
+.custom-file-upload {
     background-color: var(--background-color-2);
     color: var(--primary-font);
     border: 1px solid var(--accent-font-color);
@@ -302,6 +307,29 @@ input::file-selector-button {
     background-color: var(--background-color-1);
 }
 
+/* options / select */
+select {
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0 1em 0 0;
+    margin: 0;
+    width: 100%;
+    font-family: inherit;
+    font-size: inherit;
+    cursor: inherit;
+    line-height: inherit;
+}
+
+select {
+    background-color: var(--background-color-2);
+    border-radius: var(--border-radius);
+    color: var(--accent-font-color);
+    border: solid 1px;
+    padding: 5px;
+    font-size: unset;
+}
+
 @media (max-width: 500px) {
     #contentAndFooter {
         display: flex;
@@ -311,6 +339,7 @@ input::file-selector-button {
     home {
         width: 100vw;
     }
+
     .songList {
         justify-content: center;
     }
