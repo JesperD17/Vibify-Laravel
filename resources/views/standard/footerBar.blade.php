@@ -6,6 +6,6 @@
     </a>
     <div class="textWrapper">
         <div class="webName">Vibify.</div>
-        <div class="versionTitle">0.0.1 - 2025</div>
+        <div class="versionTitle">0.2.7 - 2025</div>
     </div>
 <footerBar/>

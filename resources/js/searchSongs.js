@@ -8,9 +8,6 @@ var title = songsMainContainer.querySelector('.mainTitle');
 // var filtersContainer = document.getElementById('filters');
 
 export async function searchSongs() {
-    loadingBeforeSubmit();
-    skeletonSongs(songList);
-
     await fetchSearchResult();
 }
 
@@ -21,7 +18,7 @@ function getSearchParams() {
 }
 
 async function fetchSearchResult(newParams) {
-    loadingBeforeSubmit();
+    if (!newParams) loadingBeforeSubmit();
 
     if (!newParams) {
         skeletonSongs(songList);
@@ -31,25 +28,24 @@ async function fetchSearchResult(newParams) {
     setSearchTitle(param);
 
     if (newParams) {
-        console.log(newParams);
-        // var response = await fetch(`http://localhost:3000/search?search_query=${param}&sp=${payloadParam}`);
+        console.log(newParams, 'new');
         var response = await fetch(`${newParams}`)
         var data = await response.json();
     } else {
+        
         var response = await fetch(`http://localhost:3000/search?search_query=${param}`);
         var data = await response.json();
-
-        var loadIcon = document.getElementById('loadingScrollSongs');
-        if (loadIcon) {
-            waitUntilVisible(loadIcon, () => {
-                console.log('User scrolled to #myDiv!');
-                console.log(musicShelf.continuation);
-                continuationUrlFetch(musicShelf.continuation);
-            });
-        }
     }
-
     submittedFormLoading();
+    
+    var loadIcon = document.getElementById('loadingScrollSongs');
+    if (loadIcon) {
+        waitUntilVisible(loadIcon, () => {
+            loadIcon.style.visibility = "shown";
+            console.log('User scrolled to #myDiv!');
+            continuationUrlFetch(musicShelf.continuation, loadIcon);
+        });
+    }
 
     console.log('received', data);
 
@@ -61,7 +57,7 @@ async function fetchSearchResult(newParams) {
     }
 
     formJsonHtml(musicShelf.contents, newParams);
-    amountOfSearched(musicShelf.contents);
+    amountOfSearched();
     // addFilterButtons(data);
 }
 
@@ -82,6 +78,8 @@ async function formJsonHtml(musicShelf, newParams) {
         let duration = musicShelf[i].duration.text;
         let title = musicShelf[i].title;
         let author = musicShelf[i].artists[0].name;
+
+        if (!thumbnail || !duration || !title || !author) break;
 
         songs += `
         <div class="song">
@@ -106,12 +104,13 @@ async function formJsonHtml(musicShelf, newParams) {
     }
 }
 
-async function amountOfSearched(musicShelf) {
+async function amountOfSearched() {
     let amountDivWrapper = document.querySelector('.searchHeader .searchAmount');
     let amountDiv = document.getElementById('amountFound');
+    let songs = songList.querySelectorAll('.song');
     if (!amountDivWrapper || !amountDiv) return;
 
-    let apiEstimated = musicShelf.length;
+    let apiEstimated = songs.length;
 
     amountDivWrapper.style.display = "flex";
     amountDiv.innerText = apiEstimated;
@@ -291,12 +290,13 @@ function waitUntilVisible(target, callback) {
     observer.observe(target);
 }
 
-function continuationUrlFetch(continuation) {
-    // setSearchTitle(param);
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0;
-
+function continuationUrlFetch(continuation, loadIcon) {
+    // let param = getSearchParams();
+    // let newUrl = `http://localhost:3000/search?search_query=${param}`;
     let newUrl = `http://localhost:3000/search?continuation=${continuation}`;
 
     fetchSearchResult(newUrl);
+console.log(loadIcon);
+
+    // loadIcon.style.visibility = null;
 }
