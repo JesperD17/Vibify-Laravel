@@ -1,3 +1,5 @@
+import { formJsonHtml } from "./searchSongs";
+
 var populairList = document.querySelector('#populairSongs .songList');
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -11,4 +13,5 @@ async function fetchData() {
     var data = await response.json();
     console.log(data);
     
+    var soongs = data;
 }

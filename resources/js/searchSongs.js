@@ -26,20 +26,27 @@ function getAmountOfValues() {
     select.addEventListener("change", (e) => {
         selected = Number(e.target.value);
         fetchSearchResult(selected)
-    }, { once:true })
+    }, { once: true })
 }
 
-async function fetchSearchResult(selectedLength) {
+async function fetchSearchResult(selectedLength, filters) {
     loadingBeforeSubmit();
     skeletonSongs(songList);
 
     let param = getSearchParams();
     setSearchTitle(param);
 
-    if (!selectedLength) length = 20;
-    
-    let response = await fetch(`http://localhost:3000/search?search_query=${param}&searchLength=${selectedLength}`);
-    let data = await response.json();
+    if (!selectedLength) selectedLength = 20;
+
+    let response;
+    let data;
+
+    if (filters) {
+        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&${filters}`);
+    } else {
+        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}`);
+    }
+    data = await response.json();
 
     submittedFormLoading();
 
@@ -64,7 +71,7 @@ function setSearchTitle(param) {
     title.innerText = 'Searched for: ' + param;
 }
 
-async function formJsonHtml(musicShelf, list) {
+export async function formJsonHtml(musicShelf, list) {
     console.log(musicShelf);
     if (!musicShelf) return;
 
@@ -106,7 +113,7 @@ async function amountOfSearched() {
 
     let apiEstimated = songs.length;
     console.log(apiEstimated);
-    
+
     amountDivWrapper.style.display = "flex";
     amountDiv.innerText = apiEstimated;
 }
@@ -115,40 +122,40 @@ async function amountOfSearched() {
 function filtersData() {
     let obj = {
         "groups": [
-            { 
-                "title": { "text":"upload_date" }, 
+            {
+                "title": { "text": "upload_date" },
                 "filters": [
-                    { "label":{ "text":'all' } },
-                    { "label":{ "text":'hour' } },
-                    { "label":{ "text":'today' } },
-                    { "label":{ "text":'week' } },
-                    { "label":{ "text":'month' } },
-                    { "label":{ "text":'year' } },
+                    { "label": { "text": 'all' } },
+                    { "label": { "text": 'hour' } },
+                    { "label": { "text": 'today' } },
+                    { "label": { "text": 'week' } },
+                    { "label": { "text": 'month' } },
+                    { "label": { "text": 'year' } },
                 ]
             },
-            { 
-                "title": { "text":"type" }, 
+            {
+                "title": { "text": "sort_by" },
                 "filters": [
-                    { "label":{ "text":'song' } },
-                    { "label":{ "text":'playlist' } }
+                    { "label": { "text": 'upload_date' } },
+                    { "label": { "text": 'relevance' } },
+                    { "label": { "text": 'rating' } },
+                    { "label": { "text": 'view_count' } }
                 ]
             },
-            { 
-                "title": { "text":"duration" }, 
+            {
+                "title": { "text": "type" },
                 "filters": [
-                    { "label":{ "text":'all' } },
-                    { "label":{ "text":'short' } },
-                    { "label":{ "text":'medium' } },
-                    { "label":{ "text":'long' } }
+                    { "label": { "text": 'song' } },
+                    { "label": { "text": 'playlist' } }
                 ]
             },
-            { 
-                "title": { "text":"sort_by" }, 
+            {
+                "title": { "text": "duration" },
                 "filters": [
-                    { "label":{ "text":'upload_date' } },
-                    { "label":{ "text":'relevance' } },
-                    { "label":{ "text":'rating' } },
-                    { "label":{ "text":'view_count' } }
+                    { "label": { "text": 'all' } },
+                    { "label": { "text": 'short' } },
+                    { "label": { "text": 'medium' } },
+                    { "label": { "text": 'long' } }
                 ]
             }
         ]
@@ -158,33 +165,35 @@ function filtersData() {
 
 async function addFilterButtons() {
     if (!filtersContainer) return;
-// || filtersContainer.innerHTML !== ''
+    // || filtersContainer.innerHTML !== ''
 
     let groups = filtersData();
-    console.log(groups);
-    
+
     let filters = "";
     for (let i = 0; i < groups.length; i++) {
+        let filterTitle = groups[i].title.text;
+        let editedTitle = filterTitle.replace('_', ' ')
+
         filters += `
         <div class="filterWrapper">
-            <div class="filterMainName">
-                ${groups[i].title.text}
+            <div class="filterMainName" params='${groups[i].title.text}'>
+                ${editedTitle}
                 <i class='bx bx-chevron-right'></i>
             </div>
 
             <div class="hiddenDropDown ${i + 1}">`
         for (let a = 0; a < groups[i].filters.length; a++) {
+            let filterLabel = groups[i].filters[a].label.text;
+            let editedLabel = filterLabel.replace('_', ' ');
+
             filters +=
-                `<button>${groups[i].filters[a].label.text}</button>`
+                `<button params='${groups[i].filters[a].label.text}'>${editedLabel}</button>`
         }
         filters +=
             `</div>
         </div>
         `
     }
-    console.log(filters, "after");
-    
-
     addSubmitButtonFilters(filters);
     showFilterItems();
     selectedFilterButtons();
@@ -214,7 +223,7 @@ function showFilterItems() {
         filterHeader.addEventListener('click', function (e) {
             if (!e.currentTarget) return;
 
-            closeFilterRules(filterHeaders, e.currentTarget)
+            closeFilterRules(filterHeaders, e.currentTarget);
 
             e.currentTarget.classList.toggle('open');
         })
@@ -280,22 +289,25 @@ function submitFIlterBtn() {
     if (!button) return;
 
     button.addEventListener('click', function () {
-        var params = [];
-        var filters = document.querySelectorAll('#filters .filterWrapper');
-        var filterHeaders = document.querySelectorAll('#filters .filterMainName');
+        let params = [];
+        let filters = document.querySelectorAll('#filters .filterWrapper');
+        let filterHeaders = document.querySelectorAll('#filters .filterMainName');
         if (!filters || !filterHeaders) return;
 
         closeAllFilters(filterHeaders);
 
         filters.forEach(filter => {
-            var filterBtns = filter.querySelectorAll('.hiddenDropDown button');
+            let filterBtns = filter.querySelectorAll('.hiddenDropDown button');
+            var searchTitle = filter.querySelector('.filterMainName');
+            if (!searchTitle) return;
+
+            let searchParams = searchTitle.getAttribute('params');
 
             filterBtns.forEach(button => {
                 if (!button.classList.contains('selected')) return;
-                var encodedParam = button.getAttribute('params');
-                var onceDecoded = decodeURIComponent(encodedParam);
+                let title = button.getAttribute('params');
 
-                params.push(onceDecoded);
+                params.push(searchParams + '=' + title);
             })
         })
         filteredQuery(params);
@@ -305,8 +317,10 @@ function submitFIlterBtn() {
 function filteredQuery(params) {
     if (!params) return;
 
-    let payloadParam = params.join('');
-console.log(params);
+    let search_length = 20;
 
-    fetchSearchResult(payloadParam);
+    let payloadParam = params.join('&');
+    console.log(payloadParam), 'aa';
+
+    fetchSearchResult(search_length, payloadParam);
 }

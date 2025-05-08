@@ -7,10 +7,12 @@ div#recentSearched {
     display: flex;
     margin: 0px 20px 20px;
     flex-wrap: wrap;
+    text-transform: capitalize;
 }
 
 #filters button {
     border-radius: 5px;
+    text-transform: capitalize;
 }
 
 .filterWrapper {

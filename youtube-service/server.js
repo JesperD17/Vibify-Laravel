@@ -14,18 +14,20 @@ app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", '*'); ne
 
 app.get('/search', async (req, res) => {
   const query = req.query.search_query;
-  const maxResults = req.query.searchLength;
+  const maxResults = req.query.search_length;
 
+  // GET /search?search_query=a&search_length=20&type=song&duration=long
+  // GET /search?search_query=bla&upload_date=week&sort_by=upload_date
   try {
     let results = [];
 
     let feed = await tube.music.search(query, {
       upload_date: req.query.upload_date,
       sort_by: req.query.sort_by,
-      type: "song",
+      type: req.query.type,
       duration: req.query.duration,
       features: []
-    });    
+    });
     let songs = feed.songs;
     let next;
 
@@ -52,7 +54,7 @@ app.get('/search', async (req, res) => {
 app.get('/standard', async (req, res) => {
   let populairFeed;
   try {
-    populairFeed = await tube.music.search('any');
+    populairFeed = await tube.music.getHomeFeed();
   } catch (error) {
     res.status(500).send(error.toString())
   }
