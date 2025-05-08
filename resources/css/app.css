@@ -197,20 +197,51 @@ search {
     border-radius: 0px 0px var(--border-radius) var(--border-radius);
 }
 
-.playlist a {
+.playlist a, .artist a {
     display: flex;
     flex-direction: column;
     width: -webkit-fill-available;
 }
 
-.playlist img {
+.playlist img, .artist img {
     display: flex;
-    width: -webkit-fill-available;
+    width: 130px;
+    height: 130px;
+    object-fit: cover;
 }
 
 .playlistAuthor {
     margin: 0px 10px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
 }
+
+.playlistAuthor .authorName {
+    color: var(--pure-white);
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+/* artists */
+.artist {
+    display: flex;
+    width: 130px;
+    position: relative;
+}
+
+.artist img {
+    border-radius: 100%;
+}
+
+.artist .artistAuthor {
+    justify-content: center;
+    display: flex;
+}
+
 
 /* error messages */
 #error404Wrapper {
@@ -315,6 +346,7 @@ select {
     border: solid 1px;
     padding: 5px;
     font-size: unset;
+    margin: 5px;
 }
 
 @media (max-width: 500px) {

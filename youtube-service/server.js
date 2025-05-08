@@ -12,35 +12,51 @@ var tube;
 
 app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", '*'); next(); });
 
+async function getContinuationItems(feed, maxResults) {
+  const results = [];
+
+  if (!feed || !feed.contents) return results;
+
+  let items = feed.contents;
+
+  do {
+    items.forEach(item => results.push(item));
+
+    if (feed.has_continuation && results.length < maxResults) {
+      feed = await feed.getContinuation();
+      items = feed.contents;
+    } else {
+      break;
+    }
+  } while (feed.has_continuation && results.length < maxResults);
+
+  return results.slice(0, maxResults);
+}
+
 app.get('/search', async (req, res) => {
   const query = req.query.search_query;
   const maxResults = req.query.search_length;
 
-  // GET /search?search_query=a&search_length=20&type=song&duration=long
-  // GET /search?search_query=bla&upload_date=week&sort_by=upload_date
+  // GET /search?search_query=metellica&type=songs
   try {
     let results = [];
 
-    let feed = await tube.music.search(query, {
-      upload_date: req.query.upload_date,
-      sort_by: req.query.sort_by,
-      type: req.query.type,
-      duration: req.query.duration,
-      features: []
+    const feed = await tube.music.search(query, {
+      type: req.query.type
     });
-    let songs = feed.songs;
-    let next;
 
-    if (songs) {
-      do {
-        songs.contents.forEach(s => { results.push(s); });
-        if (feed.has_continuation) {
-          next = await feed.getContinuation();
-          songs = next.contents;
-        }
-      } while (feed.has_continuation && results.length < maxResults);
+    if (feed.songs) {
+      results = await getContinuationItems(feed.songs, maxResults);
+    } else if (feed.videos) {
+      results = await getContinuationItems(feed.videos, maxResults);
+    } else if (feed.albums) {
+      results = await getContinuationItems(feed.albums, maxResults);
+    } else if (feed.playlists) {
+      results = await getContinuationItems(feed.playlists, maxResults);
+    } else if (feed.artists) {
+      results = await getContinuationItems(feed.artists, maxResults);
     } else {
-      results = [ 'NO SONGS FOUND' ]
+      results = ['NO RESULTS FOUND'];
     }
 
     res.json(results);
@@ -49,7 +65,6 @@ app.get('/search', async (req, res) => {
     res.status(500).send(error.toString());
   }
 });
-
 
 app.get('/standard', async (req, res) => {
   let populairFeed;

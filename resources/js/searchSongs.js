@@ -9,6 +9,8 @@ var filtersContainer = document.getElementById('filters');
 
 export async function searchSongs() {
     await fetchSearchResult();
+
+    addFilterButtons();
 }
 
 function getSearchParams() {
@@ -18,7 +20,14 @@ function getSearchParams() {
 }
 
 function getAmountOfValues() {
-    let select = document.getElementById('amountSongSelector');
+    var select = document.getElementById('amountSongSelector');
+    if (!select) return;
+
+    return select.value;
+}
+
+function clickedValues() {
+    var select = document.getElementById('amountSongSelector');
     if (!select) return;
 
     let selected;
@@ -42,9 +51,9 @@ async function fetchSearchResult(selectedLength, filters) {
     let data;
 
     if (filters) {
-        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&${filters}`);
+        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&type=${filters}`);
     } else {
-        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}`);
+        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&type=song`);
     }
     data = await response.json();
 
@@ -61,9 +70,8 @@ async function fetchSearchResult(selectedLength, filters) {
 
     formJsonHtml(data, songList);
     amountOfSearched();
-    addFilterButtons();
 
-    getAmountOfValues();
+    clickedValues();
 }
 
 function setSearchTitle(param) {
@@ -71,38 +79,81 @@ function setSearchTitle(param) {
     title.innerText = 'Searched for: ' + param;
 }
 
-export async function formJsonHtml(musicShelf, list) {
-    console.log(musicShelf);
-    if (!musicShelf) return;
+export async function formJsonHtml(data, list) {
+    if (!data) return;
 
-    console.log(musicShelf, 'aaaa');
+    console.log(data, 'aaaa');
 
-    let songs = "";
-    for (let i = 0; i < musicShelf.length; i++) {
-        let thumbnail = musicShelf[i].thumbnail.contents[0]?.url;
-        let duration = musicShelf[i].duration?.text;
-        let title = musicShelf[i]?.title;
-        let author = musicShelf[i].artists[0]?.name;
+    let foundList = data.find(obj => obj.type === "MusicResponsiveListItem");
 
-        if (!thumbnail || !duration || !title || !author) continue;
+    let itemList = "";
 
-        songs += `
-        <div class="song">
-            <div class="playSong">
-                <i class='bx bx-play'></i>
-                <img class="skeletons" src="${thumbnail}">
-                <div class="lengthSong">${duration}</div>
+    let firstItemType = data[0].item_type;
+    if (firstItemType === "song" || firstItemType === "video") {
+        for (let i = 0; i < data.length; i++) {
+            let thumbnail = data[i]?.thumbnail?.contents[0]?.url;
+            let duration = data[i]?.duration?.text || 'N/A';
+            let title = data[i]?.title;
+            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || 'Unknown author';
+
+            // if (!thumbnail || !duration || !title || !author) continue;
+
+            itemList += `
+            <div class="song">
+                <div class="playSong">
+                    <i class='bx bx-play'></i>
+                    <img class="skeletons" src="${thumbnail}">
+                    <div class="lengthSong">${duration}</div>
+                </div>
+                <div class="textWrapper">
+                    <div class="songTitle">${title}</div>
+                    <div class="songAuthor">${author}</div>
+                </div>
             </div>
-            <div class="textWrapper">
-                <div class="songTitle">${title}</div>
-                <div class="songAuthor">${author}</div>
+            `
+        }
+    } else if (firstItemType === "album" || firstItemType === "playlist") {
+        for (let i = 0; i < data.length; i++) {
+            let thumbnail = data[i]?.thumbnail?.contents[0]?.url;
+            let title = data[i]?.title;
+            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || data[i]?.name || 'Unknown author';
+
+            // if (!thumbnail || !duration || !title || !author) continue;
+
+            itemList += `
+            <div class="playlist">
+                <a href="">
+                    <img src="${thumbnail}">
+                    <div class="playlistAuthor">
+                        <div class="authorName">
+                            ${author}
+                        </div> 
+                        | ${title}
+                    </div>
+                </a>
             </div>
-        </div>
-        `
+            `
+        }
+    } else if (firstItemType === "artist") {
+        for (let i = 0; i < data.length; i++) {
+            let thumbnail = data[i]?.thumbnail?.contents[0]?.url;
+            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || data[i]?.name || 'Unknown author';
+
+            // if (!thumbnail || !duration || !title || !author) continue;
+
+            itemList += `
+            <div class="artist">
+                <a href="">
+                    <img src="${thumbnail}">
+                    <div class="artistAuthor">${author}</div>
+                </a>
+            </div>
+            `
+        }
     }
-    if (!list) return;
 
-    list.innerHTML = songs;
+    if (!list) return;
+    list.innerHTML = itemList;
 }
 
 async function amountOfSearched() {
@@ -121,206 +172,68 @@ async function amountOfSearched() {
 // search filters
 function filtersData() {
     let obj = {
-        "groups": [
-            {
-                "title": { "text": "upload_date" },
-                "filters": [
-                    { "label": { "text": 'all' } },
-                    { "label": { "text": 'hour' } },
-                    { "label": { "text": 'today' } },
-                    { "label": { "text": 'week' } },
-                    { "label": { "text": 'month' } },
-                    { "label": { "text": 'year' } },
-                ]
-            },
-            {
-                "title": { "text": "sort_by" },
-                "filters": [
-                    { "label": { "text": 'upload_date' } },
-                    { "label": { "text": 'relevance' } },
-                    { "label": { "text": 'rating' } },
-                    { "label": { "text": 'view_count' } }
-                ]
-            },
-            {
-                "title": { "text": "type" },
-                "filters": [
-                    { "label": { "text": 'song' } },
-                    { "label": { "text": 'playlist' } }
-                ]
-            },
-            {
-                "title": { "text": "duration" },
-                "filters": [
-                    { "label": { "text": 'all' } },
-                    { "label": { "text": 'short' } },
-                    { "label": { "text": 'medium' } },
-                    { "label": { "text": 'long' } }
-                ]
-            }
+        "musicSearchTypes": [
+            { 'text': 'song' },
+            { 'text': 'video' },
+            { 'text': 'album' },
+            { 'text': 'playlist' },
+            { 'text': 'artist' }
         ]
     }
-    return obj.groups;
+    return obj.musicSearchTypes;
 }
 
 async function addFilterButtons() {
     if (!filtersContainer) return;
-    // || filtersContainer.innerHTML !== ''
 
-    let groups = filtersData();
+    let types = filtersData();
 
     let filters = "";
-    for (let i = 0; i < groups.length; i++) {
-        let filterTitle = groups[i].title.text;
-        let editedTitle = filterTitle.replace('_', ' ')
-
+    for (let i = 0; i < types.length; i++) {
         filters += `
-        <div class="filterWrapper">
-            <div class="filterMainName" params='${groups[i].title.text}'>
-                ${editedTitle}
-                <i class='bx bx-chevron-right'></i>
-            </div>
-
-            <div class="hiddenDropDown ${i + 1}">`
-        for (let a = 0; a < groups[i].filters.length; a++) {
-            let filterLabel = groups[i].filters[a].label.text;
-            let editedLabel = filterLabel.replace('_', ' ');
-
-            filters +=
-                `<button params='${groups[i].filters[a].label.text}'>${editedLabel}</button>`
-        }
-        filters +=
-            `</div>
-        </div>
+            <button class="filterMainName" params='${types[i].text}'>
+                ${types[i].text}
+            </button>
         `
     }
-    addSubmitButtonFilters(filters);
-    showFilterItems();
-    selectedFilterButtons();
-
-    submitFIlterBtn();
-}
-
-
-
-function addSubmitButtonFilters(filters) {
-    filters += `
-    <div class="filterWrapper">
-        <button id="submitFilters">Submit Filters</button>
-    </div>
-    `
-
     filtersContainer.innerHTML = filters;
+
+    clickedFIlterBtn();
 }
 
-function showFilterItems() {
-    var filterHeaders = document.querySelectorAll('#filters .filterMainName');
-    if (!filterHeaders) return;
+function clickedFIlterBtn() {
+    var filters = document.querySelectorAll('#filters .filterMainName');
+    if (!filters) return;
 
-    outSideFilterClose(filterHeaders);
+    filters[0].classList.add('selected');
 
-    filterHeaders.forEach(filterHeader => {
-        filterHeader.addEventListener('click', function (e) {
+    filters.forEach(filter => {
+        filter.addEventListener('click', function (e) {
             if (!e.currentTarget) return;
 
-            closeFilterRules(filterHeaders, e.currentTarget);
+            closeFilterRules(filters, e.currentTarget);
 
-            e.currentTarget.classList.toggle('open');
+            e.currentTarget.classList.toggle('selected');
+
+            submitFIlters(filter);
         })
-    })
-}
-
-function outSideFilterClose(filters) {
-    window.addEventListener('click', function (e) {
-        filters.forEach(filter => {
-            if (filter.contains(e.target)) return;
-        })
-        if (filtersContainer.contains(e.target)) return;
-
-        closeAllFilters(filters);
     })
 }
 
 function closeFilterRules(filters, clickedFilter) {
     filters.forEach(filter => {
-        if (filter.classList.contains('open') && clickedFilter !== filter) {
-            filter.classList.remove('open');
-        }
-    })
-}
-
-function closeAllFilters(filters) {
-    filters.forEach(filter => {
-        if (filter.classList.contains('open')) {
-            filter.classList.remove('open');
-        }
-    })
-}
-
-function selectedFilterButtons() {
-    var filterDropdowns = document.querySelectorAll('#filters .hiddenDropDown');
-    if (!filterDropdowns) return;
-
-    filterDropdowns.forEach(dropdown => {
-        let buttons = dropdown.querySelectorAll('button');
-        if (!buttons) return;
-
-        buttons.forEach(button => {
-            button.addEventListener('click', function (e) {
-                removeSelectedBtns(buttons, e.currentTarget);
-
-                e.currentTarget.classList.toggle('selected');
-            })
-        })
-    })
-}
-
-function removeSelectedBtns(buttons, clickedButton) {
-    buttons.forEach(button => {
-        if (button.classList.contains('selected') && clickedButton !== button) {
-            button.classList.remove('selected');
+        if (filter.classList.contains('selected') && clickedFilter !== filter) {
+            filter.classList.remove('selected');
         }
     })
 }
 
 // param based search url
-function submitFIlterBtn() {
-    let button = document.getElementById('submitFilters');
-    if (!button) return;
+function submitFIlters(header) {
+    if (!header.classList.contains('selected')) return;
 
-    button.addEventListener('click', function () {
-        let params = [];
-        let filters = document.querySelectorAll('#filters .filterWrapper');
-        let filterHeaders = document.querySelectorAll('#filters .filterMainName');
-        if (!filters || !filterHeaders) return;
+    let param = header.getAttribute('params');
+    let search_length = getAmountOfValues();
 
-        closeAllFilters(filterHeaders);
-
-        filters.forEach(filter => {
-            let filterBtns = filter.querySelectorAll('.hiddenDropDown button');
-            var searchTitle = filter.querySelector('.filterMainName');
-            if (!searchTitle) return;
-
-            let searchParams = searchTitle.getAttribute('params');
-
-            filterBtns.forEach(button => {
-                if (!button.classList.contains('selected')) return;
-                let title = button.getAttribute('params');
-
-                params.push(searchParams + '=' + title);
-            })
-        })
-        filteredQuery(params);
-    })
-}
-
-function filteredQuery(params) {
-    if (!params) return;
-
-    let search_length = 20;
-
-    let payloadParam = params.join('&');
-    console.log(payloadParam), 'aa';
-
-    fetchSearchResult(search_length, payloadParam);
+    fetchSearchResult(search_length, param)
 }
