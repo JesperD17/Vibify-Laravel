@@ -47,6 +47,9 @@ async function fetchSearchResult(selectedLength, filters) {
 
     if (!selectedLength) selectedLength = 20;
 
+    console.log(selectedLength);
+    
+
     let response;
     let data;
 
@@ -99,7 +102,7 @@ export async function formJsonHtml(data, list) {
             // if (!thumbnail || !duration || !title || !author) continue;
 
             itemList += `
-            <div class="song">
+            <div class="song item">
                 <div class="playSong">
                     <i class='bx bx-play'></i>
                     <img class="skeletons" src="${thumbnail}">
@@ -121,7 +124,7 @@ export async function formJsonHtml(data, list) {
             // if (!thumbnail || !duration || !title || !author) continue;
 
             itemList += `
-            <div class="playlist">
+            <div class="playlist item">
                 <a href="">
                     <img src="${thumbnail}">
                     <div class="playlistAuthor">
@@ -142,7 +145,7 @@ export async function formJsonHtml(data, list) {
             // if (!thumbnail || !duration || !title || !author) continue;
 
             itemList += `
-            <div class="artist">
+            <div class="artist item">
                 <a href="">
                     <img src="${thumbnail}">
                     <div class="artistAuthor">${author}</div>
@@ -159,10 +162,10 @@ export async function formJsonHtml(data, list) {
 async function amountOfSearched() {
     let amountDivWrapper = document.querySelector('.searchHeader .searchAmount');
     let amountDiv = document.getElementById('amountFound');
-    let songs = songList.querySelectorAll('.song');
+    let items = songList.querySelectorAll('.item');
     if (!amountDivWrapper || !amountDiv) return;
 
-    let apiEstimated = songs.length;
+    let apiEstimated = items.length;
     console.log(apiEstimated);
 
     amountDivWrapper.style.display = "flex";
