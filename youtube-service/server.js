@@ -12,25 +12,26 @@ var tube;
 
 app.use((req, res, next) => { res.header("Access-Control-Allow-Origin", '*'); next(); });
 
-async function getContinuationItems(feed, maxResults) {
+async function getContinuationItems(feed, items, maxResults) {
   const results = [];
 
   if (!feed || !feed.contents) return results;
+  let next;
 
-  let items = feed.contents;
+  if (items) {
+    do {
+      items.contents.forEach(item => results.push(item));
 
-  do {
-    items.forEach(item => results.push(item));
+      if (feed.has_continuation) {
+        next = await feed.getContinuation();
+        items = next.contents;
+      } else {
+        break;
+      }
+    } while (feed.has_continuation && results.length < maxResults);
+  }
 
-    if (feed.has_continuation && results.length < maxResults) {
-      feed = await feed.getContinuation();
-      items = feed.contents;
-    } else {
-      break;
-    }
-  } while (feed.has_continuation && results.length < maxResults);
-
-  return results.slice(0, maxResults);
+  return results;
 }
 
 app.get('/search', async (req, res) => {
@@ -46,15 +47,15 @@ app.get('/search', async (req, res) => {
     });
 
     if (feed.songs) {
-      results = await getContinuationItems(feed.songs, maxResults);
+      results = await getContinuationItems(feed, feed.songs, maxResults);
     } else if (feed.videos) {
-      results = await getContinuationItems(feed.videos, maxResults);
+      results = await getContinuationItems(feed, feed.videos, maxResults);
     } else if (feed.albums) {
-      results = await getContinuationItems(feed.albums, maxResults);
+      results = await getContinuationItems(feed, feed.albums, maxResults);
     } else if (feed.playlists) {
-      results = await getContinuationItems(feed.playlists, maxResults);
+      results = await getContinuationItems(feed, feed.playlists, maxResults);
     } else if (feed.artists) {
-      results = await getContinuationItems(feed.artists, maxResults);
+      results = await getContinuationItems(feed, feed.artists, maxResults);
     } else {
       results = ['NO RESULTS FOUND'];
     }

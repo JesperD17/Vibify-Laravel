@@ -8,9 +8,9 @@ var title = songsMainContainer.querySelector('.mainTitle');
 var filtersContainer = document.getElementById('filters');
 
 export async function searchSongs() {
-    await fetchSearchResult();
-
     addFilterButtons();
+
+    await fetchSearchResult();
 }
 
 function getSearchParams() {
@@ -45,35 +45,32 @@ async function fetchSearchResult(selectedLength, filters) {
     let param = getSearchParams();
     setSearchTitle(param);
 
-    if (!selectedLength) selectedLength = 20;
-
-    console.log(selectedLength);
-    
+    if (!selectedLength) selectedLength = getAmountOfValues();
+    if (!filters) filters = getSelectedFilter();
 
     let response;
     let data;
 
-    if (filters) {
-        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&type=${filters}`);
-    } else {
-        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&type=song`);
+    try {
+        response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&type=${filters}`)
+        data = await response.json();
+    } catch (error) {
+        console.error(error);
+        noResultsFound(songList, 'Cannot fetch api data.');
+        amountOfSearched();
+        submittedFormLoading();
+        return;
     }
-    data = await response.json();
 
     submittedFormLoading();
 
-    console.log('received', data);
-    // const musicShelf = data.find(obj => obj.type === "MusicShelf");
     if (data.length < 2) {
-        console.log('no songs found', data.length);
         noResultsFound(songList);
         amountOfSearched();
         return;
     }
-
     formJsonHtml(data, songList);
     amountOfSearched();
-
     clickedValues();
 }
 
@@ -85,12 +82,7 @@ function setSearchTitle(param) {
 export async function formJsonHtml(data, list) {
     if (!data) return;
 
-    console.log(data, 'aaaa');
-
-    let foundList = data.find(obj => obj.type === "MusicResponsiveListItem");
-
     let itemList = "";
-
     let firstItemType = data[0].item_type;
     if (firstItemType === "song" || firstItemType === "video") {
         for (let i = 0; i < data.length; i++) {
@@ -166,8 +158,6 @@ async function amountOfSearched() {
     if (!amountDivWrapper || !amountDiv) return;
 
     let apiEstimated = items.length;
-    console.log(apiEstimated);
-
     amountDivWrapper.style.display = "flex";
     amountDiv.innerText = apiEstimated;
 }
@@ -190,7 +180,6 @@ async function addFilterButtons() {
     if (!filtersContainer) return;
 
     let types = filtersData();
-
     let filters = "";
     for (let i = 0; i < types.length; i++) {
         filters += `
@@ -205,7 +194,7 @@ async function addFilterButtons() {
 }
 
 function clickedFIlterBtn() {
-    var filters = document.querySelectorAll('#filters .filterMainName');
+    let filters = document.querySelectorAll('#filters .filterMainName');
     if (!filters) return;
 
     filters[0].classList.add('selected');
@@ -239,4 +228,19 @@ function submitFIlters(header) {
     let search_length = getAmountOfValues();
 
     fetchSearchResult(search_length, param)
+}
+
+function getSelectedFilter() {
+    let filters = document.querySelectorAll('#filters .filterMainName');
+    if (!filters) return;
+
+    let result;
+
+    filters.forEach(filter => {
+        if (!filter.classList.contains('selected')) return;
+
+        result = filter.getAttribute('params');
+    })
+
+    return result;
 }
