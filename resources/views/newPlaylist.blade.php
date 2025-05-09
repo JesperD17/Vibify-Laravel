@@ -1,9 +1,9 @@
 @extends('standard.master')
 
-@section('title', 'New playlist')
+@section('title', 'New playlist page')
 
 @section('content')
-<saved>
+<newPlaylist>
     playlist
-</saved>
+</newPlaylist>
 @endsection

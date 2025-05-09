@@ -1,56 +1,68 @@
-<headerSidebar>
-    @vite('resources/css/header.css')
+@vite('resources/css/header.css')
+<headerSidebar class="closedMenu">
 
-    <img src="{{ asset('pics/logo.png') }}">
+    <a href="{{ route('home') }}" class="logo">
+        <img src="{{ asset('pics/logo.png') }}">
+    </a>
 
     <div class="linksWrapper">
-        <a href="{{ route('home') }}" class="linkWithIcon">
+        <a href="{{ route('home') }}" class="linkWithIcon home">
             <i class='bx bx-home-alt-2' ></i>
-            Home
+            <div class="linkText">
+                Home
+            </div>
         </a>
     
         <a href="{{ route('saved') }}" class="linkWithIcon">
             <i class='bx bx-save' ></i>
-            Saved
+            <div class="linkText">
+                Saved
+            </div>
         </a>
     
         <a href="{{ route('search') }}" class="linkWithIcon">
             <i class='bx bx-search-alt-2' ></i>
-            Search
+            <div class="linkText">
+                Search
+            </div>
         </a>
 
         <a href="{{ route('newPlaylist') }}" class="linkWithIcon">
             <i class='bx bx-list-plus' ></i>
-            New playlist
+            <div class="linkText">
+                New playlist
+            </div>
         </a>
-    </div>
-
-    @if (Route::has('login'))
-        <nav class="flex items-center justify-end gap-4">
+        
+        @if (Route::has('login'))
             @auth
-                <a
-                    href="{{ url('/dashboard') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal"
-                >
-                    Dashboard
-                </a>
+                {{-- <a href="{{ route('profile') }}" class="linkWithIcon">
+                    <i class='bx bxs-dashboard'></i>
+                    <div class="linkText">
+                        Profile
+                    </div>
+                </a> --}}
             @else
-                <a
-                    href="{{ route('login') }}"
-                    class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] text-[#1b1b18] border border-transparent hover:border-[#19140035] dark:hover:border-[#3E3E3A] rounded-sm text-sm leading-normal"
-                >
-                    Log in
+                <a href="{{ route('login') }}" class="linkWithIcon">
+                    <i class='bx bxs-user'></i>
+                    <div class="linkText">
+                        Log in
+                    </div>
                 </a>
 
                 @if (Route::has('register'))
-                    <a
-                        href="{{ route('register') }}"
-                        class="inline-block px-5 py-1.5 dark:text-[#EDEDEC] border-[#19140035] hover:border-[#1915014a] border text-[#1b1b18] dark:border-[#3E3E3A] dark:hover:border-[#62605b] rounded-sm text-sm leading-normal">
-                        Register
+                    <a href="{{ route('register') }}" class="linkWithIcon">
+                        <i class='bx bxs-edit'></i>
+                        <div class="linkText">
+                            Register
+                        </div>
                     </a>
                 @endif
             @endauth
-        </nav>
-    @endif
-    <i class='bx bx-menu' id="extendIcon"></i>
+        @endif
+    </div>
+
+    <div id="extendIcon">
+        <i class='bx bx-menu'></i>
+    </div>
 </headerSidebar>

@@ -1,0 +1,17 @@
+footerbar {
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    text-align: end;
+    padding-right: 10px;
+    background: var(--background-color-2);
+    color: var(--primary-font);
+    height: var(--footer-height);
+}
+
+@media (max-width: 500px) {
+    footerbar {
+        justify-content: start;
+        text-align: left;
+    }
+}

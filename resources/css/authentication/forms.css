@@ -1,0 +1,112 @@
+register, login {
+    display: flex;
+    height: calc(100vh - var(--footer-height));
+    align-items: center;
+    justify-content: center;
+    background: var(--background-color-1);
+}
+
+/* forms */
+register form, login form {
+    background: var(--background-color-2);
+    border-radius: var(--border-radius);
+    max-width: 350px;
+}
+
+/* form errors */
+.errorFormText {
+    color: var(--error-color);
+}
+
+.errorFormInput {
+    border: solid 1px var(--error-color);
+}
+
+/* standard forms */
+form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.formWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin: 20px;
+    color: var(--primary-font);
+}
+
+.inputAndText {
+    display: flex;
+    flex-direction: column;
+}
+
+.formButtons {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* buttons */
+button {
+    background-color: #FFD700;
+    color: #121212;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+button:hover {
+    background-color: #e6c200;
+    box-shadow: 0 0 10px var(--accent-font-color);
+}
+
+button.alt {
+    background-color: #191818;
+    color: #FFD700;
+    border: 1px solid #B8860B;
+}
+
+button.alt:hover {
+    background-color: #222;
+    box-shadow: 0 0 10px var(--accent-font-color);
+}
+
+/* inputs */
+
+input {
+    background-color: #191818;
+    border: 1px solid #B8860B;
+    color: #E5E5E5;
+    padding: 0.75rem 1rem;
+    border-radius: 8px;
+    outline: none;
+}
+
+input::placeholder {
+    color: grey;
+}
+
+input:focus {
+    border-color: #FFD700;
+    box-shadow: 0 0 5px var(--accent-font-color);
+}
+
+/* searchbar */
+search input {
+    max-width: 300px;
+    width: -webkit-fill-available;
+    margin: 0px 20px;
+}
+
+@media (max-width: 500px) {
+    register, login {
+        align-items: unset;
+    }
+}

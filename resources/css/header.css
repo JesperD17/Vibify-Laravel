@@ -5,29 +5,55 @@ headerSidebar {
     background-color: var(--background-color-1);
     border-right: solid;
     width: 50vw;
+    min-width: 50px;
     max-width: 300px;
-    border-radius: 0px 10px 10px 0px;
+    border-radius: 0px 20px 20px 0px;
     align-items: center;
     justify-content: center;
     position: relative;
+    gap: 20px;
+    top: 0;
+    overflow: hidden;
+    transition: width 0.4s ease-in-out;
+    position: sticky;
 }
 
-headersidebar img {
-    display: flex;
-    height: 100px;
-    width: 100px;
+headerSidebar.closedMenu {
+    width: 1px;
 }
 
-.linksWrapper {
+headerSidebar .logo img {
+    max-height: fit-content;
+    max-width: 100%;
+}
+
+headerSidebar .linksWrapper {
     display: flex;
     flex-direction: column;
     gap: 10px;
 }
 
-.linkWithIcon {
+.closedMenu .linksWrapper {
+    max-width: 30px;
+}
+
+headerSidebar .linkWithIcon {
     align-items: center;
     display: flex;
     gap: 7px;
+}
+
+.closedMenu .linkWithIcon {
+    gap: 20px;
+    transition: gap 0.4s ease-in-out;
+}
+
+.linkWithIcon .linkText {
+    white-space: nowrap;
+}
+
+.linkWithIcon.home {
+    display: none;
 }
 
 #extendIcon {
@@ -36,32 +62,58 @@ headersidebar img {
     right: 0;
     margin: 20px;
     cursor: pointer;
+    transition: margin 0.4s ease-in-out;
+}
+
+.closedMenu #extendIcon {
+    margin: 10px;
+}
+
+@media (min-width: 500px) {
+    headerSidebar .linksWrapper {
+        transition: max-width 0.4s ease-in-out;
+        max-width: 300px;
+    }
 }
 
 @media (max-width: 500px) {
     headersidebar {
         flex-direction: row;
-        width: 100vw;
-        height: 10vh;
+        height: 100px;
+        width: -webkit-fill-available;
         max-width: unset;
-        position: absolute;
+        border-radius: 10px 10px 0px 0px;
         justify-content: space-around;
+        position: fixed;
+
+        top: unset;
         bottom: 0;
+        overflow: auto;
+        border: solid;
+        z-index: 1;
         overflow: auto;
     }
 
-    headersidebar img, #extendIcon {
+    headersidebar .logo,
+    #extendIcon {
         display: none;
     }
 
     .linksWrapper {
-        flex-direction: row;
-        width: 100%;
+        flex-direction: row !important;
+        width: -webkit-fill-available;
         justify-content: space-around;
         padding: 0px 15px;
+        font-size: 0.8rem;
+        gap: 30px;
     }
 
     .linkWithIcon {
         flex-direction: column;
+        white-space: nowrap;
+    }
+
+    .linkWithIcon.home {
+        display: flex;
     }
 }

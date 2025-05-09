@@ -3,28 +3,115 @@
 @section('title', 'Home Page')
 
 @section('content')
-<home>
-    @vite('resources/css/home.css')
 
-    <div class="welcomeSection">
+@vite('resources/js/homePageSongs.js')
+<home>
+    <div id="welcomeSection">
         <div class="mainTitle">
-            Welcome {user}!
+            @if (Route::has('login'))
+                @auth
+                Welcome {{ auth()->user()->name }}!
+                @endauth
+            @endif
         </div>
-        <div class="song">
-            <img src="{{ asset('pics/metallic_image.jpg') }}">
-            <div class="textWrapper">
-                <div class="songTitle">Ride the lightning song</div>
-                <div class="playSong"><i class='bx bx-play' ></i></div>
+        <div class="songList">
+            <div class="song">
+                <div class="playSong">
+                    <i class='bx bx-play' ></i>
+                    <img src="{{ asset('pics/metallic_image.jpg') }}">
+                </div>
+                <div class="textWrapper">
+                    <div class="songTitle">Ride the lightning song</div>
+                    <div class="songAuthor">Metellica</div>
+                </div>
+            </div>
+            
+            <div class="song">
+                <div class="playSong">
+                    <i class='bx bx-play' ></i>
+                    <img src="{{ asset('pics/metallic_image.jpg') }}">
+                </div>
+                <div class="textWrapper">
+                    <div class="songTitle">Ride the lightning song</div>
+                    <div class="songAuthor">Metellica</div>
+                </div>
+            </div>
+
+            <div class="song">
+                <div class="playSong">
+                    <i class='bx bx-play' ></i>
+                    <img src="{{ asset('pics/metallic_image.jpg') }}">
+                </div>
+                <div class="textWrapper">
+                    <div class="songTitle">Ride the lightning song</div>
+                    <div class="songAuthor">Metellica</div>
+                </div>
+            </div>
+
+            <div class="song">
+                <div class="playSong">
+                    <i class='bx bx-play' ></i>
+                    <img src="{{ asset('pics/metallic_image.jpg') }}">
+                </div>
+                <div class="textWrapper">
+                    <div class="songTitle">Ride the lightning song</div>
+                    <div class="songAuthor">Metellica</div>
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="mainTitle">
-        Your recent played lists / numbers.
+    <div id="RecentPlaylists">
+        <div class="mainTitle">
+            Your recently played playlists.
+        </div>
+        <div class="playLists">
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
+            <div class="playlist">
+                <a href="">
+                    <img src="{{ asset('pics/Playlist-metallica.jpg') }}">
+                    <div class="playlistAuthor">Metallica</div>
+                </a>
+            </div>
+        </div>
     </div>
 
-    @if (Route::has('login'))
-    <div class="h-14.5 hidden lg:block">ssss</div>
-    @endif
+    <div id="populairSongs">
+        <div class="mainTitle">
+            Your recently played playlists.
+        </div>
+        <div class="songList">
+            
+        </div>
+    </div>
 </home>
 @endsection
