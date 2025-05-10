@@ -5,6 +5,7 @@
 @section('content')
 
 @vite('resources/js/homePageSongs.js')
+@vite('resources/css/home.css')
 <home>
     <div id="welcomeSection">
         <div class="mainTitle">
@@ -107,9 +108,18 @@
 
     <div id="populairSongs">
         <div class="mainTitle">
-            Your recently played playlists.
+            Populair songs.
         </div>
         <div class="songList">
+            
+        </div>
+    </div>
+
+    <div id="populairAlbums">
+        <div class="mainTitle">
+            Populair albums.
+        </div>
+        <div class="albumList">
             
         </div>
     </div>

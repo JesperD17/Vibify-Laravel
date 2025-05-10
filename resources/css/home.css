@@ -1,0 +1,24 @@
+#populairSongs {
+    padding-bottom: var(--footer-height);
+}
+
+#populairSongs .songList {
+    flex-wrap: nowrap;
+    overflow: auto;
+    padding: 20px 0px;
+    position: relative;
+    left: 0;
+    scroll-snap-type: x mandatory;
+    justify-content: left;
+}
+
+#populairSongs .song {
+    flex-direction: column;
+    height: auto;
+}
+
+#populairSongs .playSong img {
+    height: 175px;
+    width: 175px;
+    object-fit: cover;
+}

@@ -70,7 +70,9 @@ app.get('/search', async (req, res) => {
 app.get('/standard', async (req, res) => {
   let populairFeed;
   try {
-    populairFeed = await tube.music.getHomeFeed();
+    populairFeed = await tube.music.getHomeFeed({
+      
+    });
   } catch (error) {
     res.status(500).send(error.toString())
   }

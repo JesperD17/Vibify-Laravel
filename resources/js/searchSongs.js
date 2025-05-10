@@ -1,6 +1,7 @@
 import { loadingBeforeSubmit, submittedFormLoading } from "./forms";
 import { skeletonSongs } from './skeletonItems';
 import { noResultsFound } from "./errors";
+import { formJsonHtml } from "./global";
 
 var songsMainContainer = document.getElementById('recentSearched');
 var songList = songsMainContainer.querySelector('.songList');
@@ -62,6 +63,9 @@ async function fetchSearchResult(selectedLength, filters) {
         return;
     }
 
+    console.log(data);
+    
+
     submittedFormLoading();
 
     if (data.length < 2) {
@@ -77,78 +81,6 @@ async function fetchSearchResult(selectedLength, filters) {
 function setSearchTitle(param) {
     if (!title) return;
     title.innerText = 'Searched for: ' + param;
-}
-
-export async function formJsonHtml(data, list) {
-    if (!data) return;
-
-    let itemList = "";
-    let firstItemType = data[0].item_type;
-    if (firstItemType === "song" || firstItemType === "video") {
-        for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents[0]?.url;
-            let duration = data[i]?.duration?.text || 'N/A';
-            let title = data[i]?.title;
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || 'Unknown author';
-
-            // if (!thumbnail || !duration || !title || !author) continue;
-
-            itemList += `
-            <div class="song item">
-                <div class="playSong">
-                    <i class='bx bx-play'></i>
-                    <img class="skeletons" src="${thumbnail}">
-                    <div class="lengthSong">${duration}</div>
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">${title}</div>
-                    <div class="songAuthor">${author}</div>
-                </div>
-            </div>
-            `
-        }
-    } else if (firstItemType === "album" || firstItemType === "playlist") {
-        for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents[0]?.url;
-            let title = data[i]?.title;
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || data[i]?.name || 'Unknown author';
-
-            // if (!thumbnail || !duration || !title || !author) continue;
-
-            itemList += `
-            <div class="playlist item">
-                <a href="">
-                    <img src="${thumbnail}">
-                    <div class="playlistAuthor">
-                        <div class="authorName">
-                            ${author}
-                        </div> 
-                        | ${title}
-                    </div>
-                </a>
-            </div>
-            `
-        }
-    } else if (firstItemType === "artist") {
-        for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents[0]?.url;
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || data[i]?.name || 'Unknown author';
-
-            // if (!thumbnail || !duration || !title || !author) continue;
-
-            itemList += `
-            <div class="artist item">
-                <a href="">
-                    <img src="${thumbnail}">
-                    <div class="artistAuthor">${author}</div>
-                </a>
-            </div>
-            `
-        }
-    }
-
-    if (!list) return;
-    list.innerHTML = itemList;
 }
 
 async function amountOfSearched() {

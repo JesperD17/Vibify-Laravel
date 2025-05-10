@@ -24,6 +24,7 @@
 #contentAndFooter {
     width: -webkit-fill-available;
     height: -webkit-fill-available;
+    overflow: auto;
 }
 
 body,
@@ -36,7 +37,10 @@ html {
     display: flex;
     flex-direction: row;
     background: black;
+
     overflow: auto;
+    scrollbar-color: var(--primary-font) var(--background-color-2);
+    scrollbar-width: thin;
 }
 
 a {
@@ -51,6 +55,10 @@ a:hover {
 i {
     color: var(--secondary-font);
     font-size: 30px;
+}
+
+img {
+    -webkit-user-drag: none;
 }
 
 home,
