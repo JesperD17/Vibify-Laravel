@@ -33,10 +33,10 @@ export async function formJsonHtml(data, list) {
     let firstDuration = data[0]?.duration?.text;
     if (firstItemType === "song" && firstDuration || firstItemType === "video") {
         for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || 'FAILED TO LOAD';
+            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
             let duration = data[i]?.duration?.text || 'N/A';
-            let title = data[i]?.title || 'Unknown title';
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || 'Unknown author';
+            let title = data[i]?.title?.text || data[i]?.title || '';
+            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
 
             itemList += `
             <div class="song item">
@@ -54,19 +54,24 @@ export async function formJsonHtml(data, list) {
         }
     } else if (firstItemType === "album" || firstItemType === "playlist") {
         for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || data[i]?.thumbnail?.[0]?.url || 'FAILED TO LOAD';
-            let title = data[i]?.title || 'Unknown title';
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || data[i]?.name || 'Unknown author';
+            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || data[i]?.thumbnail?.[0]?.url || '';
+            let title = data[i]?.title?.text || data[i]?.title || '';
+            let author = data[i]?.author?.name || data[i]?.authors?.[0]?.name || data[i]?.name || '';
 
             itemList += `
             <div class="playlist item">
                 <a href="">
-                    <img src="${thumbnail}">
+                    <img class="skeletons" src="${thumbnail}">
                     <div class="playlistAuthor">
                         <div class="authorName">
                             ${author}
-                        </div> 
-                        | ${title}
+                        </div>`
+                        if (!author === '' || !title === '') {
+                            itemList +=
+                                `| `
+                        }
+                    itemList +=
+                    `${title}
                     </div>
                 </a>
             </div>
@@ -74,13 +79,13 @@ export async function formJsonHtml(data, list) {
         }
     } else if (firstItemType === "artist") {
         for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents[0]?.url || 'FAILED TO LOAD';
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || data[i]?.name || 'Unknown author';
+            let thumbnail = data[i]?.thumbnail?.contents[0]?.url || '';
+            let author = data[i]?.name || '';
 
             itemList += `
             <div class="artist item">
                 <a href="">
-                    <img src="${thumbnail}">
+                    <img class="skeletons" src="${thumbnail}">
                     <div class="artistAuthor">${author}</div>
                 </a>
             </div>
@@ -88,9 +93,9 @@ export async function formJsonHtml(data, list) {
         }
     } else if (firstItemType === "song" && !firstDuration) {
         for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || 'FAILED TO LOAD';
-            let title = data[i]?.title || 'Unknown title';
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || 'Unknown author';
+            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
+            let title = data[i]?.title || '';
+            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
 
             itemList += `
             <div class="song item">

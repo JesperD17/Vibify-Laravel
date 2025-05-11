@@ -4,9 +4,16 @@ import { noResultsFound } from "./errors";
 import { formJsonHtml } from "./global";
 
 var songsMainContainer = document.getElementById('recentSearched');
-var songList = songsMainContainer.querySelector('.songList');
 var title = songsMainContainer.querySelector('.mainTitle');
 var filtersContainer = document.getElementById('filters');
+
+var allLists = [
+    songsMainContainer.querySelector('.songList'),
+    songsMainContainer.querySelector('.videoList'),
+    songsMainContainer.querySelector('.albumList'),
+    songsMainContainer.querySelector('.playlistList'),
+    songsMainContainer.querySelector('.artistList')
+]
 
 export async function searchSongs() {
     addFilterButtons();
@@ -40,15 +47,48 @@ function clickedValues() {
 }
 
 async function fetchSearchResult(selectedLength, filters) {
-    loadingBeforeSubmit();
-    skeletonSongs(songList);
-
-    let param = getSearchParams();
-    setSearchTitle(param);
-
     if (!selectedLength) selectedLength = getAmountOfValues();
     if (!filters) filters = getSelectedFilter();
 
+    for (let i = 0; i < allLists.length; i++) {
+        const list = allLists[i];
+
+        if (!list.classList.contains('visibleList')) continue;
+        if (list.innerHTML !== '') continue;
+
+        loadingBeforeSubmit();
+        skeletonSongs(list);
+        
+        let param = getSearchParams();
+        setSearchTitle(param);
+    
+        let data = await fetchData(param, selectedLength, filters);
+    
+        console.log(data);
+    
+        submittedFormLoading();
+    
+        if (!data.length || data.length < 2) {
+            allLists.forEach(list => {
+                if (!list.classList.contains('visibleList')) return;
+                noResultsFound(list);
+            })
+            amountOfSearched();
+            return;
+        }
+    
+        insertIntoElms(data);
+        amountOfSearched();
+        clickedValues();
+    }
+}
+
+function setSearchTitle(param) {
+    if (!title) return;
+    title.innerText = 'Searched for: ' + param;
+}
+
+async function fetchData(param, selectedLength, filters) {
     let response;
     let data;
 
@@ -57,39 +97,37 @@ async function fetchSearchResult(selectedLength, filters) {
         data = await response.json();
     } catch (error) {
         console.error(error);
-        noResultsFound(songList, 'Cannot fetch api data.');
+        allLists.forEach(list => {
+            if (!list.classList.contains('visibleList')) return;
+            noResultsFound(list, 'Cannot fetch api data.');
+        })
         amountOfSearched();
         submittedFormLoading();
         return;
     }
 
-    console.log(data);
-    
-
-    submittedFormLoading();
-
-    if (data.length < 2) {
-        noResultsFound(songList);
-        amountOfSearched();
-        return;
-    }
-    formJsonHtml(data, songList);
-    amountOfSearched();
-    clickedValues();
+    return data;
 }
 
-function setSearchTitle(param) {
-    if (!title) return;
-    title.innerText = 'Searched for: ' + param;
+async function insertIntoElms(data) {
+    if (!data) return;
+    allLists.forEach(list => {
+        if (!list.classList.contains('visibleList') || !list.innerHTML === '') return;
+        formJsonHtml(data, list);
+    })
 }
 
 async function amountOfSearched() {
     let amountDivWrapper = document.querySelector('.searchHeader .searchAmount');
     let amountDiv = document.getElementById('amountFound');
-    let items = songList.querySelectorAll('.item');
+    let items;
+    allLists.forEach(list => {
+        if (!list.classList.contains('visibleList')) return;
+        items = list.querySelectorAll('.item');
+    })
     if (!amountDivWrapper || !amountDiv) return;
 
-    let apiEstimated = items.length;
+    let apiEstimated = items?.length;
     amountDivWrapper.style.display = "flex";
     amountDiv.innerText = apiEstimated;
 }
@@ -131,13 +169,15 @@ function clickedFIlterBtn() {
 
     filters[0].classList.add('selected');
 
-    filters.forEach(filter => {
+    filters.forEach((filter, index) => {
         filter.addEventListener('click', function (e) {
             if (!e.currentTarget) return;
 
             closeFilterRules(filters, e.currentTarget);
-
             e.currentTarget.classList.toggle('selected');
+
+            hideLists(index);
+
 
             submitFIlters(filter);
         })
@@ -150,6 +190,18 @@ function closeFilterRules(filters, clickedFilter) {
             filter.classList.remove('selected');
         }
     })
+}
+
+function hideLists(clickedIndex) {
+    allLists.forEach((list, index) => {
+        if (list.classList.contains('visibleList') && index !== clickedIndex) {
+            list.classList.remove('visibleList');
+        }
+
+        if (index === clickedIndex) {
+            list.classList.add('visibleList')
+        }
+    });
 }
 
 // param based search url

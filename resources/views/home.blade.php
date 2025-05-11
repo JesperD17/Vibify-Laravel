@@ -106,20 +106,11 @@
         </div>
     </div>
 
-    <div id="populairSongs">
+    <div id="homeFeed">
         <div class="mainTitle">
             Populair songs.
         </div>
         <div class="songList">
-            
-        </div>
-    </div>
-
-    <div id="populairAlbums">
-        <div class="mainTitle">
-            Populair albums.
-        </div>
-        <div class="albumList">
             
         </div>
     </div>

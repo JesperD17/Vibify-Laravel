@@ -1,32 +1,54 @@
 import { formJsonHtml, mouseDownHandler } from "./global";
 
+var container = document.getElementById('homeFeed');
+
 document.addEventListener("DOMContentLoaded", function () {
-    fetchData()
+    functionObserver()
 });
+
+async function functionObserver() {
+    let data = await fetchData();
+    
+    createHtmlSections(data)
+}
 
 export async function fetchData() {
     let response = await fetch(`http://localhost:3000/standard`);
-    var data = await response.json();
-    console.log(data);
+    let data = await response.json();
+    return data;
+}
 
-    const listWithSong = data.sections.find(section =>
-        section.contents?.some(item => item.item_type === "song")
-    );
-
-    const listWithAlbum = data.sections.find(section =>
-        section.contents?.some(item => item.item_type === "album")
-    );
+async function createHtmlSections(data) {
+    if (!container || !data) return;
     
-    var songList = document.querySelector('#populairSongs .songList');
-    var albumList = document.querySelector('#populairAlbums .albumList');
+    let items;
+    let lists = [];
+    let index = 0;
+    data.sections.forEach(section => {
+        index ++;
 
-    if (!songList || !albumList) return;
+        let title = section?.header?.title?.text || 'Random';
+        let typeOfList = section?.contents?.[0]?.item_type + 'List index' + index;
 
-    formJsonHtml(listWithSong.contents, songList);
-    formJsonHtml(listWithAlbum.contents, albumList);
-
-    songList.style.cursor = 'grab';
-    songList.addEventListener('mousedown', e => {
-        mouseDownHandler(e, songList)
+        let typeOfListQuerySelector = `.${section.contents[0].item_type}List.index${index}`;
+        lists.push({ title: typeOfListQuerySelector, item: section });
+        items += `
+        <div class="mainTitle">
+        ${title}
+        </div>
+        
+        <div class="${typeOfList}">
+        </div>
+        `
     });
+    container.innerHTML = items;
+    
+    importHtmlSections(lists);
+}
+
+async function importHtmlSections(lists) {
+    lists.forEach(list => {
+        let htmlItem = container.querySelector(list.title)
+        formJsonHtml(list.item.contents, htmlItem);
+    })
 }

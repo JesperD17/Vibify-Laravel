@@ -1,8 +1,8 @@
-#populairSongs {
+#homeFeed {
     padding-bottom: var(--footer-height);
 }
 
-#populairSongs .songList {
+#homeFeed .songList {
     flex-wrap: nowrap;
     overflow: auto;
     padding: 20px 0px;
@@ -12,12 +12,12 @@
     justify-content: left;
 }
 
-#populairSongs .song {
+#homeFeed .song {
     flex-direction: column;
     height: auto;
 }
 
-#populairSongs .playSong img {
+#homeFeed .playSong img {
     height: 175px;
     width: 175px;
     object-fit: cover;

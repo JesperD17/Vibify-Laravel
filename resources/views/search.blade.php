@@ -31,7 +31,11 @@
             </div>
         </div>
         <div id="filters"></div>
-        <div class="songList"></div>
+        <div class="songList visibleList"></div>
+        <div class="videoList"></div>
+        <div class="albumList"></div>
+        <div class="playlistList"></div>
+        <div class="artistList"></div>
     </div>
 
     <div class="loaderWrapper">

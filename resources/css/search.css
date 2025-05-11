@@ -2,6 +2,18 @@ div#recentSearched {
     padding-bottom: var(--padding-footer-sections);
 }
 
+search .songList,
+search .videoList,
+search .albumList,
+search .playlistList,
+search .artistList {
+    display: none;
+}
+
+.visibleList {
+    display: flex !important;
+}
+
 /* filters */
 #filters {
     display: flex;
