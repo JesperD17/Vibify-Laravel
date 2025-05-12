@@ -21,6 +21,8 @@ async function searchSongs() {
     addFilterButtons();
 
     await fetchSearchResult();
+
+    clickedValues();
 }
 
 function getSearchParams() {
@@ -40,21 +42,28 @@ function clickedValues() {
     var select = document.getElementById('amountSongSelector');
     if (!select) return;
 
+    const newSelect = select.cloneNode(true);
+    select.parentNode.replaceChild(newSelect, select);
 
-    select.addEventListener("change", (e) => {
-        fetchSearchResult(e.target.value)
-    }, { once: true })
+    newSelect.addEventListener("change", (e) => {
+        fetchSearchResult(Number(e.target.value))
+    })
 }
 
 async function fetchSearchResult(selectedLength, filters) {
     let newSelectedLength = getAmountOfValues();
-    let selectedNumber = returnAMountOfSearched();    
     
     for (let i = 0; i < allLists.length; i++) {
         const list = allLists[i];
 
-        if (!list.classList.contains('visibleList')) continue;
-        if (list.innerHTML !== '' || selectedLength === selectedNumber) continue;
+        if (!list.classList.contains('visibleList')) continue;        
+
+        // Count actual items inside the list
+        const currentItems = list.querySelectorAll('.item')?.length || 0;
+
+        // Only fetch if the list is empty or the amount has changed
+        if (currentItems > 0 && currentItems === selectedLength) continue;
+
         
         loadingBeforeSubmit();
         skeletonSongs(list);
@@ -62,11 +71,12 @@ async function fetchSearchResult(selectedLength, filters) {
         let param = getSearchParams();
         if (!selectedLength) selectedLength = newSelectedLength;
         if (!filters) filters = getSelectedFilter();
+        
         let data = await fetchData(param, selectedLength, filters);
         setSearchTitle(param);
-    
+        
         console.log(data);
-    
+        
         submittedFormLoading();
     
         if (!data.length || data.length < 2) {
@@ -80,7 +90,6 @@ async function fetchSearchResult(selectedLength, filters) {
     
         insertIntoElms(data, list);
         amountOfSearched();
-        clickedValues();
     }
 }
 
@@ -126,14 +135,6 @@ function amountOfSearched() {
     let apiEstimated = items?.length;
     amountDivWrapper.style.display = "flex";
     amountDiv.innerText = apiEstimated;
-}
-
-function returnAMountOfSearched() {
-    let select = document.getElementById('amountSongSelector');
-    if (!select) return;
-    let selectValue = select.options[select.selectedIndex].value;
-
-    return selectValue;
 }
 
 // search filters

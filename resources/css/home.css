@@ -14,11 +14,26 @@
 
 #homeFeed .song {
     flex-direction: column;
+    width: 175px;
     height: auto;
+    align-items: baseline;
+}
+
+#homeFeed .playSong {
+    width: -webkit-fill-available;
+    height: -webkit-fill-available;
 }
 
 #homeFeed .playSong img {
     height: 175px;
     width: 175px;
     object-fit: cover;
+}
+
+#homeFeed .song .textWrapper {
+    width: -webkit-fill-available;
+}
+
+#homeFeed .textWrapper{
+    padding: 0px 10px;
 }

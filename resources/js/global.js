@@ -28,7 +28,7 @@ export async function formJsonHtml(data, list) {
     if (!data) return;
 
     let itemList = "";
-    let firstItemType = Object.entries(
+    let mostItemType = Object.entries(
         data.reduce((acc, { item_type }) => {
             acc[item_type] = (acc[item_type] || 0) + 1;
             return acc;
@@ -36,7 +36,7 @@ export async function formJsonHtml(data, list) {
     ).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
 
     let firstDuration = data[0]?.duration?.text;
-    if (firstItemType === "song" && firstDuration || firstItemType === "video") {
+    if (mostItemType === "song" && firstDuration || mostItemType === "video") {
         for (let i = 0; i < data.length; i++) {
             let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
             let duration = data[i]?.duration?.text || 'N/A';
@@ -57,7 +57,7 @@ export async function formJsonHtml(data, list) {
             </div>
             `
         }
-    } else if (firstItemType === "album" || firstItemType === "playlist") {
+    } else if (mostItemType === "album" || mostItemType === "playlist") {
         for (let i = 0; i < data.length; i++) {
             let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || data[i]?.thumbnail?.[0]?.url || '';
             let title = data[i]?.title?.text || data[i]?.title || '';
@@ -82,7 +82,7 @@ export async function formJsonHtml(data, list) {
             </div>
             `
         }
-    } else if (firstItemType === "artist") {
+    } else if (mostItemType === "artist") {
         for (let i = 0; i < data.length; i++) {
             let thumbnail = data[i]?.thumbnail?.contents[0]?.url || '';
             let author = data[i]?.name || '';
@@ -96,7 +96,7 @@ export async function formJsonHtml(data, list) {
             </div>
             `
         }
-    } else if (firstItemType === "song" && !firstDuration) {
+    } else if (mostItemType === "song" && !firstDuration) {
         for (let i = 0; i < data.length; i++) {
             let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
             let title = data[i]?.title || '';
