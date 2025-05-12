@@ -28,7 +28,12 @@ export async function formJsonHtml(data, list) {
     if (!data) return;
 
     let itemList = "";
-    let firstItemType = data[0].item_type;
+    let firstItemType = Object.entries(
+        data.reduce((acc, { item_type }) => {
+            acc[item_type] = (acc[item_type] || 0) + 1;
+            return acc;
+        }, {})
+    ).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
 
     let firstDuration = data[0]?.duration?.text;
     if (firstItemType === "song" && firstDuration || firstItemType === "video") {
@@ -66,12 +71,12 @@ export async function formJsonHtml(data, list) {
                         <div class="authorName">
                             ${author}
                         </div>`
-                        if (!author === '' || !title === '') {
-                            itemList +=
-                                `| `
-                        }
-                    itemList +=
-                    `${title}
+            if (!author === '' || !title === '') {
+                itemList +=
+                    `| `
+            }
+            itemList +=
+                `${title}
                     </div>
                 </a>
             </div>

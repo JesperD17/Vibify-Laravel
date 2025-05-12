@@ -15,7 +15,9 @@ var allLists = [
     songsMainContainer.querySelector('.artistList')
 ]
 
-export async function searchSongs() {
+window.myApp.searchSongs = searchSongs;
+
+async function searchSongs() {
     addFilterButtons();
 
     await fetchSearchResult();
@@ -31,38 +33,37 @@ function getAmountOfValues() {
     var select = document.getElementById('amountSongSelector');
     if (!select) return;
 
-    return select.value;
+    return Number(select.value);
 }
 
 function clickedValues() {
     var select = document.getElementById('amountSongSelector');
     if (!select) return;
 
-    let selected;
 
     select.addEventListener("change", (e) => {
-        selected = Number(e.target.value);
-        fetchSearchResult(selected)
+        fetchSearchResult(e.target.value)
     }, { once: true })
 }
 
 async function fetchSearchResult(selectedLength, filters) {
-    if (!selectedLength) selectedLength = getAmountOfValues();
-    if (!filters) filters = getSelectedFilter();
-
+    let newSelectedLength = getAmountOfValues();
+    let selectedNumber = returnAMountOfSearched();    
+    
     for (let i = 0; i < allLists.length; i++) {
         const list = allLists[i];
 
         if (!list.classList.contains('visibleList')) continue;
-        if (list.innerHTML !== '') continue;
-
+        if (list.innerHTML !== '' || selectedLength === selectedNumber) continue;
+        
         loadingBeforeSubmit();
         skeletonSongs(list);
         
         let param = getSearchParams();
-        setSearchTitle(param);
-    
+        if (!selectedLength) selectedLength = newSelectedLength;
+        if (!filters) filters = getSelectedFilter();
         let data = await fetchData(param, selectedLength, filters);
+        setSearchTitle(param);
     
         console.log(data);
     
@@ -77,7 +78,7 @@ async function fetchSearchResult(selectedLength, filters) {
             return;
         }
     
-        insertIntoElms(data);
+        insertIntoElms(data, list);
         amountOfSearched();
         clickedValues();
     }
@@ -91,7 +92,6 @@ function setSearchTitle(param) {
 async function fetchData(param, selectedLength, filters) {
     let response;
     let data;
-
     try {
         response = await fetch(`http://localhost:3000/search?search_query=${param}&search_length=${selectedLength}&type=${filters}`)
         data = await response.json();
@@ -105,19 +105,16 @@ async function fetchData(param, selectedLength, filters) {
         submittedFormLoading();
         return;
     }
-
     return data;
 }
 
-async function insertIntoElms(data) {
+async function insertIntoElms(data, list) {
     if (!data) return;
-    allLists.forEach(list => {
-        if (!list.classList.contains('visibleList') || !list.innerHTML === '') return;
-        formJsonHtml(data, list);
-    })
+    if (!list.innerHTML === '') return;
+    formJsonHtml(data, list);
 }
 
-async function amountOfSearched() {
+function amountOfSearched() {
     let amountDivWrapper = document.querySelector('.searchHeader .searchAmount');
     let amountDiv = document.getElementById('amountFound');
     let items;
@@ -126,10 +123,17 @@ async function amountOfSearched() {
         items = list.querySelectorAll('.item');
     })
     if (!amountDivWrapper || !amountDiv) return;
-
     let apiEstimated = items?.length;
     amountDivWrapper.style.display = "flex";
     amountDiv.innerText = apiEstimated;
+}
+
+function returnAMountOfSearched() {
+    let select = document.getElementById('amountSongSelector');
+    if (!select) return;
+    let selectValue = select.options[select.selectedIndex].value;
+
+    return selectValue;
 }
 
 // search filters
@@ -159,7 +163,6 @@ async function addFilterButtons() {
         `
     }
     filtersContainer.innerHTML = filters;
-
     clickedFIlterBtn();
 }
 
@@ -177,9 +180,8 @@ function clickedFIlterBtn() {
             e.currentTarget.classList.toggle('selected');
 
             hideLists(index);
-
-
             submitFIlters(filter);
+            amountOfSearched()
         })
     })
 }
@@ -207,24 +209,20 @@ function hideLists(clickedIndex) {
 // param based search url
 function submitFIlters(header) {
     if (!header.classList.contains('selected')) return;
-
     let param = header.getAttribute('params');
-    let search_length = getAmountOfValues();
+    let search_length = Number(getAmountOfValues());
 
     fetchSearchResult(search_length, param)
 }
 
 function getSelectedFilter() {
     let filters = document.querySelectorAll('#filters .filterMainName');
-    if (!filters) return;
-
     let result;
+    if (!filters) return;
 
     filters.forEach(filter => {
         if (!filter.classList.contains('selected')) return;
-
         result = filter.getAttribute('params');
     })
-
     return result;
 }

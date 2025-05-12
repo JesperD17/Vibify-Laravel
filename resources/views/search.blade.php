@@ -6,6 +6,8 @@
 
 @vite('resources/css/authentication/forms.css')
 @vite('resources/css/search.css')
+
+@vite('resources/js/searchSongs.js')
 <search>
     <form onsubmit="myApp.searchSongs()">
         <div class="mainTitle">
