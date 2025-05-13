@@ -35,5 +35,9 @@
 }
 
 #homeFeed .textWrapper{
-    padding: 0px 10px;
+    padding: 5px 10px;
+}
+
+#homeFeed .playSong .lengthSong {
+    display: none;
 }

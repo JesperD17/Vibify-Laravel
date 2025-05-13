@@ -24,18 +24,16 @@ export function waitUntilVisible(target, callback) {
 }
 
 export function seeDOMChanges(area, callback) {
+    console.log(area);
     
-    const observer = new MutationObserver((entries) => {
-        console.log(entries);
-        
+    const observer = new MutationObserver((entries) => {                
         entries.forEach(entry => {
             if (entry) {              
                 callback(entry.target);
             }
         });
     });
-    observer.observe(area, { childList: true, subtree: false });
-    
+    observer.observe(area, { childList: true, subtree: true });
 }
 
 // creating songs, playlists, albums and artist elements.
@@ -50,8 +48,7 @@ export async function formJsonHtml(data, list) {
         }, {})
     ).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
 
-    let firstDuration = data[0]?.duration?.text;
-    if (mostItemType === "song" && firstDuration || mostItemType === "video") {
+    if (mostItemType === "song" || mostItemType === "video") {
         for (let i = 0; i < data.length; i++) {
             let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
             let duration = data[i]?.duration?.text || 'N/A';
@@ -108,26 +105,6 @@ export async function formJsonHtml(data, list) {
                     <img class="skeletons" src="${thumbnail}">
                     <div class="artistAuthor">${author}</div>
                 </a>
-            </div>
-            `
-        }
-    } else if (mostItemType === "song" && !firstDuration) {
-        for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
-            let title = data[i]?.title || '';
-            let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
-
-            itemList += `
-            <div class="song item">
-                <div class="playSong">
-                    <i class='bx bx-play'></i>
-                    <img class="skeletons" src="${thumbnail}">
-                    <div class="lengthSong"></div>
-                </div>
-                <div class="textWrapper">
-                    <div class="songTitle">${title}</div>
-                    <div class="songAuthor">${author}</div>
-                </div>
             </div>
             `
         }

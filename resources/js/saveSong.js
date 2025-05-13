@@ -16,15 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 function readNewItems(area) {
-    console.log(area);
-    
-    seeDOMChanges(area, (entry) => {
-        console.log(entry, 'test');
-        
+    seeDOMChanges(area, (entry) => {        
         let items = entry.querySelectorAll('.item');
-        if (!items) return;
-
+        if (!items || !items instanceof NodeList || items.length < 1) return;
         console.log(items);
-
+        
     })
 }

@@ -106,13 +106,6 @@
         </div>
     </div>
 
-    <div id="homeFeed">
-        <div class="mainTitle">
-            Populair songs.
-        </div>
-        <div class="songList">
-            
-        </div>
-    </div>
+    <div id="homeFeed"></div>
 </home>
 @endsection
