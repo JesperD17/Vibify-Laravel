@@ -19,7 +19,15 @@
                         Profile:
                     </div>
                     <div class="flexAlign">
-                        <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}">
+                        @php
+                            $avatarPath = public_path('uploads/avatars/' . auth()->user()->avatar);
+                        @endphp
+
+                        @if (file_exists($avatarPath))
+                            <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}" class="profilePic">
+                        @else
+                            <img src="{{ asset('uploads/avatars/default.jpg') }}" class="profilePic">
+                        @endif
                         
                         <div id="changeProf" onclick="myApp.showChangeAvatarForm()">
                             <i class='bx bx-edit-alt'></i>

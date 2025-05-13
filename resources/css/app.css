@@ -116,7 +116,6 @@ search {
     margin: 0px 20px;
     gap: 30px;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .song {
@@ -376,11 +375,12 @@ select {
         width: 100vw;
     }
 
-    .songList {
-        justify-content: center;
-    }
-
-    .playLists {
+    .songList,
+    .videoList,
+    .albumList,
+    .playLists,
+    .playlistList,
+    .artistList {
         justify-content: center;
     }
 

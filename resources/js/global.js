@@ -23,6 +23,19 @@ export function waitUntilVisible(target, callback) {
     observer.observe(target);
 }
 
+export function seeDOMChanges(callback) {
+    const observer = new MutationObserver((entries) => {
+        console.log(entries);
+        entries.forEach(entry => {
+            if (entry) {
+                callback();
+            }
+        });
+    });
+
+    observer.observe(document.getElementById('contentAndFooter'), { childList: true, subtree: true });
+}
+
 // creating songs, playlists, albums and artist elements.
 export async function formJsonHtml(data, list) {
     if (!data) return;

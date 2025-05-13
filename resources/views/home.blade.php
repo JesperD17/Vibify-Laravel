@@ -4,7 +4,7 @@
 
 @section('content')
 
-@vite('resources/js/homePageSongs.js')
+@vite('resources/js/homePageFeed.js')
 @vite('resources/css/home.css')
 <home>
     <div id="welcomeSection">

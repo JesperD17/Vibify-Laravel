@@ -3,7 +3,7 @@ import './bootstrap';
 import { loadingBeforeSubmit, showChangeAvatarForm } from "./forms";
 import { openCloseMenu } from "./headerMenuIcon";
 import { skeletonSongs } from './skeletonItems';
-import { fetchData } from './homePageSongs';
+import { fetchData } from './homePageFeed';
 
 window.myApp = {
     loadingBeforeSubmit, showChangeAvatarForm,

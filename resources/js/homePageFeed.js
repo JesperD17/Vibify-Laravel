@@ -15,13 +15,14 @@ async function functionObserver() {
 export async function fetchData() {
     let response = await fetch(`http://localhost:3000/standard`);
     let data = await response.json();
+
     return data;
 }
 
-async function createHtmlSections(data) {
+async function createHtmlSections(data) {    
     if (!container || !data) return;
 
-    let items;
+    let items = '';
     let lists = [];
     let index = 0;
     data.sections.forEach(section => {
@@ -32,6 +33,8 @@ async function createHtmlSections(data) {
 
         let typeOfListQuerySelector = `.${section.contents[0].item_type}List.index${index}`;
         lists.push({ title: typeOfListQuerySelector, item: section });
+    // console.log(items);
+
         items += `
         <div class="mainTitle">
         ${title}
@@ -41,6 +44,7 @@ async function createHtmlSections(data) {
         </div>
         `
     });
+    
     container.innerHTML = items;
 
     importHtmlSections(lists);
