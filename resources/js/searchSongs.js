@@ -64,7 +64,6 @@ async function fetchSearchResult(selectedLength, filters) {
         // Only fetch if the list is empty or the amount has changed
         if (currentItems > 0 && currentItems === selectedLength) continue;
 
-        
         loadingBeforeSubmit();
         skeletonSongs(list);
         
@@ -73,10 +72,7 @@ async function fetchSearchResult(selectedLength, filters) {
         if (!filters) filters = getSelectedFilter();
         
         let data = await fetchData(param, selectedLength, filters);
-        setSearchTitle(param);
-        
-        console.log(data);
-        
+        setSearchTitle(param);        
         submittedFormLoading();
     
         if (!data.length || data.length < 2) {
