@@ -6,20 +6,50 @@ let recentSearched = document.getElementById('recentSearched');
 
 document.addEventListener("DOMContentLoaded", function () {
     if (homeFeed) {
-        standardWrapper = homeFeed;
+        readNewItems(homeFeed)
     } else if (recentSearched) {
-        standardWrapper = recentSearched;
+        readNewItems(recentSearched, { subtree: true });
     } else {
         return;
     }
-    readNewItems(standardWrapper);
 });
 
-function readNewItems(area) {
-    seeDOMChanges(area, (entry) => {        
+function readNewItems(area, options = {}) {
+    seeDOMChanges(area, (entry) => {
         let items = entry.querySelectorAll('.item');
         if (!items || !items instanceof NodeList || items.length < 1) return;
-        console.log(items);
-        
+        insertSaveButton(items);
+    }, options)
+}
+
+function insertSaveButton(items) {
+    if(!items) return;
+    let saveBtn = saveButton();    
+    items.forEach(item => {
+        if (item.classList.contains('artist')) return;        
+        item.innerHTML += saveBtn;
+    });
+    toggleSaveBtn(items);
+}
+
+function saveButton() {
+    let button = `
+    <div class="saveBtnWrapper">
+        <i class='bx bx-heart'></i> 
+    </div>
+    `
+    return button;
+}
+
+function toggleSaveBtn(items) {
+    if (!items) return;
+    items.forEach(item => {
+        let heartIconWrapper = item.querySelector('.saveBtnWrapper');
+        let heartIcon = heartIconWrapper.querySelector('i');
+        if (!heartIconWrapper || !heartIcon) return;
+
+        heartIconWrapper.addEventListener('click', () => {
+            heartIcon.classList.toggle('bxs-heart');
+        });
     })
 }

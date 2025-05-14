@@ -23,17 +23,15 @@ export function waitUntilVisible(target, callback) {
     observer.observe(target);
 }
 
-export function seeDOMChanges(area, callback) {
-    console.log(area);
-    
-    const observer = new MutationObserver((entries) => {                
+export function seeDOMChanges(area, callback, options = {}) {    
+    const observer = new MutationObserver((entries) => {                        
         entries.forEach(entry => {
             if (entry) {              
                 callback(entry.target);
             }
         });
     });
-    observer.observe(area, { childList: true, subtree: true });
+    observer.observe(area, { childList: true, subtree: false, ...options });
 }
 
 // creating songs, playlists, albums and artist elements.

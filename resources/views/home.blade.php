@@ -107,5 +107,9 @@
     </div>
 
     <div id="homeFeed"></div>
+
+    <div class="loaderWrapper">
+        <span class="loader"></span>
+    </div>
 </home>
 @endsection

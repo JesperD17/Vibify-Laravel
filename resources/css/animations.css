@@ -3,7 +3,7 @@
     align-items: center;
     justify-content: center;
     height: -webkit-fill-available;
-    width: 100%;
+    width: -webkit-fill-available;
     position: absolute;
     background: var(--background-shade);
     border-radius: var(--border-radius);

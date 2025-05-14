@@ -4,7 +4,7 @@ export function noResultsFound(container, customMessage) {
     if (!customMessage) customMessage = 'No results found.';
 
     let errorHtml = `
-    <div id="error404Wrapper">
+    <div class="error404Wrapper">
         <div class="header"><i class='bx bx-question-mark'></i></div>
         <div class="message">${customMessage}</div>
     </div>

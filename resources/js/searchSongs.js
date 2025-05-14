@@ -72,7 +72,7 @@ async function fetchSearchResult(selectedLength, filters) {
         if (!filters) filters = getSelectedFilter();
         
         let data = await fetchData(param, selectedLength, filters);
-        setSearchTitle(param);        
+        setSearchTitle(param);
         submittedFormLoading();
     
         if (!data.length || data.length < 2) {

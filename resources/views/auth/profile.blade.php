@@ -24,9 +24,9 @@
                         @endphp
 
                         @if (file_exists($avatarPath))
-                            <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}" class="profilePic">
+                            <img src="{{ asset('uploads/avatars/' . auth()->user()->avatar) }}" class="profilePic skeletons">
                         @else
-                            <img src="{{ asset('uploads/avatars/default.jpg') }}" class="profilePic">
+                            <img src="{{ asset('uploads/avatars/default.jpg') }}" class="profilePic skeletons">
                         @endif
                         
                         <div id="changeProf" onclick="myApp.showChangeAvatarForm()">

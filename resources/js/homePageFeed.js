@@ -1,4 +1,5 @@
 import { formJsonHtml, mouseDownHandler } from "./global";
+import { loadingBeforeSubmit, submittedFormLoading } from "./forms";
 
 var container = document.getElementById('homeFeed');
 
@@ -7,9 +8,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function functionObserver() {
+    loadingBeforeSubmit();
     let data = await fetchData();
-
+    
     createHtmlSections(data)
+    submittedFormLoading();
 }
 
 export async function fetchData() {
