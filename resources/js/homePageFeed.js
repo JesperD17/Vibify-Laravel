@@ -4,14 +4,16 @@ import { loadingBeforeSubmit, submittedFormLoading } from "./forms";
 var container = document.getElementById('homeFeed');
 
 document.addEventListener("DOMContentLoaded", function () {
+    if (!container) return;
     functionObserver()
 });
 
 async function functionObserver() {
     loadingBeforeSubmit();
-    let data = await fetchData();
     
+    let data = await fetchData();
     createHtmlSections(data)
+    
     submittedFormLoading();
 }
 

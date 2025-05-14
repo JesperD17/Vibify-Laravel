@@ -4,6 +4,8 @@
 
 @section('content')
 <newPlaylist>
-    playlist
+    <form>
+        
+    </form>
 </newPlaylist>
 @endsection
