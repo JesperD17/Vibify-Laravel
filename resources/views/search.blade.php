@@ -44,4 +44,7 @@
         <span class="loader"></span>
     </div>
 </search>
+@auth
+<div id="loggedIn"></div>
+@endauth
 @endsection

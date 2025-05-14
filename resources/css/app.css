@@ -300,6 +300,10 @@ search {
     margin: 20px;
 }
 
+.error404Wrapper a {
+    color: var(--accent-font-color) !important;
+}
+
 .error404Wrapper .header {
     font-size: 4rem;
 }

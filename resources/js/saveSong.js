@@ -1,6 +1,5 @@
 import { seeDOMChanges } from "./global";
 
-var standardWrapper = document.getElementById('contentAndFooter');
 let homeFeed = document.getElementById('homeFeed');
 let recentSearched = document.getElementById('recentSearched');
 

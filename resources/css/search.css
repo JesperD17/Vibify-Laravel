@@ -8,6 +8,7 @@ search .albumList,
 search .playlistList,
 search .artistList {
     display: none;
+    justify-content: center;
 }
 
 .visibleList {

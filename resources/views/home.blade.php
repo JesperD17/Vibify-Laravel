@@ -20,6 +20,7 @@
         </div>
     </div>
 
+    @auth
     <div id="RecentPlaylists">
         <div class="mainTitle">
             Your recently played playlists.
@@ -28,6 +29,7 @@
             
         </div>
     </div>
+    @endauth
 
     <div id="homeFeed"></div>
 
