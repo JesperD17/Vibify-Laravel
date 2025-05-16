@@ -5,6 +5,7 @@ use App\Http\Controllers\auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\DeleteUserController;
 use App\Http\Controllers\Auth\UpdateAvatarController;
+use App\Http\Controllers\LimitGuestSearchController;
 
 use Illuminate\Http\Request;
 use GuzzleHttp\Client as HttpClient;
@@ -56,12 +57,6 @@ Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
 Route::post('/updateAvatar', [UpdateAvatarController::class, 'update_avatar'])
     ->name('updateAvatar');
 
-Route::any('/proxy/{path}', function (Request $req, $path) {
-    $client = new HttpClient([
-        'base_uri' => 'https://httpbin.org'
-    ]);
-
-    return $client->request($req->method(), $path);
-});
+Route::post('/guestLimit', [LimitGuestSearchController::class, 'count']);
 
 require __DIR__ . '/auth.php';

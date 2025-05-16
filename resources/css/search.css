@@ -2,6 +2,11 @@ div#recentSearched {
     padding-bottom: var(--padding-footer-sections);
 }
 
+.searchbarWrapper {
+    display: flex;
+    align-items: center;
+}
+
 search .songList,
 search .videoList,
 search .albumList,
