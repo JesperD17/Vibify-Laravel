@@ -57,6 +57,7 @@ Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
 Route::post('/updateAvatar', [UpdateAvatarController::class, 'update_avatar'])
     ->name('updateAvatar');
 
-Route::post('/guestLimit', [LimitGuestSearchController::class, 'count']);
+Route::post('/guestLimit', [LimitGuestSearchController::class, 'count'])
+    ->name('guestLimit');
 
 require __DIR__ . '/auth.php';

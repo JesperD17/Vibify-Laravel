@@ -9,7 +9,7 @@
 
 @vite('resources/js/searchSongs.js')
 <search>
-    <form onsubmit="myApp.searchSongs()" action="/guestLimit" method="POST">
+    <form onsubmit="myApp.searchSongs()" method="POST" action="{{ url('guestLimit') }}">
         @csrf
         <div class="mainTitle">
             Search

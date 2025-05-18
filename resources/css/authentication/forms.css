@@ -110,6 +110,10 @@ search input {
     border-radius: 0px 8px 8px 0px;
 }
 
+.searchbarWrapper button i {
+    color: var(--background-color-2);
+}
+
 @media (max-width: 500px) {
     register, login {
         align-items: unset;

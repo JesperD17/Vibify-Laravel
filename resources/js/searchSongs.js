@@ -18,28 +18,28 @@ var allLists = [
 window.myApp.searchSongs = searchSongs;
 
 async function searchSongs() {
-    let cookieMatch = document.cookie.match(/guestLimit=(\d+)/);
-    let oldValue = 0;
-    if (cookieMatch) {
-        oldValue = parseInt(cookieMatch[1], 10); 
-    }
+    // let cookieMatch = document.cookie.match(/guestLimit=(\d+)/);
+    // let oldValue = 0;
+    // if (cookieMatch) {
+    //     oldValue = parseInt(cookieMatch[1], 10); 
+    // }
     
-    if (oldValue < 5) {
+    // if (oldValue < 5) {
         addFilterButtons();
     
         await fetchSearchResult();
     
         clickedValues();
-    } else {
-        allLists.forEach(list => {
-            if (!list.classList.contains('visibleList')) return;
-            noResultsFound(list, 
-            `You have reached your daily limit of 5 searches. Please <a href="/auth/log in">login</a> or return tomorrow to continue.`, 
-            `<i class='bx bx-message-rounded-error'></i>`)
-        })
+    // } else {
+        // allLists.forEach(list => {
+        //     if (!list.classList.contains('visibleList')) return;
+        //     noResultsFound(list, 
+        //     `You have reached your daily limit of 5 searches. Please <a href="/auth/log in">login</a> or return tomorrow to continue.`, 
+        //     `<i class='bx bx-message-rounded-error'></i>`)
+        // })
         
-    }
-    guestSearchLimit();
+    // }
+    // guestSearchLimit();
 }
 
 function getSearchParams() {
@@ -126,7 +126,7 @@ async function fetchData(param, selectedLength, filters) {
         amountOfSearched();
         submittedFormLoading();
         return;
-    }
+    }    
     return data;
 }
 
@@ -241,28 +241,28 @@ function getSelectedFilter() {
     return result;
 }
 
-function guestSearchLimit() {
-    let loggedInDiv = document.getElementById('loggedIn');
-    if (loggedInDiv) {
-        document.cookie = "guestLimit=; expires=Thu, 01 Jan 1970 00:00:00 GMT;"
-        return
-    }
+// function guestSearchLimit() {
+//     let loggedInDiv = document.getElementById('loggedIn');
+//     if (loggedInDiv) {
+//         document.cookie = "guestLimit=; expires=Thu, 01 Jan 1970 00:00:00 GMT;"
+//         return
+//     }
 
-    let cookieMatch = document.cookie.match(/guestLimit=(\d+)/);
-    var tomorrow = new Date();
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    let expires = "expires=" + tomorrow.toUTCString();
+//     let cookieMatch = document.cookie.match(/guestLimit=(\d+)/);
+//     var tomorrow = new Date();
+//     tomorrow.setDate(tomorrow.getDate() + 1);
+//     let expires = "expires=" + tomorrow.toUTCString();
     
-    if (!cookieMatch) {
-        document.cookie = "guestLimit=1; " + expires + ";";
-    } else {
-        let oldValue = parseInt(cookieMatch[1], 10);
-        if (oldValue === 5) {
-            return
-        }
-        let newValue = oldValue + 1;
-        document.cookie = "guestLimit=" + newValue + "; " + expires + ";";
-    }
-    console.log(document.cookie);
+//     if (!cookieMatch) {
+//         document.cookie = "guestLimit=1; " + expires + ";";
+//     } else {
+//         let oldValue = parseInt(cookieMatch[1], 10);
+//         if (oldValue === 5) {
+//             return
+//         }
+//         let newValue = oldValue + 1;
+//         document.cookie = "guestLimit=" + newValue + "; " + expires + ";";
+//     }
+//     console.log(document.cookie);
     
-}
+// }
