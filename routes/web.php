@@ -7,9 +7,6 @@ use App\Http\Controllers\Auth\DeleteUserController;
 use App\Http\Controllers\Auth\UpdateAvatarController;
 use App\Http\Controllers\LimitGuestSearchController;
 
-use Illuminate\Http\Request;
-use GuzzleHttp\Client as HttpClient;
-
 Route::get('/', function () {
     return view('home');
 })->name('home');
@@ -57,7 +54,6 @@ Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
 Route::post('/updateAvatar', [UpdateAvatarController::class, 'update_avatar'])
     ->name('updateAvatar');
 
-Route::post('/guestLimit', [LimitGuestSearchController::class, 'count'])
-    ->name('guestLimit');
+Route::post('/guestLimit', [LimitGuestSearchController::class, 'count']);
 
 require __DIR__ . '/auth.php';
