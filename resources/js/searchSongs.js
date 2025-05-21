@@ -17,29 +17,10 @@ var allLists = [
 
 window.myApp.searchSongs = searchSongs;
 
-async function searchSongs() {
-    // let cookieMatch = document.cookie.match(/guestLimit=(\d+)/);
-    // let oldValue = 0;
-    // if (cookieMatch) {
-    //     oldValue = parseInt(cookieMatch[1], 10); 
-    // }
-    
-    // if (oldValue < 5) {
-        addFilterButtons();
-    
-        await fetchSearchResult();
-    
-        clickedValues();
-    // } else {
-        // allLists.forEach(list => {
-        //     if (!list.classList.contains('visibleList')) return;
-        //     noResultsFound(list, 
-        //     `You have reached your daily limit of 5 searches. Please <a href="/auth/log in">login</a> or return tomorrow to continue.`, 
-        //     `<i class='bx bx-message-rounded-error'></i>`)
-        // })
-        
-    // }
-    // guestSearchLimit();
+async function searchSongs() { 
+    addFilterButtons();
+    await fetchSearchResult();
+    clickedValues();
 }
 
 function getSearchParams() {
@@ -75,14 +56,23 @@ async function fetchSearchResult(selectedLength, filters) {
 
         if (!list.classList.contains('visibleList')) continue;        
 
-        // Count actual items inside the list
         const currentItems = list.querySelectorAll('.item')?.length || 0;
 
-        // Only fetch if the list is empty or the amount has changed
         if (currentItems > 0 && currentItems === selectedLength) continue;
 
         loadingBeforeSubmit();
         skeletonSongs(list);
+
+        let limitMessage =  await guestSearchLimit();
+        if (limitMessage && limitMessage === 'too many requests!') {
+            allLists.forEach(list => {
+                if (!list.classList.contains('visibleList')) return;
+                noResultsFound(list, 'Your daily limit of search request has been reached!', `<i class='bx bx-time-five'></i>`);
+            })
+            amountOfSearched();
+            submittedFormLoading();
+            return;
+        }
         
         let param = getSearchParams();
         if (!selectedLength) selectedLength = newSelectedLength;
@@ -100,7 +90,7 @@ async function fetchSearchResult(selectedLength, filters) {
             amountOfSearched();
             return;
         }
-    
+
         insertIntoElms(data, list);
         amountOfSearched();
     }
@@ -241,28 +231,9 @@ function getSelectedFilter() {
     return result;
 }
 
-// function guestSearchLimit() {
-//     let loggedInDiv = document.getElementById('loggedIn');
-//     if (loggedInDiv) {
-//         document.cookie = "guestLimit=; expires=Thu, 01 Jan 1970 00:00:00 GMT;"
-//         return
-//     }
-
-//     let cookieMatch = document.cookie.match(/guestLimit=(\d+)/);
-//     var tomorrow = new Date();
-//     tomorrow.setDate(tomorrow.getDate() + 1);
-//     let expires = "expires=" + tomorrow.toUTCString();
-    
-//     if (!cookieMatch) {
-//         document.cookie = "guestLimit=1; " + expires + ";";
-//     } else {
-//         let oldValue = parseInt(cookieMatch[1], 10);
-//         if (oldValue === 5) {
-//             return
-//         }
-//         let newValue = oldValue + 1;
-//         document.cookie = "guestLimit=" + newValue + "; " + expires + ";";
-//     }
-//     console.log(document.cookie);
-    
-// }
+async function guestSearchLimit() {
+    let response = await fetch(`/guestLimit`)
+    let data = await response.json();
+    if (!data) return undefined;
+    return data;    
+}

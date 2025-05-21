@@ -9,14 +9,13 @@
 
 @vite('resources/js/searchSongs.js')
 <search>
-    <form onsubmit="myApp.searchSongs()" action="/guestLimit" method="POST">
-        @csrf
+    <form onsubmit="myApp.searchSongs()">
         <div class="mainTitle">
             Search
         </div>
         <div class="searchbarWrapper">
             <input type="text" id="searchBar" name="search" required>
-            <button type="submit"><i class='bx bxs-search'></i></button>
+            <div class="divButton" onclick="myApp.searchSongs()"><i class='bx bxs-search'></i></div>
         </div>
     </form>
 
