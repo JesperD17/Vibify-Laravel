@@ -15,6 +15,8 @@ var allLists = [
     songsMainContainer.querySelector('.artistList')
 ]
 
+document.getElementById('searchBar').addEventListener("change", showSuggestions);
+
 window.myApp.searchSongs = searchSongs;
 
 async function searchSongs() { 
@@ -93,6 +95,7 @@ async function fetchSearchResult(selectedLength, filters) {
 
         insertIntoElms(data, list);
         amountOfSearched();
+        saveToAutoCookie();
     }
 }
 
@@ -236,4 +239,26 @@ async function guestSearchLimit() {
     let data = await response.json();
     if (!data) return undefined;
     return data;    
+}
+
+// autocomplete
+function saveToAutoCookie() {
+    let param = getSearchParams(); // Assume it returns a string
+    let cookieMatch = document.cookie.match(/(?<=guestLimit=)\d*/g);
+    let cookieList = [];
+
+    if (cookieMatch) {
+        cookieList = cookieMatch.split(',');
+    }
+
+    if (!cookieList.includes(param)) {
+        cookieList.push(param);
+    }
+    document.cookie = "guestLimit=" + cookieList.join(',') + "; path=/";
+}
+
+function showSuggestions() {
+    let list = document.cookie.match(/(?<=guestLimit=)\d*/g);
+    console.log(list);
+    
 }

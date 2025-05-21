@@ -34,7 +34,7 @@ function insertSaveButton(items) {
 function saveButton() {
     let button = `
     <div class="saveBtnWrapper">
-        <i class='bx bx-heart'></i> 
+        <i class='bx bx-dots-horizontal bx-flip-horizontal' ></i>
     </div>
     `
     return button;
@@ -48,7 +48,7 @@ function toggleSaveBtn(items) {
         if (!heartIconWrapper || !heartIcon) return;
 
         heartIconWrapper.addEventListener('click', () => {
-            heartIcon.classList.toggle('bxs-heart');
+            heartIcon.classList.toggle('openedMenu');    
         });
     })
 }

@@ -59,6 +59,7 @@ i {
 
 button i, .divButton i {
     font-size: 1rem;
+    color: var(--background-color-1);
 }
 
 img {
@@ -132,11 +133,7 @@ search {
     font-size: 1.5rem;
 }
 
-.saveBtnWrapper .bx-heart {
-    color: var(--primary-font);
-}
-
-.saveBtnWrapper .bxs-heart {
+.saveBtnWrapper .bx-dots-horizontal {
     color: var(--primary-font);
 }
 
@@ -172,11 +169,24 @@ search {
     height: 100%;
     align-items: center;
     justify-content: center;
+    position: relative;
+}
+
+.song.item .playSong::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--background-shade);
+    z-index: 1;
 }
 
 .playSong i {
     position: absolute;
     font-size: 40px;
+    z-index: 1;
 }
 
 .playSong img {

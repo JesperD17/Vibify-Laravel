@@ -9,7 +9,7 @@
 
 @vite('resources/js/searchSongs.js')
 <search>
-    <form onsubmit="myApp.searchSongs()">
+    <form onsubmit="myApp.searchSongs()" autocomplete="off">
         <div class="mainTitle">
             Search
         </div>

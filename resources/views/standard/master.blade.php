@@ -20,9 +20,9 @@
     @vite('resources/js/app.js')
     @vite('resources/js/confirmSubmit.js')
 
-    @auth
+    {{-- @auth
         @vite('resources/js/saveSong.js')
-    @endauth
+    @endauth --}}
 </head>
 <body>
     @include('standard.toprofile')
