@@ -5,6 +5,31 @@ div#recentSearched {
 .searchbarWrapper {
     display: flex;
     align-items: center;
+    position: relative;
+}
+
+#suggestSearchItems {
+    position: relative;
+    margin: 0px 20px;
+}
+
+#suggestSearchItems .itemsWrapper {
+    display: none;
+    flex-direction: column;
+    max-width: 300px;
+    padding: 5px 20px;
+    color: var(--pure-white);
+    position: absolute;
+    background: var(--background-shade);
+    border-radius: 0px 0px 10px 10px;
+}
+
+#suggestSearchItems .itemsWrapper::has(> div) {
+    background: none;
+}
+
+.suggestionItem:hover {
+    text-decoration: underline;
 }
 
 search .songList,

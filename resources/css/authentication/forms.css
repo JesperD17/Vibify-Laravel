@@ -111,7 +111,7 @@ search input {
 }
 
 .searchbarWrapper button i {
-    color: var(--background-color-2);
+    color: var(--background-color-2); 
 }
 
 @media (max-width: 500px) {

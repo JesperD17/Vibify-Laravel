@@ -17,6 +17,9 @@
             <input type="text" id="searchBar" name="search" required>
             <div class="divButton" onclick="myApp.searchSongs()"><i class='bx bxs-search'></i></div>
         </div>
+        <div id="suggestSearchItems">
+            <div class="itemsWrapper"></div>
+        </div>
     </form>
 
     <div id="recentSearched">

@@ -6,6 +6,8 @@ import { formJsonHtml } from "./global";
 var songsMainContainer = document.getElementById('recentSearched');
 var title = songsMainContainer.querySelector('.mainTitle');
 var filtersContainer = document.getElementById('filters');
+var searchBar = document.getElementById('searchBar');
+var suggestionList = document.querySelector('#suggestSearchItems .itemsWrapper');
 
 var allLists = [
     songsMainContainer.querySelector('.songList'),
@@ -15,11 +17,13 @@ var allLists = [
     songsMainContainer.querySelector('.artistList')
 ]
 
-document.getElementById('searchBar').addEventListener("change", showSuggestions);
+searchBar.addEventListener("input", showSuggestions);
+searchBar.addEventListener("keydown", showHideSuggestions);
+document.addEventListener("click", showHideSuggestions);
 
 window.myApp.searchSongs = searchSongs;
 
-async function searchSongs() { 
+async function searchSongs() {
     addFilterButtons();
     await fetchSearchResult();
     clickedValues();
@@ -52,11 +56,11 @@ function clickedValues() {
 
 async function fetchSearchResult(selectedLength, filters) {
     let newSelectedLength = getAmountOfValues();
-    
+
     for (let i = 0; i < allLists.length; i++) {
         const list = allLists[i];
 
-        if (!list.classList.contains('visibleList')) continue;        
+        if (!list.classList.contains('visibleList')) continue;
 
         const currentItems = list.querySelectorAll('.item')?.length || 0;
 
@@ -65,7 +69,7 @@ async function fetchSearchResult(selectedLength, filters) {
         loadingBeforeSubmit();
         skeletonSongs(list);
 
-        let limitMessage =  await guestSearchLimit();
+        let limitMessage = await guestSearchLimit();
         if (limitMessage && limitMessage === 'too many requests!') {
             allLists.forEach(list => {
                 if (!list.classList.contains('visibleList')) return;
@@ -75,15 +79,15 @@ async function fetchSearchResult(selectedLength, filters) {
             submittedFormLoading();
             return;
         }
-        
+
         let param = getSearchParams();
         if (!selectedLength) selectedLength = newSelectedLength;
         if (!filters) filters = getSelectedFilter();
-        
+
         let data = await fetchData(param, selectedLength, filters);
         setSearchTitle(param);
         submittedFormLoading();
-    
+
         if (!data.length || data.length < 2) {
             allLists.forEach(list => {
                 if (!list.classList.contains('visibleList')) return;
@@ -119,7 +123,7 @@ async function fetchData(param, selectedLength, filters) {
         amountOfSearched();
         submittedFormLoading();
         return;
-    }    
+    }
     return data;
 }
 
@@ -238,19 +242,19 @@ async function guestSearchLimit() {
     let response = await fetch(`/guestLimit`)
     let data = await response.json();
     if (!data) return undefined;
-    return data;    
+    return data;
 }
 
 // autocomplete
 function saveToAutoCookie() {
-    let param = getSearchParams(); // Assume it returns a string
-    let cookieMatch = document.cookie.match(/(?<=guestLimit=)\d*/g);
+    let param = getSearchParams();
+    let cookieMatch = document.cookie.match(/(?:^|;\s*)guestLimit=([^;]*)/);
     let cookieList = [];
 
     if (cookieMatch) {
+        cookieMatch = cookieMatch[1];
         cookieList = cookieMatch.split(',');
     }
-
     if (!cookieList.includes(param)) {
         cookieList.push(param);
     }
@@ -258,7 +262,54 @@ function saveToAutoCookie() {
 }
 
 function showSuggestions() {
-    let list = document.cookie.match(/(?<=guestLimit=)\d*/g);
-    console.log(list);
+    let list = document.cookie.match(/(?:^|;\s*)guestLimit=([^;]*)/);
+    if (!list) return;
+    list = list[1];
+    const arrayObj = [];
+    let start = 0;
+
+    for (let i = 0; i < list.length; i++) {
+        if (list[i] === ",") {
+            arrayObj.push(list.slice(start, i));
+            start = i + 1;
+        }
+    }
+    arrayObj.push(list.slice(start));
+
+    if (arrayObj.length > 5) {
+        createSuggestionDivs(arrayObj.slice((arrayObj.length - 5), arrayObj.length))
+    } else {
+        createSuggestionDivs(arrayObj);
+    }
+}
+
+function createSuggestionDivs(list) {
+    let divs = "";
+    for (let i = 0; i < list.length; i++) {
+        divs += `
+        <div class="suggestionItem">${list[i]}</div>
+        `
+    }
+    suggestionList.innerHTML = divs;
+    suggestionList.style.display = "flex";
+}
+
+function showHideSuggestions(e) {
+    let param = getSearchParams();
     
+    if (!e.key) {
+        if (suggestionList.contains(e.target)) return;
+        if (searchBar.contains(e.target) &&
+            window.getComputedStyle(suggestionList, null).display === 'none'
+            && param !== undefined) {
+            suggestionList.style.display = "flex";
+            return;
+        }
+        suggestionList.style.display = null;
+        return;
+    };
+
+    if (e.key === 'Backspace' || e.key === 'Enter') {
+        suggestionList.style.display = null;
+    }
 }
