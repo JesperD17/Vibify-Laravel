@@ -41,6 +41,14 @@ search .artistList {
     justify-content: center;
 }
 
+#pageLoadedItems .songList,
+#pageLoadedItems .videoList,
+#pageLoadedItems .albumList,
+#pageLoadedItems .playlistList,
+#pageLoadedItems .artistList {
+    display: flex;
+}
+
 .visibleList {
     display: flex !important;
 }

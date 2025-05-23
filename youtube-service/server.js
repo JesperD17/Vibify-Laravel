@@ -68,15 +68,23 @@ app.get('/search', async (req, res) => {
 });
 
 app.get('/standard', async (req, res) => {
-  let populairFeed;
-  try {
-    populairFeed = await tube.music.getHomeFeed({
-      
-    });
-  } catch (error) {
-    res.status(500).send(error.toString())
+  const query = req.query.type;
+  let feed;
+
+  if (req.query.type === "home") {
+    try {
+      feed = await tube.music.getHomeFeed({});
+    } catch (error) {
+      res.status(500).send(error.toString())
+    }
+  } else if (req.query.type === "explore") {
+    try {
+      feed = await tube.music.getExplore({});
+    } catch (error) {
+      res.status(500).send(error.toString())
+    }
   }
-  res.json(populairFeed);
+  res.json(feed);
 });
 
 app.listen(port, () => {

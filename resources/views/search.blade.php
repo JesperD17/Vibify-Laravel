@@ -7,6 +7,7 @@
 @vite('resources/css/authentication/forms.css')
 @vite('resources/css/search.css')
 
+@vite('resources/js/searchExplore.js')
 @vite('resources/js/searchSongs.js')
 <search>
     <form onsubmit="myApp.searchSongs()" autocomplete="off">
@@ -25,7 +26,7 @@
     <div id="recentSearched">
         <div class="searchHeader">
             <div class="mainTitle">
-                Your recently searched songs.
+                
             </div>
             <div class="smallTitle searchAmount">
                 <select name="AmountOfSongs" id="amountSongSelector">
@@ -42,6 +43,8 @@
         <div class="albumList"></div>
         <div class="playlistList"></div>
         <div class="artistList"></div>
+
+        <div id="pageLoadedItems"></div>
     </div>
 
     <div class="loaderWrapper">

@@ -54,20 +54,18 @@ function clickedValues() {
     })
 }
 
-async function fetchSearchResult(selectedLength, filters) {
+async function fetchSearchResult(selectedLength, filters, type) {
     let newSelectedLength = getAmountOfValues();
 
     for (let i = 0; i < allLists.length; i++) {
         const list = allLists[i];
-
         if (!list.classList.contains('visibleList')) continue;
 
         const currentItems = list.querySelectorAll('.item')?.length || 0;
-
         if (currentItems > 0 && currentItems === selectedLength) continue;
 
         loadingBeforeSubmit();
-        skeletonSongs(list);
+        skeletonSongs(list, type);
 
         let limitMessage = await guestSearchLimit();
         if (limitMessage && limitMessage === 'too many requests!') {
@@ -182,7 +180,6 @@ function clickedFIlterBtn() {
     if (!filters) return;
 
     filters[0].classList.add('selected');
-
     filters.forEach((filter, index) => {
         filter.addEventListener('click', function (e) {
             if (!e.currentTarget) return;
@@ -191,7 +188,7 @@ function clickedFIlterBtn() {
             e.currentTarget.classList.toggle('selected');
 
             hideLists(index);
-            submitFIlters(filter);
+            submitFIlters(filter, e.currentTarget.innerText);
             amountOfSearched()
         })
     })
@@ -218,12 +215,12 @@ function hideLists(clickedIndex) {
 }
 
 // param based search url
-function submitFIlters(header) {
+function submitFIlters(header, type) {
     if (!header.classList.contains('selected')) return;
     let param = header.getAttribute('params');
     let search_length = Number(getAmountOfValues());
 
-    fetchSearchResult(search_length, param)
+    fetchSearchResult(search_length, param, type)
 }
 
 function getSelectedFilter() {

@@ -197,14 +197,6 @@ search {
     object-fit: cover;
 }
 
-.playSong .lengthSong {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    color: var(--pure-white);
-    margin: 0px 5px;
-}
-
 .song .textWrapper {
     display: flex;
     width: 100%;
@@ -235,6 +227,14 @@ search {
     display: -webkit-box;
     -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
+}
+
+.song .lengthSong {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    color: var(--pure-white);
+    margin: 0px 5px;
 }
 
 /* playlists */
@@ -335,7 +335,8 @@ search {
     background: linear-gradient(110deg, #ececec 8%, #f5f5f5 18%, #ececec 33%);
     animation: 1.5s shine linear infinite;
     background-size: 200% 100%;
-    color: transparent;
+    color: transparent !important;
+    border-radius: 8px;
 }
 
 .songAuthor.skeletons {
@@ -344,6 +345,12 @@ search {
 
 .noClick {
     cursor: no-drop;
+}
+
+.skeletonGap .playlistAuthor {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
 }
 
 @keyframes shine {

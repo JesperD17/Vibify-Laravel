@@ -46,6 +46,12 @@ export async function formJsonHtml(data, list) {
         }, {})
     ).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
 
+    if (mostItemType === "undefined") {
+        createCustomHtmlItems(data, list);
+        return;
+    }
+    console.log(mostItemType);
+    
     if (mostItemType === "song" || mostItemType === "video") {
         for (let i = 0; i < data.length; i++) {
             let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
@@ -58,12 +64,12 @@ export async function formJsonHtml(data, list) {
                 <div class="playSong">
                     <i class='bx bx-play'></i>
                     <img class="skeletons" src="${thumbnail}">
-                    <div class="lengthSong">${duration}</div>
                 </div>
                 <div class="textWrapper">
                     <div class="songTitle">${title}</div>
                     <div class="songAuthor">${author}</div>
                 </div>
+                <div class="lengthSong">${duration}</div>
             </div>
             `
         }
@@ -112,6 +118,28 @@ export async function formJsonHtml(data, list) {
     list.innerHTML = itemList;
 }
 
+// custom html
+function createCustomHtmlItems(data, list) {
+    if(!data || !list) return;
+
+    let mostBtnText = hasMajorityButtonText(data, item.button_text)
+    if (mostBtnText) {
+        list.innerHTML === itemList;
+        return
+    }
+
+}
+
+function hasMajorityButtonText(items, type) {
+  let threshold = 0.5;
+  let total = items.length;
+  let withButtonText = items.filter(
+    item => typeof type === 'string' && type.trim() !== ""
+  ).length;
+
+  return (withButtonText / total) > threshold;
+}
+
 // draggable scroll
 let moveHandler;
 let upHandler;
@@ -149,4 +177,60 @@ function mouseUpHandler(list) {
 
     document.removeEventListener('mousemove', moveHandler);
     document.removeEventListener('mouseup', upHandler);
+}
+
+// autloaded feed items
+export async function createHtmlSections(container, data) {
+    if (!container || !data) {
+        noResultsFound(container, 'Unable to fetch Api data')
+        return;
+    }
+    console.log(data);
+    
+
+    let items = '';
+    let lists = [];
+    let index = 0;
+    data.sections.forEach(section => {
+        index++;
+
+        let title = section?.header?.title?.text || 'Random';
+        let typeOfList = section?.contents?.[0]?.item_type + 'List index' + index;
+        let typeOfListQuerySelector = `.${section.contents[0].item_type}List.index${index}`;
+        lists.push({ title: typeOfListQuerySelector, item: section });
+
+        items += `
+        <div class="mainTitle">
+        ${title}
+        </div>
+        
+        <div class="${typeOfList}">
+        </div>
+        `
+    });
+
+    container.innerHTML = items;
+
+    importHtmlSections(container, lists);
+}
+
+async function importHtmlSections(container, lists) {
+    lists.forEach(list => {
+        let htmlItem = container.querySelector(list.title)
+        formJsonHtml(list.item.contents, htmlItem);
+
+        let mostItemType = Object.entries(
+            list.item.contents.reduce((acc, { item_type }) => {
+                acc[item_type] = (acc[item_type] || 0) + 1;
+                return acc;
+            }, {})
+        ).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
+
+        if (mostItemType === "song") {
+            htmlItem.style.cursor = 'grab';
+            htmlItem.addEventListener('mousedown', e => {
+                mouseDownHandler(e, htmlItem)
+            });
+        }
+    })
 }
