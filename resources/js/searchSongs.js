@@ -17,7 +17,8 @@ var allLists = [
     songsMainContainer.querySelector('.artistList')
 ]
 
-searchBar.addEventListener("input", showSuggestions);
+foremSuggestionsList();
+searchBar.addEventListener("input", foremSuggestionsList);
 searchBar.addEventListener("keydown", showHideSuggestions);
 document.addEventListener("click", showHideSuggestions);
 
@@ -258,9 +259,11 @@ function saveToAutoCookie() {
     document.cookie = "guestLimit=" + cookieList.join(',') + "; path=/";
 }
 
-function showSuggestions() {
+function foremSuggestionsList() {
     let list = document.cookie.match(/(?:^|;\s*)guestLimit=([^;]*)/);
     if (!list) return;
+    console.log(list);
+
     list = list[1];
     const arrayObj = [];
     let start = 0;
@@ -288,25 +291,38 @@ function createSuggestionDivs(list) {
         `
     }
     suggestionList.innerHTML = divs;
-    suggestionList.style.display = "flex";
+    addSuggestionsToBar();
 }
 
 function showHideSuggestions(e) {
-    let param = getSearchParams();
+    const childDiv = suggestionList.querySelector('div');
     
     if (!e.key) {
         if (suggestionList.contains(e.target)) return;
-        if (searchBar.contains(e.target) &&
-            window.getComputedStyle(suggestionList, null).display === 'none'
-            && param !== undefined) {
+        if (
+            searchBar.contains(e.target) &&
+            window.getComputedStyle(suggestionList, null).display === 'none' &&
+            suggestionList.contains(childDiv)
+        ) {            
             suggestionList.style.display = "flex";
             return;
+        } else {
+            suggestionList.style.display = null;
+            return;
         }
-        suggestionList.style.display = null;
-        return;
     };
 
     if (e.key === 'Backspace' || e.key === 'Enter') {
         suggestionList.style.display = null;
     }
+}
+
+function addSuggestionsToBar() {
+    let items = suggestionList.querySelectorAll('.suggestionItem');
+    items.forEach(item => {
+        item.addEventListener('click', () => {
+            searchBar.value = item.innerText;
+            suggestionList.style.display = null;
+        })
+    })
 }
