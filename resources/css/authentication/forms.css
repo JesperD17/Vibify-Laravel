@@ -116,6 +116,6 @@ search input {
 
 @media (max-width: 500px) {
     register, login {
-        align-items: unset;
+        padding-bottom: var(--footer-height);
     }
 }

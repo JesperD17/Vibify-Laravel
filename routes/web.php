@@ -23,6 +23,10 @@ Route::get('/newPlaylist', function () {
     return view('newPlaylist');
 })->name('newPlaylist');
 
+Route::get('/standard/notLoggedIn', function () {
+    return view('standard.notLoggedIn');
+})->name('notLoggedIn');
+
 // auth
 Route::get('/auth/profile', function () {
     return view('auth.profile');
@@ -36,10 +40,6 @@ Route::get('/auth/register', function () {
     return view('auth.register');
 })->name('register');
 
-Route::get('/auth/dashboard', function () {
-    return view('auth.dashboard');
-})->name('dashboard');
-
 // controllers
 Route::post('/auth/register', [RegisteredUserController::class, 'store'])
     ->name('register');
@@ -52,6 +52,7 @@ Route::delete('/deleteUser', [DeleteUserController::class, 'destroy'])
     ->name('deleteUser');
 
 Route::post('/updateAvatar', [UpdateAvatarController::class, 'update_avatar'])
+    ->middleware('auth')
     ->name('updateAvatar');
 
 Route::get('/guestLimit', [LimitGuestSearchController::class, 'count']);

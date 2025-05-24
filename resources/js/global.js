@@ -45,16 +45,15 @@ export async function formJsonHtml(data, list) {
             return acc;
         }, {})
     ).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
-
+    
     if (mostItemType === "undefined") {
         createCustomHtmlItems(data, list);
         return;
     }
-    console.log(mostItemType);
     
     if (mostItemType === "song" || mostItemType === "video") {
         for (let i = 0; i < data.length; i++) {
-            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || '';
+            let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || data[i]?.thumbnail?.[0]?.url || '';
             let duration = data[i]?.duration?.text || 'N/A';
             let title = data[i]?.title?.text || data[i]?.title || '';
             let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
@@ -119,25 +118,22 @@ export async function formJsonHtml(data, list) {
 }
 
 // custom html
-function createCustomHtmlItems(data, list) {
+function createCustomHtmlItems(data, list) {    
     if(!data || !list) return;
 
-    let mostBtnText = hasMajorityButtonText(data, item.button_text)
-    if (mostBtnText) {
-        list.innerHTML === itemList;
+    let itemList = "";
+    let mostBtnText = data.some(item => item.button_text);    
+    if (mostBtnText === true) {
+        for (let i = 0; i < data.length; i++) {
+            let title = data[i]?.button_text || '';
+
+            itemList += `
+            <button>${title}</button>
+            `
+        }
+        list.innerHTML = itemList;        
         return
     }
-
-}
-
-function hasMajorityButtonText(items, type) {
-  let threshold = 0.5;
-  let total = items.length;
-  let withButtonText = items.filter(
-    item => typeof type === 'string' && type.trim() !== ""
-  ).length;
-
-  return (withButtonText / total) > threshold;
 }
 
 // draggable scroll
@@ -184,9 +180,7 @@ export async function createHtmlSections(container, data) {
     if (!container || !data) {
         noResultsFound(container, 'Unable to fetch Api data')
         return;
-    }
-    console.log(data);
-    
+    }    
 
     let items = '';
     let lists = [];
@@ -195,10 +189,16 @@ export async function createHtmlSections(container, data) {
         index++;
 
         let title = section?.header?.title?.text || 'Random';
-        let typeOfList = section?.contents?.[0]?.item_type + 'List index' + index;
-        let typeOfListQuerySelector = `.${section.contents[0].item_type}List.index${index}`;
+        let typeOfList = section?.contents?.[0]?.item_type;
+        let typeOfListQuerySelector = `.${section?.contents?.[0]?.item_type || 'customBtns'}List.index${index}`;
         lists.push({ title: typeOfListQuerySelector, item: section });
-
+                
+        if (typeOfList !== undefined) {
+            typeOfList = typeOfList + 'List index' + index;
+        } else {
+            typeOfList = "customBtnsList index" + index;
+        }
+        
         items += `
         <div class="mainTitle">
         ${title}

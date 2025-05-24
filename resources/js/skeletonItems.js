@@ -1,5 +1,4 @@
 export function skeletonSongs(list, type) {
-    console.log(type);
     var amountOfSkeletonSongs = 24;
     var items = "";
 

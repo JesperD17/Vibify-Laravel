@@ -1,6 +1,5 @@
 notloggedin {
     position: fixed;
-    height: 100%;
     width: -webkit-fill-available;
     display: flex;
     flex-direction: column;
@@ -32,4 +31,27 @@ notloggedin {
 .textWithLink {
     display: flex;
     gap: 8px;
+}
+
+/* error messages */
+.error404Wrapper {
+    display: flex;
+    height: calc(var(--fill-page) - var(--footer-height));
+    justify-content: center;
+    flex-direction: column;
+    color: var(--primary-font);
+    align-items: center;
+    margin: 20px;
+}
+
+.error404Wrapper a {
+    color: var(--accent-font-color) !important;
+}
+
+.error404Wrapper .header {
+    font-size: 4rem;
+}
+
+.error404Wrapper .header i {
+    font-size: 5rem;
 }

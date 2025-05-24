@@ -56,6 +56,7 @@ function clickedValues() {
 }
 
 async function fetchSearchResult(selectedLength, filters, type) {
+    document.querySelector('.searchHeader').style.display = "flex";
     let newSelectedLength = getAmountOfValues();
 
     for (let i = 0; i < allLists.length; i++) {
@@ -262,7 +263,6 @@ function saveToAutoCookie() {
 function foremSuggestionsList() {
     let list = document.cookie.match(/(?:^|;\s*)guestLimit=([^;]*)/);
     if (!list) return;
-    console.log(list);
 
     list = list[1];
     const arrayObj = [];
