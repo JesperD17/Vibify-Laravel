@@ -23,10 +23,10 @@ export function waitUntilVisible(target, callback) {
     observer.observe(target);
 }
 
-export function seeDOMChanges(area, callback, options = {}) {    
-    const observer = new MutationObserver((entries) => {                        
+export function seeDOMChanges(area, callback, options = {}) {
+    const observer = new MutationObserver((entries) => {
         entries.forEach(entry => {
-            if (entry) {              
+            if (entry) {
                 callback(entry.target);
             }
         });
@@ -45,12 +45,10 @@ export async function formJsonHtml(data, list) {
             return acc;
         }, {})
     ).reduce((a, b) => (b[1] > a[1] ? b : a))[0];
-    
     if (mostItemType === "undefined") {
         createCustomHtmlItems(data, list);
         return;
     }
-    
     if (mostItemType === "song" || mostItemType === "video") {
         for (let i = 0; i < data.length; i++) {
             let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || data[i]?.thumbnail?.[0]?.url || '';
@@ -59,7 +57,7 @@ export async function formJsonHtml(data, list) {
             let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
 
             itemList += `
-            <div class="song item">
+            <div class="song item playable">
                 <div class="playSong">
                     <i class='bx bx-play'></i>
                     <img class="skeletons" src="${thumbnail}">
@@ -118,11 +116,11 @@ export async function formJsonHtml(data, list) {
 }
 
 // custom html
-function createCustomHtmlItems(data, list) {    
-    if(!data || !list) return;
+function createCustomHtmlItems(data, list) {
+    if (!data || !list) return;
 
     let itemList = "";
-    let mostBtnText = data.some(item => item.button_text);    
+    let mostBtnText = data.some(item => item.button_text);
     if (mostBtnText === true) {
         for (let i = 0; i < data.length; i++) {
             let title = data[i]?.button_text || '';
@@ -131,7 +129,7 @@ function createCustomHtmlItems(data, list) {
             <button>${title}</button>
             `
         }
-        list.innerHTML = itemList;        
+        list.innerHTML = itemList;
         return
     }
 }
@@ -180,7 +178,7 @@ export async function createHtmlSections(container, data) {
     if (!container || !data) {
         noResultsFound(container, 'Unable to fetch Api data')
         return;
-    }    
+    }
 
     let items = '';
     let lists = [];
@@ -192,13 +190,13 @@ export async function createHtmlSections(container, data) {
         let typeOfList = section?.contents?.[0]?.item_type;
         let typeOfListQuerySelector = `.${section?.contents?.[0]?.item_type || 'customBtns'}List.index${index}`;
         lists.push({ title: typeOfListQuerySelector, item: section });
-                
+
         if (typeOfList !== undefined) {
             typeOfList = typeOfList + 'List index' + index;
         } else {
             typeOfList = "customBtnsList index" + index;
         }
-        
+
         items += `
         <div class="mainTitle">
         ${title}

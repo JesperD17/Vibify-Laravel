@@ -5,17 +5,11 @@ import { formJsonHtml } from "./global";
 
 var songsMainContainer = document.getElementById('recentSearched');
 var title = songsMainContainer.querySelector('.mainTitle');
-var filtersContainer = document.getElementById('filters');
+// var filtersContainer = document.getElementById('filters');
 var searchBar = document.getElementById('searchBar');
 var suggestionList = document.querySelector('#suggestSearchItems .itemsWrapper');
 
-var allLists = [
-    songsMainContainer.querySelector('.songList'),
-    songsMainContainer.querySelector('.videoList'),
-    songsMainContainer.querySelector('.albumList'),
-    songsMainContainer.querySelector('.playlistList'),
-    songsMainContainer.querySelector('.artistList')
-]
+var allLists = [];
 
 foremSuggestionsList();
 searchBar.addEventListener("input", foremSuggestionsList);
@@ -25,10 +19,32 @@ document.addEventListener("click", showHideSuggestions);
 window.myApp.searchSongs = searchSongs;
 
 async function searchSongs() {
+    createAllElements();
+
     addFilterButtons();
     await fetchSearchResult();
     clickedValues();
 }
+
+function createAllElements() {
+    let allItems = `
+        <div class="songList visibleList"></div>
+        <div class="videoList"></div>
+        <div class="albumList"></div>
+        <div class="playlistList"></div>
+        <div class="artistList"></div>
+    `;
+    songsMainContainer.innerHTML += allItems;
+    
+    allLists.push(
+        songsMainContainer.querySelector('.songList'),
+        songsMainContainer.querySelector('.videoList'),
+        songsMainContainer.querySelector('.albumList'),
+        songsMainContainer.querySelector('.playlistList'),
+        songsMainContainer.querySelector('.artistList')
+    );
+}
+
 
 function getSearchParams() {
     let param = document.getElementById('searchBar').value;
@@ -83,11 +99,11 @@ async function fetchSearchResult(selectedLength, filters, type) {
         let param = getSearchParams();
         if (!selectedLength) selectedLength = newSelectedLength;
         if (!filters) filters = getSelectedFilter();
-
+        
         let data = await fetchData(param, selectedLength, filters);
         setSearchTitle(param);
         submittedFormLoading();
-
+        
         if (!data.length || data.length < 2) {
             allLists.forEach(list => {
                 if (!list.classList.contains('visibleList')) return;
@@ -162,6 +178,7 @@ function filtersData() {
 }
 
 async function addFilterButtons() {
+    var filtersContainer = document.getElementById('filters');
     if (!filtersContainer) return;
 
     let types = filtersData();
@@ -174,13 +191,14 @@ async function addFilterButtons() {
         `
     }
     filtersContainer.innerHTML = filters;
-    clickedFIlterBtn();
+    
+    clickedFilterBtn();
 }
 
-function clickedFIlterBtn() {
-    let filters = document.querySelectorAll('#filters .filterMainName');
-    if (!filters) return;
-
+function clickedFilterBtn() {
+    let filters = document.querySelectorAll('#filters .filterMainName');    
+    if (filters.length === 0) return;
+    
     filters[0].classList.add('selected');
     filters.forEach((filter, index) => {
         filter.addEventListener('click', function (e) {
@@ -228,6 +246,7 @@ function submitFIlters(header, type) {
 function getSelectedFilter() {
     let filters = document.querySelectorAll('#filters .filterMainName');
     let result;
+    
     if (!filters) return;
 
     filters.forEach(filter => {
@@ -296,14 +315,14 @@ function createSuggestionDivs(list) {
 
 function showHideSuggestions(e) {
     const childDiv = suggestionList.querySelector('div');
-    
+
     if (!e.key) {
         if (suggestionList.contains(e.target)) return;
         if (
             searchBar.contains(e.target) &&
             window.getComputedStyle(suggestionList, null).display === 'none' &&
             suggestionList.contains(childDiv)
-        ) {            
+        ) {
             suggestionList.style.display = "flex";
             return;
         } else {

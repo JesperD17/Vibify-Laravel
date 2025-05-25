@@ -34,6 +34,14 @@ notloggedin {
 }
 
 /* error messages */
+search .error404Wrapper,
+search .error404Wrapper,
+search .error404Wrapper,
+search .error404Wrapper,
+search .error404Wrapper .error404Wrapper {
+    height: 40vh;
+}
+
 .error404Wrapper {
     display: flex;
     height: calc(var(--fill-page) - var(--footer-height));

@@ -1,5 +1,5 @@
 export function skeletonSongs(list, type) {
-    var amountOfSkeletonSongs = 24;
+    var amountOfSkeletonSongs = 20;
     var items = "";
 
     if (!type || type === "Song" || type === "Video") {

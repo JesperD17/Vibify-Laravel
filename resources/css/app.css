@@ -173,7 +173,7 @@ newplaylist {
     position: relative;
 }
 
-.song.item .playSong::before {
+.song .playSong::before {
     content: '';
     position: absolute;
     top: 0;

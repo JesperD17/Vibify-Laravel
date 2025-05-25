@@ -6,6 +6,7 @@
 
 @vite('resources/css/authentication/forms.css')
 @vite('resources/css/search.css')
+@vite('resources/css/error.css')
 
 @vite('resources/js/searchExplore.js')
 @vite('resources/js/searchSongs.js')
@@ -38,14 +39,9 @@
             </div>
         </div>
         <div id="filters"></div>
-        <div class="songList visibleList"></div>
-        <div class="videoList"></div>
-        <div class="albumList"></div>
-        <div class="playlistList"></div>
-        <div class="artistList"></div>
 
-        <div id="pageLoadedItems"></div>
     </div>
+    <div id="pageLoadedItems"></div>
 
     <div class="loaderWrapper">
         <span class="loader"></span>
