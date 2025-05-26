@@ -164,6 +164,10 @@ newplaylist {
     cursor: pointer;
 }
 
+.song .videoId {
+    display: none;
+}
+
 .playSong {
     display: flex;
     cursor: pointer;
@@ -173,7 +177,7 @@ newplaylist {
     position: relative;
 }
 
-.song .playSong::before {
+.song:hover .playSong::before, .song .playSong:has(i.bx.bx-pause)::before {
     content: '';
     position: absolute;
     top: 0;
@@ -184,7 +188,16 @@ newplaylist {
     z-index: 1;
 }
 
+.song:hover i {
+    display: flex;
+}
+
+.song i.bx.bx-pause {
+    display: flex;
+}
+
 .playSong i {
+    display: none;
     position: absolute;
     font-size: 40px;
     z-index: 1;

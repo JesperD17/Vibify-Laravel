@@ -51,16 +51,30 @@ export async function formJsonHtml(data, list) {
     }
     if (mostItemType === "song" || mostItemType === "video") {
         for (let i = 0; i < data.length; i++) {
+            let id = data[i]?.id || 'undefined';
             let thumbnail = data[i]?.thumbnail?.contents?.[0]?.url || data[i]?.thumbnail?.[0]?.url || '';
             let duration = data[i]?.duration?.text || 'N/A';
             let title = data[i]?.title?.text || data[i]?.title || '';
             let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
+            let remebered = document.cookie.match(/(?:^|;\s*)playing=([^;]*)/);
+            console.log(remebered[1]);
 
-            itemList += `
-            <div class="song item playable">
+            if (remebered[1] === id) {
+                itemList +=
+                    `<div class="song item playable playingSong">
+                <div class="videoId">${id}</div>
                 <div class="playSong">
-                    <i class='bx bx-play'></i>
-                    <img class="skeletons" src="${thumbnail}">
+            <i class='bx bx-pause'></i>`
+            } else {
+                itemList +=
+                    `<div class="song item playable">
+                <div class="videoId">${id}</div>
+                <div class="playSong">
+            <i class='bx bx-play'></i>`
+            }
+
+            itemList +=
+                `<img class="skeletons" src="${thumbnail}">
                 </div>
                 <div class="textWrapper">
                     <div class="songTitle">${title}</div>
