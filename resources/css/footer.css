@@ -7,6 +7,7 @@ footerbar {
     background: var(--background-color-2);
     color: var(--primary-font);
     height: var(--footer-height);
+    position: sticky;
 }
 
 @media (max-width: 500px) {

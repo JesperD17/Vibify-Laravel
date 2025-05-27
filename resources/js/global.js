@@ -57,9 +57,8 @@ export async function formJsonHtml(data, list) {
             let title = data[i]?.title?.text || data[i]?.title || '';
             let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
             let remebered = document.cookie.match(/(?:^|;\s*)playing=([^;]*)/);
-            console.log(remebered[1]);
 
-            if (remebered[1] === id) {
+            if (remebered?.[1], remebered?.[1] === id) {
                 itemList +=
                     `<div class="song item playable playingSong">
                 <div class="videoId">${id}</div>

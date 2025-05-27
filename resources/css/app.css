@@ -88,7 +88,7 @@ newplaylist {
     color: var(--accent-font-color);
     font-size: 2rem;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     margin: 20px;
 }
 
@@ -420,6 +420,56 @@ select {
     margin: 5px;
 }
 
+/* playing songs */
+playingsong {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    background: var(--background-color-1);
+    color: var(--pure-white);
+    position: sticky;
+    bottom: 0;
+    width: -webkit-fill-available;
+}
+
+playingsong .songInfo img {
+    height: 100px;
+    width: 100px;
+    border-radius: 25%;
+}
+
+playingsong .songInfo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.centerPlayingWrapper {
+    display: flex;
+    flex-direction: column;
+}
+
+.actionMenu {
+    display: flex;
+}
+
+.actionMenu i {
+    margin: 10px;
+    font-size: 2rem;
+}
+
+.actionMenu i:hover {
+    color: var(--primary-font);
+    cursor: pointer;
+}
+
+.progressMenu {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    justify-content: center;
+}
+
 @media (max-width: 500px) {
     #contentAndFooter {
         display: flex;
@@ -445,5 +495,9 @@ select {
 
     .searchHeader {
         flex-direction: column;
+    }
+
+    playingsong .songInfo img {
+        display: none;
     }
 }

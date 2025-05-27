@@ -30,6 +30,7 @@
     <div id="contentAndFooter">
         @yield('content')
     
+        @include('standard.playingSong')
         @include('standard.footerBar')
     </div>
 </body>

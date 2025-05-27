@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+createPlaySongHtml();
+
 function readNewItems(area, options = {}) {
     seeDOMChanges(area, (entry) => {
         let items = entry.querySelectorAll('.playable');
@@ -42,7 +44,7 @@ function clickableItems(items) {
 }
 
 function removePlaySongRules(songs, clickedSong) {
-    songs.forEach(song => {
+    songs.forEach(song => { 
         if (song.classList.contains('playingSong') && clickedSong !== song) {
             let icon = song.querySelector('.playSong i');
             song.classList.remove('playingSong');
@@ -55,12 +57,11 @@ function removePlaySongRules(songs, clickedSong) {
 function createPlaySongHtml(div, id) {
     if (!div || !id) {
         div = document.querySelector('.playingSong');
-        console.log(div);
-        
-        id = div.querySelector('.videoId');
+        if (!div) return;
+        id = div.querySelector('.videoId').innerText;
     }
+    if (!div || !id) return;
     console.log('creating', div, id);
-    
 }
 
 // function rememberPlayingVideo(value) {
