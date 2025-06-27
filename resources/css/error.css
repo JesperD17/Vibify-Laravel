@@ -34,17 +34,16 @@ notloggedin {
 }
 
 /* error messages */
-search .error404Wrapper,
-search .error404Wrapper,
-search .error404Wrapper,
-search .error404Wrapper,
-search .error404Wrapper .error404Wrapper {
+search .errorWrapper,
+search .errorWrapper,
+search .errorWrapper,
+search .errorWrapper,
+search .errorWrapper .errorWrapper {
     height: 40vh;
 }
 
-.error404Wrapper {
+.errorWrapper {
     display: flex;
-    height: calc(var(--fill-page) - var(--footer-height));
     justify-content: center;
     flex-direction: column;
     color: var(--primary-font);
@@ -52,14 +51,20 @@ search .error404Wrapper .error404Wrapper {
     margin: 20px;
 }
 
-.error404Wrapper a {
+.errorWrapper a {
     color: var(--accent-font-color) !important;
 }
 
-.error404Wrapper .header {
+.errorWrapper .header {
     font-size: 4rem;
 }
 
-.error404Wrapper .header i {
+.errorWrapper .header i {
     font-size: 5rem;
+}
+
+@media (min-width: 500px) {
+    .errorWrapper {
+        height: calc(var(--fill-page) - var(--footer-height));
+    }
 }

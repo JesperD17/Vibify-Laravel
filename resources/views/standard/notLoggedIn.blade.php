@@ -1,7 +1,7 @@
 @vite('resources/css/error.css')
 <notLoggedIn>
     @guest
-    <div class="error404Wrapper">
+    <div class="errorWrapper">
         <div class="header">
             404
         </div>

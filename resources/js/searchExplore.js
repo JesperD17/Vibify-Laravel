@@ -1,5 +1,5 @@
 import { loadingBeforeSubmit, submittedFormLoading } from "./forms";
-import { createHtmlSections } from "./global";
+import { createHtmlSections, showApiErrorOnPage } from "./global";
 
 var container = document.getElementById('pageLoadedItems');
 
@@ -10,10 +10,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function functionObserver() {
     loadingBeforeSubmit();
-    
-    let data = await fetchData();
-    createHtmlSections(container, data)
-    submittedFormLoading();
+
+    try {
+        let data = await fetchData();
+        createHtmlSections(container, data);
+        submittedFormLoading();
+    } catch (error) {
+        console.error(error);
+        submittedFormLoading();
+        showApiErrorOnPage(container);
+    }
 }
 
 async function fetchData() {

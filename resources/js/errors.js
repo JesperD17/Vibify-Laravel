@@ -5,7 +5,7 @@ export function noResultsFound(container, customMessage, customIcon) {
     if (!customIcon) customIcon = `<i class='bx bx-question-mark'></i>`;
 
     let errorHtml = `
-    <div class="error404Wrapper">
+    <div class="errorWrapper">
         <div class="header">${customIcon}</div>
         <div class="message">${customMessage}</div>
     </div>

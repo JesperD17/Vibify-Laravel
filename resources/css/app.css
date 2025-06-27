@@ -86,9 +86,9 @@ newplaylist {
 
 .mainTitle {
     color: var(--accent-font-color);
-    font-size: 2rem;
+    font-size: 1.5rem;
     display: flex;
-    justify-content: space-around;
+    /* justify-content: space-around; */
     margin: 20px;
 }
 
@@ -422,7 +422,8 @@ select {
 
 /* playing songs */
 playingsong {
-    display: flex;
+    /* display: flex; */
+    display: none;
     align-items: center;
     justify-content: space-around;
     background: var(--background-color-1);
@@ -468,6 +469,10 @@ playingsong .songInfo {
     gap: 5px;
     align-items: center;
     justify-content: center;
+}
+
+.marginRight {
+    margin-right: 20px;
 }
 
 @media (max-width: 500px) {

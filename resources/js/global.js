@@ -245,3 +245,18 @@ async function importHtmlSections(container, lists) {
         }
     })
 }
+
+export function showApiErrorOnPage(location) {
+    if (!location) return;
+    let errorHtml = `
+    <div class="errorWrapper">
+        <div class="header">
+            <i class='bx bx-question-mark'></i>
+        </div>
+        <div class="message">
+            The music api is offline!
+        </div>
+    </div>
+    `
+    location.innerHTML = errorHtml;
+}

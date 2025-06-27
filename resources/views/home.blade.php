@@ -6,6 +6,7 @@
 
 @vite('resources/js/homePageFeed.js')
 @vite('resources/css/home.css')
+@vite('resources/css/error.css')
 <home>
     <div id="welcomeSection">
         <div class="mainTitle">
