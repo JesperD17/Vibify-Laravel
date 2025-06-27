@@ -9,13 +9,13 @@
 @vite('resources/css/error.css')
 <home>
     <div id="welcomeSection">
-        <div class="mainTitle">
+        {{-- <div class="mainTitle">
             @if (Route::has('login'))
                 @auth
                 Welcome {{ auth()->user()->name }}!
                 @endauth
             @endif
-        </div>
+        </div> --}}
         <div class="songList">
             
         </div>
@@ -32,7 +32,15 @@
     </div>
     @endauth
 
-    <div id="homeFeed"></div>
+    <div id="homeFeed">
+        {{-- Skeleton items --}}
+        <div class="mainTitle"></div>
+        <div class="songList"></div>
+        <div class="mainTitle"></div>
+        <div class="albumList"></div>
+        <div class="mainTitle"></div>
+        <div class="albumList"></div>
+    </div>
 
     <div class="loaderWrapper">
         <span class="loader"></span>

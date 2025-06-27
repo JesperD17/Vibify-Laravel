@@ -63,8 +63,8 @@ search .errorWrapper .errorWrapper {
     font-size: 5rem;
 }
 
-@media (min-width: 500px) {
+/* @media (min-width: 500px) {
     .errorWrapper {
         height: calc(var(--fill-page) - var(--footer-height));
     }
-}
+} */

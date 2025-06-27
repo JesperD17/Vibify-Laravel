@@ -1,8 +1,8 @@
 import { loadingBeforeSubmit, submittedFormLoading } from "./forms";
 import { createHtmlSections, showApiErrorOnPage } from "./global";
+import { skeletonSongs } from "./skeletonItems";
 
 var container = document.getElementById('homeFeed');
-var textRecent = document.getElementById('RecentPlaylists');
 
 document.addEventListener("DOMContentLoaded", function () {
     if (!container) return;
@@ -10,20 +10,28 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function functionObserver() {
-    if (!textRecent) return;
-    textRecent.style.display = "none"
+    if (!container) return;
     loadingBeforeSubmit();
+    skeletonSongs(container.querySelector('.songList'), "Song");
+
+    container.querySelectorAll('.albumList').forEach(list => {
+        skeletonSongs(list, "Playlist");
+    })
+
+    container.querySelectorAll('.mainTitle').forEach(title => {
+        title.classList.add('skeletons');
+        title.classList.add('fitContent');
+        title.innerHTML = "these are skeleton titles.";
+    })
 
     try {
         let data = await fetchData();
-        textRecent.style.display = null;
         createHtmlSections(container, data);
         submittedFormLoading();
     } catch (error) {
         console.error(error);
         submittedFormLoading();
         showApiErrorOnPage(container);
-        container.style.paddingBottom = 0;
     }
 }
 

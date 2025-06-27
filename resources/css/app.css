@@ -475,6 +475,10 @@ playingsong .songInfo {
     margin-right: 20px;
 }
 
+.fitContent {
+    width: fit-content;
+}
+
 @media (max-width: 500px) {
     #contentAndFooter {
         display: flex;
