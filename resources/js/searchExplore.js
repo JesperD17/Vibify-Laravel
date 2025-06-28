@@ -1,5 +1,6 @@
 import { loadingBeforeSubmit, submittedFormLoading } from "./forms";
 import { createHtmlSections, showApiErrorOnPage } from "./global";
+import { skeletonSongs } from "./skeletonItems";
 
 var container = document.getElementById('pageLoadedItems');
 
@@ -10,6 +11,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function functionObserver() {
     loadingBeforeSubmit();
+    skeletonSongs(container.querySelector('.albumList'), "Album", 24);
+    skeletonSongs(container.querySelector('.customBtnsList'), "Button", 35);
+    container.querySelectorAll('.songList').forEach(list => {
+        skeletonSongs(list, "Song");
+    })
+
+    container.querySelectorAll('.mainTitle').forEach(title => {
+        title.classList.add('skeletons');
+        title.classList.add('fitContent');
+        title.innerHTML = "these are skeleton titles.";
+    })
 
     try {
         let data = await fetchData();

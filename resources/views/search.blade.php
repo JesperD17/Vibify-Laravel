@@ -41,7 +41,17 @@
         <div id="filters"></div>
 
     </div>
-    <div id="pageLoadedItems"></div>
+    <div id="pageLoadedItems">
+        {{-- Skeleton items --}}
+        <div class="mainTitle"></div>
+        <div class="albumList"></div>
+        <div class="mainTitle"></div>
+        <div class="customBtnsList"></div>
+        <div class="mainTitle"></div>
+        <div class="songList"></div>
+        <div class="mainTitle"></div>
+        <div class="songList"></div>
+    </div>
 
     <div class="loaderWrapper">
         <span class="loader"></span>

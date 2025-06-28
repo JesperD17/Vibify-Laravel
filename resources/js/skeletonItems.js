@@ -1,5 +1,5 @@
-export function skeletonSongs(list, type) {
-    var amountOfSkeletonSongs = 20;
+export function skeletonSongs(list, type, amountOfSkeletonSongs) {
+    if (!amountOfSkeletonSongs) amountOfSkeletonSongs = 20;
     var items = "";
 
     if (!type || type === "Song" || type === "Video") {
@@ -40,6 +40,12 @@ export function skeletonSongs(list, type) {
                     <div class="artistAuthor skeletons">Random author</div>
                 </a>
             </div>
+            `
+        }
+    } else if (type === "Button") {
+        for (let i = 0; i < amountOfSkeletonSongs; i++) {
+            items += `
+            <button class="skeletons">This button has two lines</button>
             `
         }
     }

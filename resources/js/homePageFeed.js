@@ -10,12 +10,11 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 async function functionObserver() {
-    if (!container) return;
     loadingBeforeSubmit();
     skeletonSongs(container.querySelector('.songList'), "Song");
 
     container.querySelectorAll('.albumList').forEach(list => {
-        skeletonSongs(list, "Playlist");
+        skeletonSongs(list, "Playlist", 10);
     })
 
     container.querySelectorAll('.mainTitle').forEach(title => {
