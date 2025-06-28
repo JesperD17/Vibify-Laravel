@@ -1,6 +1,6 @@
 <playingSong>
     <div class="songInfo">
-        <img src="{{ asset('pics/Playlist-metallica.jpg') }}"></img>
+        <img class="skeletons"></img>
         <div class="text">
             <div class="songTitle">title</div>
             <div class="songAuthor">Author</div>
@@ -13,11 +13,15 @@
             <i class='bx bx-pause'></i>
             <i class='bx bx-skip-next'></i>
         </div>
-        <div class="progressMenu">
+        {{-- <div class="progressMenu">
             <div class="progressDone">0:00</div>
             <div class="progressBar"></div>
             <div class="progressLeft">0:00</div>
-        </div>
+        </div> --}}
+        <audio controls>
+            <source type="audio/mp4">
+            Your browser does not support the audio element.
+        </audio>
     </div>
 
     <div class="volume">

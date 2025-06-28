@@ -431,6 +431,8 @@ playingsong {
     position: sticky;
     bottom: 0;
     width: -webkit-fill-available;
+    border-bottom: solid black 2px;
+    border-top: solid black 2px;
 }
 
 playingsong .songInfo img {
@@ -504,6 +506,11 @@ playingsong .songInfo {
 
     .searchHeader {
         flex-direction: column;
+    }
+
+    playingsong {
+        position: absolute;
+        bottom: 100px;
     }
 
     playingsong .songInfo img {

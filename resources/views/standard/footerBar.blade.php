@@ -1,6 +1,5 @@
 @vite('resources/css/footer.css')
 <footerBar>
-
     <a class="logo" href="{{ route('home') }}">
         <img src="{{ asset('pics/logo secondary.png') }}">
     </a>

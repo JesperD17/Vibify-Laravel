@@ -62,7 +62,6 @@ app.get('/search', async (req, res) => {
 
     res.json(results);
   } catch (error) {
-    console.error('Search error:', error);
     res.status(500).send(error.toString());
   }
 });
@@ -86,6 +85,28 @@ app.get('/standard', async (req, res) => {
   }
   res.json(feed);
 });
+
+app.get('/streamingData', async (req, res) => {
+  const id = req.query.id;
+  const audioType = req.query.type;
+  const songData = req.query.songData;
+  let info;
+
+  if (id) {
+    try {
+      info = await tube.getStreamingData(id, audioType);
+    } catch (error) {
+      res.status(500).send(error.toString())
+    }
+  } else if (songData) {
+    try {
+      info = await tube.getBasicInfo(songData, 'YTMUSIC');
+    } catch (error) {
+      res.status(500).send(error.toString())
+    }
+  }
+  res.json(info)
+})
 
 app.listen(port, () => {
   console.log(`Tube service listening at http://localhost:${port}`);

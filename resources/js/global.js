@@ -56,7 +56,7 @@ export async function formJsonHtml(data, list) {
             let duration = data[i]?.duration?.text || 'N/A';
             let title = data[i]?.title?.text || data[i]?.title || '';
             let author = data[i]?.artists?.[0]?.name || data[i]?.authors?.[0]?.name || data[i]?.author?.name || '';
-            let remebered = document.cookie.match(/(?:^|;\s*)playing=([^;]*)/);
+            let remebered = document.cookie.match(/(?:^|;\s*)playingID=([^;]*)/);
 
             if (remebered?.[1], remebered?.[1] === id) {
                 itemList +=

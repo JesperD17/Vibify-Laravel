@@ -3,11 +3,9 @@ headerSidebar {
     display: flex;
     flex-direction: column;
     background-color: var(--background-color-1);
-    border-right: solid;
     width: 50vw;
     min-width: 50px;
     max-width: 300px;
-    border-radius: 0px 20px 20px 0px;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -16,6 +14,7 @@ headerSidebar {
     overflow: hidden;
     transition: width 0.4s ease-in-out;
     position: sticky;
+    border-right: solid;
 }
 
 headerSidebar.closedMenu {
@@ -82,16 +81,15 @@ headerSidebar .linkWithIcon {
         height: 100px;
         width: -webkit-fill-available;
         max-width: unset;
-        border-radius: 10px 10px 0px 0px;
         justify-content: space-around;
         position: fixed;
-
         top: unset;
         bottom: 0;
         overflow: auto;
-        border: solid;
         z-index: 1;
         overflow: auto;
+        border-top: solid;
+        border-right: unset;
     }
 
     headersidebar .logo,
