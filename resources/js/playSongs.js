@@ -1,9 +1,10 @@
 import { seeDOMChanges } from "./global";
 
-var container = document.querySelector('playingsong');
+var container = document.querySelector('playingSong');
 var homeFeed = document.getElementById('homeFeed');
 var searchFeed = document.getElementById('recentSearched');
 var autoloadedItems = document.getElementById('pageLoadedItems');
+let player = null;
 
 document.addEventListener("DOMContentLoaded", function () {
     if (homeFeed) {
@@ -69,23 +70,21 @@ function createPlaySongHtml(div, id) {
 }
 
 async function playSong(id) {
+    console.log(document.cookie.match(/(?:^|;\s*)playingID=([^;]*)/));
+
     if (!id) {
-        id = document.cookie.match(/(?:^|;\s*)playingID=([^;]*)/)[1];
-        // id = id[1];
+        id = document.cookie.match(/(?:^|;\s*)playingID=([^;]*)/);
+        if (!id) return;
+        id = id[1];
     }
 
-    let data = await fetchAudioData(id);
-    let strings = await fetchAudioStrings(id);
-    changeHtmlData(data, strings);
-    container.style.display = "flex";
-    console.log(data, 'br', strings);
-
-}
-
-async function fetchAudioData(id) {
-    let response = await fetch(`http://localhost:3000/streamingData?id=${id}&type=audio`)
-    let data = await response.json();
-    return data;
+    try {
+        startAudioPlayer(`http://localhost:3000/player?id=${id}&type=audio`);
+        insertSongInfo(await fetchAudioStrings(id))
+        container.style.display = "flex";
+    } catch (e) {
+        console.error("Failed to load song data:", e);
+    }
 }
 
 async function fetchAudioStrings(id) {
@@ -94,13 +93,62 @@ async function fetchAudioStrings(id) {
     return data;
 }
 
-function changeHtmlData(data, strings) {
-    let audio = container.querySelector('audio');
-    audio.querySelector('source').src = data.url;
-    audio.load();
+function startAudioPlayer(url) {
+    const wrapper = container.querySelector('.centerPlayingWrapper');
+    const audio = wrapper.querySelector('audio');
+    const playPauseBtn = document.getElementById("play-pause");
 
-    let dataHtml = container.querySelector('.songInfo');
+    if (player !== null) {
+        player.destroy();
+        player = null;
+    }
+
+    player = dashjs.MediaPlayer().create();
+    player.initialize(audio, url, true);
+    audio.play();
+    actionMenuEvents(audio, wrapper, playPauseBtn);
+}
+
+function actionMenuEvents(audio, wrapper, playPauseBtn) {
+    const seekBar = wrapper.querySelector(".seek-bar");
+    const currentTimeEl = wrapper.querySelector(".current-time");
+    const durationEl = wrapper.querySelector(".duration");
+    playPauseBtn.addEventListener("click", () => {
+        if (audio.paused) {
+            audio.play();
+            playPauseBtn.classList.replace("bx-play", "bx-pause");
+
+        } else {
+            audio.pause();
+            playPauseBtn.classList.replace("bx-pause", "bx-play");
+        }
+    });
+
+    seekBar.addEventListener("input", () => {
+        audio.currentTime = seekBar.value;
+    });
+
+    audio.addEventListener("timeupdate", () => {
+        seekBar.value = audio.currentTime;
+        currentTimeEl.textContent = formatTime(audio.currentTime);
+    });
+
+    audio.addEventListener("loadedmetadata", () => {
+        seekBar.max = audio.duration;
+        durationEl.textContent = formatTime(audio.duration);
+    });
+}
+
+function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60).toString().padStart(2, '0');
+    return `${m}:${s}`;
+}
+
+function insertSongInfo(strings) {
+    const dataHtml = container.querySelector('.songInfo');
+    if (!dataHtml) return
     dataHtml.querySelector('img').src = strings.basic_info.thumbnail[0].url;
-    dataHtml.querySelector('.songTitle').innerHTML = strings.basic_info.title;
-    dataHtml.querySelector('.songAuthor').innerHTML = strings.basic_info.author;
+    dataHtml.querySelector('.songTitle').innerText = strings.basic_info.title;
+    dataHtml.querySelector('.songAuthor').innerText = strings.basic_info.author;
 }

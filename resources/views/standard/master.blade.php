@@ -21,6 +21,7 @@
     @vite('resources/js/confirmSubmit.js')
 
     @vite('resources/js/playSongs.js')
+    <script src="https://cdn.dashjs.org/latest/modern/umd/dash.all.min.js"></script>
 </head>
 <body>
     @include('standard.toprofile')

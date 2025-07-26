@@ -438,7 +438,6 @@ playingsong {
 playingsong .songInfo img {
     height: 100px;
     width: 100px;
-    border-radius: 25%;
 }
 
 playingsong .songInfo {
@@ -450,10 +449,20 @@ playingsong .songInfo {
 .centerPlayingWrapper {
     display: flex;
     flex-direction: column;
+    width: 50%;
+}
+
+#bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
 }
 
 .actionMenu {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .actionMenu i {

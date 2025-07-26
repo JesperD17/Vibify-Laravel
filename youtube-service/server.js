@@ -37,11 +37,10 @@ async function getContinuationItems(feed, items, maxResults) {
 app.get('/search', async (req, res) => {
   const query = req.query.search_query;
   const maxResults = req.query.search_length;
+  let results = [];
 
   // GET /search?search_query=metellica&type=songs
   try {
-    let results = [];
-
     const feed = await tube.music.search(query, {
       type: req.query.type
     });
@@ -70,18 +69,14 @@ app.get('/standard', async (req, res) => {
   const query = req.query.type;
   let feed;
 
-  if (req.query.type === "home") {
-    try {
+  try {
+    if (req.query.type === "home") {
       feed = await tube.music.getHomeFeed({});
-    } catch (error) {
-      res.status(500).send(error.toString())
-    }
-  } else if (req.query.type === "explore") {
-    try {
+    } else if (req.query.type === "explore") {
       feed = await tube.music.getExplore({});
-    } catch (error) {
-      res.status(500).send(error.toString())
     }
+  } catch (error) {
+    res.status(500).send(error.toString())
   }
   res.json(feed);
 });
@@ -92,22 +87,57 @@ app.get('/streamingData', async (req, res) => {
   const songData = req.query.songData;
   let info;
 
-  if (id) {
-    try {
+  try {
+    if (id) {
       info = await tube.getStreamingData(id, audioType);
-    } catch (error) {
-      res.status(500).send(error.toString())
-    }
-  } else if (songData) {
-    try {
+    } else if (songData) {
       info = await tube.getBasicInfo(songData, 'YTMUSIC');
-    } catch (error) {
-      res.status(500).send(error.toString())
     }
+  } catch (error) {
+    res.status(500).send(error.toString())
   }
   res.json(info)
 })
 
+app.get('/player', async (req, res) => {
+  const id = req.query.id;
+  const audioType = req.query.type;
+  const songData = req.query.songData;
+  let info;
+
+  try {
+    info = await tube.getInfo(id, "YTMUSIC");
+  } catch (error) {
+    res.status(500).send(error.toString())
+  }
+  res.send(await info.toDash(url => {
+    return `http://localhost:3000/proxy?url=${encodeURIComponent(url)}`;
+  }));
+})
+
 app.listen(port, () => {
   console.log(`Tube service listening at http://localhost:${port}`);
+});
+
+// playing songs using proxy
+app.get('/proxy', async (req, res) => {
+  const targetUrl = req.query.url;
+  const Url = new URL(targetUrl);
+
+  const headers = {
+    ...req.headers,
+    origin: 'https://www.youtube.com',
+    referer: 'https://www.youtube.com/',
+    cookie: null,
+    host: Url.host
+  };
+
+  const response = await fetch(targetUrl, { headers });
+
+  const body = await response.arrayBuffer();
+  for (const [key, value] of response.headers.entries()) {
+      res.setHeader(key, value);
+  }
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.status(response.status).send(Buffer.from(body));
 });

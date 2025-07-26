@@ -1,4 +1,5 @@
-register, login {
+register,
+login {
     display: flex;
     height: calc(100vh - var(--footer-height));
     align-items: center;
@@ -7,7 +8,8 @@ register, login {
 }
 
 /* forms */
-register form, login form {
+register form,
+login form {
     background: var(--background-color-2);
     border-radius: var(--border-radius);
     max-width: 350px;
@@ -47,7 +49,7 @@ form {
     align-items: center;
     justify-content: end;
     gap: 10px;
-    margin-top: 15px;
+    margin-top: 1 5px;
 }
 
 /* buttons */
@@ -79,7 +81,6 @@ button.alt:hover {
 }
 
 /* inputs */
-
 input {
     background-color: #191818;
     border: 1px solid #B8860B;
@@ -98,6 +99,101 @@ input:focus {
     box-shadow: 0 0 5px var(--accent-font-color);
 }
 
+/* range input type */
+input[type=range] {
+    -webkit-appearance: none;
+    margin: unset;
+    padding: unset;
+    width: 100%;
+    border: unset;
+    background: unset;
+    display: flex;
+}
+
+input[type=range]:focus {
+    outline: none;
+    border-color: none;
+    box-shadow: none;
+}
+
+/* slider */
+input[type=range]::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: var(--pure-white);
+    border-radius: 1.3px;
+}
+
+/* thumb */
+input[type=range]::-webkit-slider-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 100%;
+    background: var(--primary-font);
+    cursor: pointer;
+    -webkit-appearance: none;
+    margin-top: -5px;
+}
+
+input[type=range]:focus::-webkit-slider-runnable-track {
+    background: var(--secondary-font);
+}
+
+/* slider */
+input[type=range]::-moz-range-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: var(--pure-white);
+    border-radius: 1.3px;
+}
+
+/* thumb */
+input[type=range]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 100%;
+    background: var(--primary-font);
+    cursor: pointer;
+}
+
+input[type=range]::-ms-track {
+    width: 100%;
+    height: 5px;
+    cursor: pointer;
+    background: transparent;
+    border-color: transparent;
+    border-width: 16px 0;
+    color: transparent;
+}
+
+input[type=range]::-ms-fill-lower {
+    background: #2a6495;
+    border-radius: 2.6px;
+}
+
+input[type=range]::-ms-fill-upper {
+    background: var(--pure-white);
+    border-radius: 2.6px;
+}
+
+input[type=range]::-ms-thumb {
+    height: 36px;
+    width: 16px;
+    border-radius: 3px;
+    background: var(--primary-font);
+    cursor: pointer;
+}
+
+input[type=range]:focus::-ms-fill-lower {
+    background: var(--pure-white);
+}
+
+input[type=range]:focus::-ms-fill-upper {
+    background: var(--secondary-font);
+}
+
 /* searchbar */
 search input {
     max-width: 300px;
@@ -111,11 +207,13 @@ search input {
 }
 
 .searchbarWrapper button i {
-    color: var(--background-color-2); 
+    color: var(--background-color-2);
 }
 
 @media (max-width: 500px) {
-    register, login {
+
+    register,
+    login {
         padding-bottom: var(--footer-height);
     }
 }
