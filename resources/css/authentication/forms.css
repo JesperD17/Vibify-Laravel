@@ -169,7 +169,7 @@ input[type=range]::-ms-track {
 }
 
 input[type=range]::-ms-fill-lower {
-    background: #2a6495;
+    background: var(--secondary-font);
     border-radius: 2.6px;
 }
 

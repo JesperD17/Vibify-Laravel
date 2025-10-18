@@ -15,6 +15,7 @@
     {{-- css --}}
     @vite('resources/css/app.css')
     @vite('resources/css/animations.css')
+    @vite('resources/css/authentication/forms.css')
 
     {{-- js --}}
     @vite('resources/js/app.js')

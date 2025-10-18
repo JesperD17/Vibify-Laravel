@@ -4,7 +4,6 @@
 
 @section('content')
 
-@vite('resources/css/authentication/forms.css')
 <login>
     <form method="POST">
         @csrf

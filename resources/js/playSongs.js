@@ -64,8 +64,6 @@ function createPlaySongHtml(div, id) {
         if (!div) return;
         id = div.querySelector('.videoId').innerText;
     }
-    console.log('creating', div, id);
-
     playSong(id)
 }
 
@@ -90,6 +88,7 @@ async function playSong(id) {
 async function fetchAudioStrings(id) {
     let response = await fetch(`http://localhost:3000/streamingData?songData=${id}`)
     let data = await response.json();
+    console.log(data)
     return data;
 }
 
@@ -97,10 +96,20 @@ function startAudioPlayer(url) {
     const wrapper = container.querySelector('.centerPlayingWrapper');
     const audio = wrapper.querySelector('audio');
     const playPauseBtn = document.getElementById("play-pause");
+    if (!wrapper || !audio || !playPauseBtn) return;
 
     if (player !== null) {
         player.destroy();
         player = null;
+    }
+
+    if (url.includes('.mpd')) {
+        player = dashjs.MediaPlayer().create();
+        player.initialize(audio, url, true);
+    } else {
+        // progressive stream (mp3/ogg/etc.) or proxyed stream
+        audio.src = url;
+        audio.load();
     }
 
     player = dashjs.MediaPlayer().create();
@@ -113,15 +122,16 @@ function actionMenuEvents(audio, wrapper, playPauseBtn) {
     const seekBar = wrapper.querySelector(".seek-bar");
     const currentTimeEl = wrapper.querySelector(".current-time");
     const durationEl = wrapper.querySelector(".duration");
-    playPauseBtn.addEventListener("click", () => {
-        if (audio.paused) {
-            audio.play();
-            playPauseBtn.classList.replace("bx-play", "bx-pause");
+    var isInternalChange = false;
 
-        } else {
-            audio.pause();
-            playPauseBtn.classList.replace("bx-pause", "bx-play");
-        }
+    playPauseBtn.addEventListener("click", () => {
+        isInternalChange = true;
+        playPauseIf(audio, playPauseBtn);
+        isInternalChange = false;
+    });
+
+    audio.addEventListener("play", (event) => {
+        console.log(event)
     });
 
     seekBar.addEventListener("input", () => {
@@ -139,10 +149,25 @@ function actionMenuEvents(audio, wrapper, playPauseBtn) {
     });
 }
 
+function playPauseIf(audio, button) {
+    if (audio.paused) { 
+        audio.play();
+        console.log('play');
+
+        button.classList.replace("bx-play", "bx-pause");
+    } else {
+        audio.pause();
+
+        console.log('pause');
+
+        button.classList.replace("bx-pause", "bx-play");
+    }
+}
+
 function formatTime(seconds) {
     const m = Math.floor(seconds / 60);
     const s = Math.floor(seconds % 60).toString().padStart(2, '0');
-    return `${m}:${s}`;
+    return `${m}:${s}`; 
 }
 
 function insertSongInfo(strings) {

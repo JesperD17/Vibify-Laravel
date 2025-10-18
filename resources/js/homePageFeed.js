@@ -25,10 +25,11 @@ async function functionObserver() {
 
     try {
         let data = await fetchData();
+
         createHtmlSections(container, data);
         submittedFormLoading();
     } catch (error) {
-        console.error(error);
+        console.error(error, 'aaaa');
         submittedFormLoading();
         showApiErrorOnPage(container);
     }

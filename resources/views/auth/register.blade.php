@@ -4,7 +4,6 @@
 
 @section('content')
 
-@vite('resources/css/authentication/forms.css')
 <register>
     <form method="POST" class="form">
         @csrf

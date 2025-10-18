@@ -450,6 +450,7 @@ playingsong .songInfo {
     display: flex;
     flex-direction: column;
     width: 50%;
+    padding: 10px 0px;
 }
 
 #bar {

@@ -4,7 +4,6 @@
 
 @section('content')
 
-@vite('resources/css/authentication/forms.css')
 @vite('resources/css/search.css')
 @vite('resources/css/error.css')
 
